@@ -1,0 +1,499 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Guía de Estudio - Patrón MVC en CodeIgniter 4</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Fira+Code:wght@400;500;600&display=swap');
+
+        @page {
+            size: A4;
+            margin: 20mm 15mm 20mm 15mm;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            color: #1e293b;
+            line-height: 1.6;
+            background-color: #ffffff;
+            font-size: 13px;
+            margin: 0;
+            padding: 0;
+        }
+
+        .header-cover {
+            background: linear-gradient(135deg, #065f46 0%, #047857 50%, #10b981 100%);
+            color: white;
+            padding: 30px;
+            border-radius: 12px;
+            margin-bottom: 25px;
+            box-shadow: 0 4px 15px rgba(16, 185, 129, 0.2);
+        }
+
+        .header-cover h1 {
+            margin: 0 0 8px 0;
+            font-size: 26px;
+            font-weight: 800;
+            letter-spacing: -0.5px;
+        }
+
+        .header-cover p {
+            margin: 0;
+            font-size: 14px;
+            opacity: 0.95;
+            font-weight: 400;
+        }
+
+        .badge-role {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 11px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 8px;
+        }
+
+        .badge-model { background: #dbeafe; color: #1e40af; border: 1px solid #bfdbfe; }
+        .badge-controller { background: #fef3c7; color: #92400e; border: 1px solid #fde68a; }
+        .badge-view { background: #d1fae5; color: #065f46; border: 1px solid #a7f3d0; }
+        .badge-routes { background: #f3e8ff; color: #6b21a8; border: 1px solid #e9d5ff; }
+
+        h2 {
+            font-size: 18px;
+            font-weight: 700;
+            color: #0f172a;
+            border-bottom: 2px solid #e2e8f0;
+            padding-bottom: 6px;
+            margin-top: 25px;
+            margin-bottom: 12px;
+            page-break-after: avoid;
+        }
+
+        h3 {
+            font-size: 15px;
+            font-weight: 600;
+            color: #1e293b;
+            margin-top: 15px;
+            margin-bottom: 8px;
+            page-break-after: avoid;
+        }
+
+        .card {
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            padding: 15px;
+            margin-bottom: 15px;
+            page-break-inside: avoid;
+        }
+
+        .card-accent {
+            border-left: 4px solid #10b981;
+        }
+
+        .diagram-box {
+            background: #0f172a;
+            color: #f8fafc;
+            border-radius: 8px;
+            padding: 16px;
+            font-family: 'Fira Code', monospace;
+            font-size: 11px;
+            line-height: 1.5;
+            margin-bottom: 20px;
+            white-space: pre;
+            page-break-inside: avoid;
+        }
+
+        pre {
+            background: #1e293b;
+            color: #e2e8f0;
+            padding: 14px;
+            border-radius: 8px;
+            font-family: 'Fira Code', monospace;
+            font-size: 11.5px;
+            line-height: 1.45;
+            overflow-x: auto;
+            margin: 10px 0;
+            page-break-inside: avoid;
+        }
+
+        code {
+            font-family: 'Fira Code', monospace;
+            background: #f1f5f9;
+            color: #0f172a;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-size: 11.5px;
+        }
+
+        pre code {
+            background: transparent;
+            color: inherit;
+            padding: 0;
+        }
+
+        .keyword { color: #f472b6; font-weight: 600; }
+        .function { color: #60a5fa; }
+        .string { color: #34d399; }
+        .comment { color: #94a3b8; font-style: italic; }
+        .variable { color: #fde047; }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 15px 0;
+            font-size: 12px;
+            page-break-inside: avoid;
+        }
+
+        th {
+            background: #f1f5f9;
+            color: #334155;
+            font-weight: 700;
+            text-align: left;
+            padding: 8px 10px;
+            border: 1px solid #cbd5e1;
+        }
+
+        td {
+            padding: 8px 10px;
+            border: 1px solid #e2e8f0;
+            vertical-align: top;
+        }
+
+        tr:nth-child(even) {
+            background: #f8fafc;
+        }
+
+        .page-break {
+            page-break-before: always;
+        }
+
+        ul {
+            margin: 6px 0 12px 20px;
+            padding: 0;
+        }
+
+        li {
+            margin-bottom: 4px;
+        }
+
+        .tip-box {
+            background: #ecfdf5;
+            border: 1px solid #a7f3d0;
+            border-left: 4px solid #10b981;
+            padding: 12px;
+            border-radius: 6px;
+            margin: 15px 0;
+            page-break-inside: avoid;
+        }
+
+        .tip-box strong {
+            color: #065f46;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- PORTADA -->
+    <div class="header-cover">
+        <h1>Guía de Estudio: Patrón MVC en CodeIgniter 4</h1>
+        <p>Aprende paso a paso cómo viajan los datos desde la Base de Datos hasta la Vista para rendir y aprobar tu examen.</p>
+    </div>
+
+    <!-- SECCIÓN 1: QUÉ ES MVC -->
+    <h2>1. ¿Qué es el Patrón MVC y cuál es el rol de cada parte?</h2>
+    <p>El patrón <strong>MVC (Modelo - Vista - Controlador)</strong> es una arquitectura de software que separa la aplicación en tres capas independientes con responsabilidades únicas:</p>
+
+    <div class="card card-accent">
+        <p><strong>Analogía del Restaurante:</strong></p>
+        <ul>
+            <li><strong>El Cliente (Navegador / Usuario):</strong> Pide un plato ingresando a una URL (por ejemplo: <code>/dashboard</code> o <code>/plantas</code>).</li>
+            <li><strong>El Controlador (El Mozo / Mesero):</strong> Recibe la petición del usuario, va a la cocina, pide lo que necesita, prepara la bandeja con los datos (<code>$data</code>) y se la lleva al cliente. <strong>Coordina todo.</strong></li>
+            <li><strong>El Modelo (El Chef / Despensa):</strong> Es el <strong>único</strong> que interactúa con los ingredientes (<strong>la Base de Datos MySQL</strong>). Sabe hacer consultas SQL (<code>SELECT</code>, <code>INSERT</code>, <code>UPDATE</code>, <code>DELETE</code>).</li>
+            <li><strong>La Vista (El Plato servido y decorado):</strong> Es el código <strong>HTML / CSS</strong> que muestra visualmente los datos listos en la pantalla del usuario.</li>
+        </ul>
+    </div>
+
+    <h3>Diagrama del Flujo de Datos (El Viaje del Dato)</h3>
+    <div class="diagram-box">
+[ USUARIO ] 
+    │  (1. Ingresa a la URL, ej: /dashboard o /plantas)
+    ▼
+[ RUTA (app/Config/Routes.php) ] 
+    │
+    ▼
+[ CONTROLADOR (app/Controllers/SmartPlant.php) ] 
+    │  (2. Pide datos: $plantaModel->activasPorUsuario())
+    ▼
+[ MODELO (app/Models/PlantaModel.php) ] ────► [ BASE DE DATOS (MySQL) ]
+    │                                              │ (3. Ejecuta SELECT seguro)
+    │◄─────────────────────────────────────────────┘ (4. Devuelve array con registros)
+(5. Inyecta el array $data) 
+    │
+    ▼
+[ VISTA (app/Views/Dashboard.php) ] ────► [ PANTALLA DEL USUARIO ] (6. Renderiza HTML)</div>
+
+    <!-- SECCIÓN 2: PASO A PASO CON CÓDIGO REAL -->
+    <div class="page-break"></div>
+    <h2>2. Paso a Paso: El Código Real de tu Proyecto y Qué Hace Cada Línea</h2>
+
+    <!-- PASO 1: EL MODELO -->
+    <span class="badge-role badge-model">Paso 1: El Modelo (M)</span>
+    <h3>Archivo: <code>app/Models/PlantaModel.php</code></h3>
+    <p>Representa a la tabla <code>plantas</code> en MySQL. Es el único archivo que ejecuta consultas a la base de datos.</p>
+
+    <pre><code><span class="keyword">&lt;?php</span>
+
+<span class="keyword">namespace</span> App\Models;
+
+<span class="keyword">use</span> CodeIgniter\Model;
+
+<span class="keyword">class</span> PlantaModel <span class="keyword">extends</span> Model
+{
+    <span class="comment">// 1. Nombre exacto de la tabla en MySQL</span>
+    <span class="keyword">protected</span> <span class="variable">$table</span> = <span class="string">'plantas'</span>;
+    
+    <span class="comment">// 2. Clave primaria única</span>
+    <span class="keyword">protected</span> <span class="variable">$primaryKey</span> = <span class="string">'id'</span>;
+    
+    <span class="comment">// 3. Formato en que devuelve los registros ('array' o 'object')</span>
+    <span class="keyword">protected</span> <span class="variable">$returnType</span> = <span class="string">'array'</span>;
+    
+    <span class="comment">// 4. Columnas habilitadas para consultas y operaciones</span>
+    <span class="keyword">protected</span> <span class="variable">$allowedFields</span> = [
+        <span class="string">'usuario_id'</span>, <span class="string">'nombre'</span>, <span class="string">'especie'</span>, <span class="string">'descripcion'</span>,
+        <span class="string">'humedad_min'</span>, <span class="string">'humedad_max'</span>, <span class="string">'temp_min'</span>, <span class="string">'temp_max'</span>, <span class="string">'activa'</span>
+    ];
+
+    <span class="comment">/**
+     * Consulta las plantas activas que pertenecen a un usuario específico
+     */</span>
+    <span class="keyword">public function</span> <span class="function">activasPorUsuario</span>(<span class="keyword">int</span> <span class="variable">$usuarioId</span>): <span class="keyword">array</span>
+    {
+        <span class="comment">// SQL equivalente: SELECT * FROM plantas WHERE usuario_id = $usuarioId AND activa = 1 ORDER BY id ASC;</span>
+        <span class="keyword">return</span> <span class="variable">$this</span>-><span class="function">where</span>(<span class="string">'usuario_id'</span>, <span class="variable">$usuarioId</span>)
+                    -><span class="function">where</span>(<span class="string">'activa'</span>, <span class="number">1</span>)
+                    -><span class="function">orderBy</span>(<span class="string">'id'</span>, <span class="string">'ASC'</span>)
+                    -><span class="function">findAll</span>();
+    }
+}</code></pre>
+
+    <div class="card">
+        <strong>🔍 Explicación de cada línea del Modelo:</strong>
+        <ul>
+            <li><code>class PlantaModel extends Model</code>: Hereda todas las funciones de base de datos nativas de CodeIgniter 4 (ORM / Query Builder).</li>
+            <li><code>protected $table = 'plantas';</code>: Le dice al framework con qué tabla de MySQL debe operar.</li>
+            <li><code>->where(...)->findAll()</code>: Ejecuta la consulta SQL con parámetros preparados (Prepared Statements) que evitan inyecciones SQL.</li>
+        </ul>
+    </div>
+
+    <!-- PASO 2: LA RUTA -->
+    <span class="badge-role badge-routes">Paso 2: La Ruta (Routes)</span>
+    <h3>Archivo: <code>app/Config/Routes.php</code></h3>
+    <p>Conecta la URL del navegador con el Controlador que debe responder.</p>
+
+    <pre><code><span class="comment">// Cuando el usuario entra a http://localhost:8080/dashboard</span>
+<span class="variable">$routes</span>-><span class="function">get</span>(<span class="string">'dashboard'</span>, <span class="string">'SmartPlant::dashboard'</span>);
+<span class="variable">$routes</span>-><span class="function">get</span>(<span class="string">'plantas'</span>, <span class="string">'Plantas::index'</span>);</code></pre>
+
+    <div class="card">
+        <strong>🔍 Explicación de la línea de Ruta:</strong>
+        <ul>
+            <li><code>$routes->get(...)</code>: Escucha peticiones HTTP de tipo GET.</li>
+            <li><code>'dashboard'</code>: Es el camino o URL que escribe el usuario.</li>
+            <li><code>'SmartPlant::dashboard'</code>: Indica la clase controladora (<code>SmartPlant</code>) y el método (<code>dashboard</code>) a ejecutar.</li>
+        </ul>
+    </div>
+
+    <!-- PASO 3: EL CONTROLADOR -->
+    <div class="page-break"></div>
+    <span class="badge-role badge-controller">Paso 3: El Controlador (C)</span>
+    <h3>Archivo: <code>app/Controllers/SmartPlant.php</code> (o <code>Plantas.php</code>)</h3>
+    <p>El intermediario. Recibe la petición, llama al Modelo para obtener los datos, los empaqueta en <code>$data</code> y llama a la Vista.</p>
+
+    <pre><code><span class="keyword">&lt;?php</span>
+
+<span class="keyword">namespace</span> App\Controllers;
+
+<span class="comment">// 1. Importamos la clase del Modelo</span>
+<span class="keyword">use</span> App\Models\PlantaModel;
+
+<span class="keyword">class</span> SmartPlant <span class="keyword">extends</span> BaseController
+{
+    <span class="keyword">public function</span> <span class="function">dashboard</span>()
+    {
+        <span class="comment">// 2. Obtenemos el ID del usuario en sesión</span>
+        <span class="variable">$usuario_id</span> = (int) (<span class="variable">$_SESSION</span>[<span class="string">'usuario_id'</span>] ?? <span class="number">1</span>);
+
+        <span class="comment">// 3. Instanciamos el Modelo</span>
+        <span class="variable">$plantaModel</span> = <span class="keyword">new</span> PlantaModel();
+
+        <span class="comment">// 4. Le pedimos los datos a la base de datos a través del Modelo</span>
+        <span class="variable">$misPlantas</span> = <span class="variable">$plantaModel</span>-><span class="function">activasPorUsuario</span>(<span class="variable">$usuario_id</span>);
+
+        <span class="comment">// 5. Empaquetamos los datos en el array asociativo $data</span>
+        <span class="variable">$data</span> = [
+            <span class="string">'titulo'</span>  => <span class="string">'Panel Principal - SmartPlant CARE'</span>,
+            <span class="string">'plantas'</span> => <span class="variable">$misPlantas</span> <span class="comment">// Esta clave 'plantas' se convertirá en $plantas en la vista</span>
+        ];
+
+        <span class="comment">// 6. Cargamos la vista y le inyectamos los datos</span>
+        <span class="keyword">return</span> <span class="function">view</span>(<span class="string">'Dashboard'</span>, <span class="variable">$data</span>);
+    }
+}</code></pre>
+
+    <div class="card">
+        <strong>🔍 Explicación de cada línea del Controlador:</strong>
+        <ul>
+            <li><code>$plantaModel = new PlantaModel();</code>: Crea el objeto para solicitar información al modelo.</li>
+            <li><code>$data = ['plantas' => $misPlantas];</code>: <strong>Clave para el examen:</strong> Toda variable que deba mostrarse en pantalla debe viajar dentro de este arreglo asociativo.</li>
+            <li><code>return view('Dashboard', $data);</code>: Renderiza la vista y le transfiere los datos limpios.</li>
+        </ul>
+    </div>
+
+    <!-- PASO 4: LA VISTA -->
+    <span class="badge-role badge-view">Paso 4: La Vista (V)</span>
+    <h3>Archivo: <code>app/Views/Dashboard.php</code></h3>
+    <p>Presentación visual. Recibe las variables inyectadas y las dibuja con HTML y estructuras PHP simples (<code>foreach</code>, <code>if</code>).</p>
+
+    <pre><code><span class="keyword">&lt;?php</span>
+<span class="comment">// Recibe las variables provistas por el Controlador</span>
+<span class="variable">$plantas</span> = <span class="variable">$plantas</span> ?? [];
+<span class="keyword">?&gt;</span>
+&lt;!DOCTYPE html&gt;
+&lt;html lang="es"&gt;
+&lt;head&gt;
+    &lt;meta charset="UTF-8"&gt;
+    &lt;title&gt;&lt;?= <span class="function">esc</span>(<span class="variable">$titulo</span>) ?&gt;&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+    &lt;h1&gt;&lt;?= <span class="function">esc</span>(<span class="variable">$titulo</span>) ?&gt;&lt;/h1&gt;
+
+    &lt;!-- Verificamos si hay registros --&gt;
+    <span class="keyword">&lt;?php if</span> (!<span class="function">empty</span>(<span class="variable">$plantas</span>) && <span class="function">is_array</span>(<span class="variable">$plantas</span>)): <span class="keyword">?&gt;</span>
+        &lt;table border="1" cellpadding="8"&gt;
+            &lt;thead&gt;
+                &lt;tr&gt;
+                    &lt;th&gt;ID&lt;/th&gt;
+                    &lt;th&gt;Nombre&lt;/th&gt;
+                    &lt;th&gt;Especie&lt;/th&gt;
+                    &lt;th&gt;Humedad Mín/Máx&lt;/th&gt;
+                &lt;/tr&gt;
+            &lt;/thead&gt;
+            &lt;tbody&gt;
+                <span class="keyword">&lt;?php foreach</span> (<span class="variable">$plantas</span> <span class="keyword">as</span> <span class="variable">$planta</span>): <span class="keyword">?&gt;</span>
+                    &lt;tr&gt;
+                        &lt;td&gt;&lt;?= <span class="function">esc</span>(<span class="variable">$planta</span>[<span class="string">'id'</span>]) ?&gt;&lt;/td&gt;
+                        &lt;td&gt;&lt;strong&gt;&lt;?= <span class="function">esc</span>(<span class="variable">$planta</span>[<span class="string">'nombre'</span>]) ?&gt;&lt;/strong&gt;&lt;/td&gt;
+                        &lt;td&gt;&lt;?= <span class="function">esc</span>(<span class="variable">$planta</span>[<span class="string">'especie'</span>]) ?&gt;&lt;/td&gt;
+                        &lt;td&gt;&lt;?= <span class="function">esc</span>(<span class="variable">$planta</span>[<span class="string">'humedad_min'</span>]) ?&gt;% - &lt;?= <span class="function">esc</span>(<span class="variable">$planta</span>[<span class="string">'humedad_max'</span>]) ?&gt;%&lt;/td&gt;
+                    &lt;/tr&gt;
+                <span class="keyword">&lt;?php endforeach; ?&gt;</span>
+            &lt;/tbody&gt;
+        &lt;/table&gt;
+    <span class="keyword">&lt;?php else: ?&gt;</span>
+        &lt;p&gt;No se encontraron plantas registradas en la base de datos.&lt;/p&gt;
+    <span class="keyword">&lt;?php endif; ?&gt;</span>
+&lt;/body&gt;
+&lt;/html&gt;</code></pre>
+
+    <div class="tip-box">
+        <strong>💡 Regla de Oro para el Examen:</strong> En la Vista <strong>NUNCA</strong> debe haber llamadas a <code>Database::connect()</code>, sentencias <code>SELECT</code>, ni <code>$stmt->prepare()</code>. La vista solo muestra los datos que el Controlador le entregó.
+    </div>
+
+    <!-- SECCIÓN 3: TABLA DE EQUIVALENCIAS -->
+    <div class="page-break"></div>
+    <h2>3. El "Molde Universal" de tu Proyecto (Aplica a todas las tablas)</h2>
+    <p>Todas las secciones de tu página web siguen exactamente esta misma estructura de 4 pasos:</p>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Módulo</th>
+                <th>1. Modelo (BD)</th>
+                <th>2. Ruta (URL)</th>
+                <th>3. Controlador (Lógica)</th>
+                <th>4. Vista (HTML)</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td><strong>Plantas</strong></td>
+                <td><code>PlantaModel.php</code></td>
+                <td><code>/dashboard</code></td>
+                <td><code>$plantaModel->activasPorUsuario()</code></td>
+                <td><code>Dashboard.php</code> (Recibe <code>$plantas</code>)</td>
+            </tr>
+            <tr>
+                <td><strong>Usuarios / Perfil</strong></td>
+                <td><code>UsuarioModel.php</code></td>
+                <td><code>/login</code></td>
+                <td><code>$usuarioModel->verificarLogin()</code></td>
+                <td><code>Login.php</code> / <code>Dashboard.php</code></td>
+            </tr>
+            <tr>
+                <td><strong>Dispositivos / Hardware</strong></td>
+                <td><code>DispositivoModel.php</code></td>
+                <td><code>/hardware/connect</code></td>
+                <td><code>$dispositivoModel->obtenerPorUsuario()</code></td>
+                <td><code>HardwareConnect.php</code> (Recibe <code>$devices</code>)</td>
+            </tr>
+            <tr>
+                <td><strong>Sensores / Telemetría</strong></td>
+                <td><code>LecturaModel.php</code></td>
+                <td><code>/dashboard</code></td>
+                <td><code>$lecturaModel->obtenerUltimaLectura()</code></td>
+                <td><code>Dashboard.php</code> (Recibe <code>$humedad</code>, <code>$temp</code>)</td>
+            </tr>
+            <tr>
+                <td><strong>Alertas / Eventos</strong></td>
+                <td><code>EventoModel.php</code></td>
+                <td><code>/dashboard</code></td>
+                <td><code>$eventoModel->obtenerRecientes()</code></td>
+                <td><code>Dashboard.php</code> (Recibe <code>$eventos</code>)</td>
+            </tr>
+            <tr>
+                <td><strong>Soporte</strong></td>
+                <td><code>UsuarioModel.php</code></td>
+                <td><code>/support</code></td>
+                <td>Valida correo y mensaje</td>
+                <td><code>Support.php</code> (Recibe <code>$msg_estado</code>)</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <!-- SECCIÓN 4: PREGUNTAS DE EXAMEN -->
+    <h2>4. Simulador de Preguntas y Respuestas para el Examen Oral 🎓</h2>
+
+    <table>
+        <thead>
+            <tr>
+                <th style="width: 40%;">Pregunta del Profesor</th>
+                <th style="width: 60%;">Respuesta Correcta</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td><strong>¿Por qué está mal colocar una consulta <code>SELECT</code> dentro del archivo de una Vista?</strong></td>
+                <td>Porque violaría el principio de <em>separación de responsabilidades</em>. La Vista solo debe encargarse de la presentación visual. Si colocamos consultas SQL en la vista, exponemos la seguridad de la base de datos y el código se vuelve imposible de mantener y reutilizar.</td>
+            </tr>
+            <tr>
+                <td><strong>¿Quién conecta la Vista con el Modelo?</strong></td>
+                <td>El <strong>Controlador</strong>. El Modelo y la Vista nunca deben comunicarse directamente entre sí. El Controlador recibe la petición, le solicita los datos al Modelo y se los entrega a la Vista empaquetados en un array asociativo <code>$data</code>.</td>
+            </tr>
+            <tr>
+                <td><strong>¿Cómo viajan los datos desde el Controlador a la Vista en CodeIgniter 4?</strong></td>
+                <td>A través del arreglo asociativo <code>$data</code> que se le pasa a la función <code>view('nombre_vista', $data)</code>. Cada clave del arreglo se convierte automáticamente en una variable con ese mismo nombre dentro del archivo de la vista.</td>
+            </tr>
+            <tr>
+                <td><strong>¿Qué ventajas tiene usar <code>CodeIgniter\Model</code> frente a consultas SQL manuales?</strong></td>
+                <td>Proporciona abstracción de datos (ORM y Query Builder), mapeo seguro de columnas (<code>allowedFields</code>) y protección automática contra inyecciones SQL gracias al uso de sentencias preparadas.</td>
+            </tr>
+        </tbody>
+    </table>
+
+</body>
+</html>

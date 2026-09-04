@@ -1,0 +1,621 @@
+PHP Warning:  Module "openssl" is already loaded in Unknown on line 0
+[Thu Jul 23 08:21:32 2026] PHP Warning:  Module "openssl" is already loaded in Unknown on line 0
+[Thu Jul 23 08:21:32 2026] PHP 8.2.12 Development Server (http://0.0.0.0:8080) started
+[Thu Jul 23 08:22:08 2026] 127.0.0.1:65241 Accepted
+[Thu Jul 23 08:22:09 2026] 127.0.0.1:65241 Closing
+[Thu Jul 23 08:22:11 2026] 127.0.0.1:65243 Accepted
+[Thu Jul 23 08:22:12 2026] 127.0.0.1:65243 Closing
+[Thu Jul 23 08:22:12 2026] 192.168.2.144:65244 Accepted
+[Thu Jul 23 08:22:12 2026] 192.168.2.144:65244 Closing
+[Thu Jul 23 08:22:12 2026] 192.168.2.144:65245 Accepted
+[Thu Jul 23 08:22:13 2026] 192.168.2.144:65245 Closing
+[Thu Jul 23 08:24:46 2026] 127.0.0.1:65306 Accepted
+[Thu Jul 23 08:24:47 2026] 127.0.0.1:65306 Closing
+[Thu Jul 23 08:24:47 2026] 127.0.0.1:65307 Accepted
+[Thu Jul 23 08:24:47 2026] 127.0.0.1:65308 Accepted
+[Thu Jul 23 08:24:47 2026] 127.0.0.1:65307 [200]: GET /assets/product-device-black.png
+[Thu Jul 23 08:24:47 2026] 127.0.0.1:65308 Closing
+[Thu Jul 23 08:24:47 2026] 127.0.0.1:65312 Accepted
+[Thu Jul 23 08:24:47 2026] 127.0.0.1:65307 Closing
+[Thu Jul 23 08:24:47 2026] 127.0.0.1:65313 Accepted
+[Thu Jul 23 08:24:47 2026] 127.0.0.1:65312 [200]: GET /assets/styles.css
+[Thu Jul 23 08:24:47 2026] 127.0.0.1:65313 [200]: GET /assets/part-solar.png
+[Thu Jul 23 08:24:47 2026] 127.0.0.1:65312 Closing
+[Thu Jul 23 08:24:47 2026] 127.0.0.1:65313 Closing
+[Thu Jul 23 08:24:47 2026] 127.0.0.1:65321 Accepted
+[Thu Jul 23 08:24:47 2026] 127.0.0.1:65321 [200]: GET /assets/exploded-body.png
+[Thu Jul 23 08:24:47 2026] 127.0.0.1:65322 Accepted
+[Thu Jul 23 08:24:47 2026] 127.0.0.1:65322 [200]: GET /assets/exploded-pcb.png
+[Thu Jul 23 08:24:47 2026] 127.0.0.1:65321 Closing
+[Thu Jul 23 08:24:47 2026] 127.0.0.1:65322 Closing
+[Thu Jul 23 08:24:48 2026] 127.0.0.1:65323 Accepted
+[Thu Jul 23 08:24:48 2026] 127.0.0.1:65324 Accepted
+[Thu Jul 23 08:24:48 2026] 127.0.0.1:65323 [200]: GET /assets/exploded-battery.png
+[Thu Jul 23 08:24:48 2026] 127.0.0.1:65325 Accepted
+[Thu Jul 23 08:24:48 2026] 127.0.0.1:65324 [200]: GET /assets/product-lifestyle.png
+[Thu Jul 23 08:24:48 2026] 127.0.0.1:65326 Accepted
+[Thu Jul 23 08:24:48 2026] 127.0.0.1:65325 [200]: GET /assets/exploded-base.png
+[Thu Jul 23 08:24:48 2026] 127.0.0.1:65323 Closing
+[Thu Jul 23 08:24:48 2026] 127.0.0.1:65325 Closing
+[Thu Jul 23 08:24:48 2026] 127.0.0.1:65324 Closing
+[Thu Jul 23 08:24:50 2026] 127.0.0.1:65326 Closing
+[Thu Jul 23 08:24:50 2026] 127.0.0.1:65329 Accepted
+[Thu Jul 23 08:24:50 2026] 127.0.0.1:65329 [200]: GET /favicon.ico
+[Thu Jul 23 08:24:50 2026] 127.0.0.1:65329 Closing
+[Thu Jul 23 08:25:23 2026] 127.0.0.1:65347 Accepted
+[Thu Jul 23 08:25:24 2026] 127.0.0.1:65347 Closing
+[Thu Jul 23 08:25:24 2026] 127.0.0.1:65348 Accepted
+[Thu Jul 23 08:25:24 2026] 127.0.0.1:65349 Accepted
+[Thu Jul 23 08:25:24 2026] 127.0.0.1:65348 Closing
+[Thu Jul 23 08:25:24 2026] 127.0.0.1:65349 [200]: GET /assets/styles.css
+[Thu Jul 23 08:25:24 2026] 127.0.0.1:65349 Closing
+[Thu Jul 23 08:25:24 2026] 127.0.0.1:65353 Accepted
+[Thu Jul 23 08:25:24 2026] 127.0.0.1:65353 [200]: GET /assets/product-device-black.png
+[Thu Jul 23 08:25:24 2026] 127.0.0.1:65353 Closing
+[Thu Jul 23 08:25:24 2026] 127.0.0.1:65354 Accepted
+[Thu Jul 23 08:25:24 2026] 127.0.0.1:65354 [200]: GET /assets/part-solar.png
+[Thu Jul 23 08:25:24 2026] 127.0.0.1:65354 Closing
+[Thu Jul 23 08:25:25 2026] 127.0.0.1:65362 Accepted
+[Thu Jul 23 08:25:25 2026] 127.0.0.1:65362 [200]: GET /assets/exploded-body.png
+[Thu Jul 23 08:25:25 2026] 127.0.0.1:65362 Closing
+[Thu Jul 23 08:25:25 2026] 127.0.0.1:65363 Accepted
+[Thu Jul 23 08:25:25 2026] 127.0.0.1:65364 Accepted
+[Thu Jul 23 08:25:25 2026] 127.0.0.1:65365 Accepted
+[Thu Jul 23 08:25:25 2026] 127.0.0.1:65363 [200]: GET /assets/exploded-pcb.png
+[Thu Jul 23 08:25:25 2026] 127.0.0.1:65363 Closing
+[Thu Jul 23 08:25:25 2026] 127.0.0.1:65366 Accepted
+[Thu Jul 23 08:25:25 2026] 127.0.0.1:65364 [200]: GET /assets/exploded-battery.png
+[Thu Jul 23 08:25:25 2026] 127.0.0.1:65365 [200]: GET /assets/exploded-base.png
+[Thu Jul 23 08:25:25 2026] 127.0.0.1:65366 [200]: GET /assets/product-lifestyle.png
+[Thu Jul 23 08:25:25 2026] 127.0.0.1:65365 Closing
+[Thu Jul 23 08:25:25 2026] 127.0.0.1:65364 Closing
+[Thu Jul 23 08:25:25 2026] 127.0.0.1:65366 Closing
+[Thu Jul 23 08:25:25 2026] 127.0.0.1:65368 Accepted
+[Thu Jul 23 08:25:25 2026] 127.0.0.1:65368 Closing
+[Thu Jul 23 08:25:25 2026] 127.0.0.1:65369 Accepted
+[Thu Jul 23 08:25:27 2026] 127.0.0.1:65369 Closing
+[Thu Jul 23 08:25:27 2026] 127.0.0.1:65371 Accepted
+[Thu Jul 23 08:25:28 2026] 127.0.0.1:65371 Closing
+[Thu Jul 23 08:25:28 2026] 127.0.0.1:65373 Accepted
+[Thu Jul 23 08:25:28 2026] 127.0.0.1:65373 [200]: GET /assets/styles.css
+[Thu Jul 23 08:25:28 2026] 127.0.0.1:65373 Closing
+[Thu Jul 23 08:25:29 2026] 127.0.0.1:65376 Accepted
+[Thu Jul 23 08:25:29 2026] 127.0.0.1:65376 Closing
+[Thu Jul 23 08:25:29 2026] 127.0.0.1:65377 Accepted
+[Thu Jul 23 08:25:31 2026] 127.0.0.1:65377 Closing
+[Thu Jul 23 08:25:31 2026] 127.0.0.1:65381 Accepted
+[Thu Jul 23 08:25:31 2026] 127.0.0.1:65381 Closing
+[Thu Jul 23 08:25:31 2026] 127.0.0.1:65385 Accepted
+[Thu Jul 23 08:25:31 2026] 127.0.0.1:65385 [200]: GET /assets/styles.css
+[Thu Jul 23 08:25:31 2026] 127.0.0.1:65385 Closing
+[Thu Jul 23 08:25:32 2026] 127.0.0.1:65388 Accepted
+[Thu Jul 23 08:25:32 2026] 127.0.0.1:65388 Closing
+[Thu Jul 23 08:25:32 2026] 127.0.0.1:65389 Accepted
+[Thu Jul 23 08:25:41 2026] 127.0.0.1:65389 Closing
+[Thu Jul 23 08:25:41 2026] 127.0.0.1:65394 Accepted
+[Thu Jul 23 08:25:41 2026] 127.0.0.1:65394 Closing
+[Thu Jul 23 08:25:41 2026] 127.0.0.1:65398 Accepted
+[Thu Jul 23 08:25:41 2026] 127.0.0.1:65399 Accepted
+[Thu Jul 23 08:25:41 2026] 127.0.0.1:65400 Accepted
+[Thu Jul 23 08:25:41 2026] 127.0.0.1:65398 [200]: GET /assets/styles.css
+[Thu Jul 23 08:25:41 2026] 127.0.0.1:65399 [200]: GET /assets/product-device-black.png
+[Thu Jul 23 08:25:41 2026] 127.0.0.1:65400 [200]: GET /assets/part-solar.png
+[Thu Jul 23 08:25:41 2026] 127.0.0.1:65398 Closing
+[Thu Jul 23 08:25:41 2026] 127.0.0.1:65399 Closing
+[Thu Jul 23 08:25:41 2026] 127.0.0.1:65400 Closing
+[Thu Jul 23 08:25:41 2026] 127.0.0.1:65407 Accepted
+[Thu Jul 23 08:25:41 2026] 127.0.0.1:65408 Accepted
+[Thu Jul 23 08:25:41 2026] 127.0.0.1:65407 [200]: GET /assets/exploded-body.png
+[Thu Jul 23 08:25:41 2026] 127.0.0.1:65408 [200]: GET /assets/exploded-pcb.png
+[Thu Jul 23 08:25:41 2026] 127.0.0.1:65409 Accepted
+[Thu Jul 23 08:25:41 2026] 127.0.0.1:65407 Closing
+[Thu Jul 23 08:25:41 2026] 127.0.0.1:65408 Closing
+[Thu Jul 23 08:25:41 2026] 127.0.0.1:65410 Accepted
+[Thu Jul 23 08:25:41 2026] 127.0.0.1:65411 Accepted
+[Thu Jul 23 08:25:41 2026] 127.0.0.1:65409 [200]: GET /assets/exploded-battery.png
+[Thu Jul 23 08:25:41 2026] 127.0.0.1:65410 [200]: GET /assets/exploded-base.png
+[Thu Jul 23 08:25:41 2026] 127.0.0.1:65411 [200]: GET /assets/product-lifestyle.png
+[Thu Jul 23 08:25:41 2026] 127.0.0.1:65409 Closing
+[Thu Jul 23 08:25:41 2026] 127.0.0.1:65410 Closing
+[Thu Jul 23 08:25:41 2026] 127.0.0.1:65411 Closing
+[Thu Jul 23 08:25:41 2026] 127.0.0.1:65412 Accepted
+[Thu Jul 23 08:25:42 2026] 127.0.0.1:65412 Closing
+[Thu Jul 23 08:26:05 2026] 127.0.0.1:64499 Accepted
+[Thu Jul 23 08:26:05 2026] 127.0.0.1:64499 Closing
+[Thu Jul 23 08:26:05 2026] 127.0.0.1:64500 Accepted
+[Thu Jul 23 08:26:05 2026] 127.0.0.1:64501 Accepted
+[Thu Jul 23 08:26:05 2026] 127.0.0.1:64500 [200]: GET /assets/product-device.png
+[Thu Jul 23 08:26:05 2026] 127.0.0.1:64501 [200]: GET /assets/product-kit.png
+[Thu Jul 23 08:26:05 2026] 127.0.0.1:64500 Closing
+[Thu Jul 23 08:26:05 2026] 127.0.0.1:64501 Closing
+[Thu Jul 23 08:26:05 2026] 127.0.0.1:64506 Accepted
+[Thu Jul 23 08:26:05 2026] 127.0.0.1:64507 Accepted
+[Thu Jul 23 08:26:05 2026] 127.0.0.1:64506 [200]: GET /assets/styles.css
+[Thu Jul 23 08:26:06 2026] 127.0.0.1:64507 Closing
+[Thu Jul 23 08:26:06 2026] 127.0.0.1:64508 Accepted
+[Thu Jul 23 08:26:06 2026] 127.0.0.1:64508 [200]: GET /assets/product-solar.png
+[Thu Jul 23 08:26:06 2026] 127.0.0.1:64506 Closing
+[Thu Jul 23 08:26:06 2026] 127.0.0.1:64508 Closing
+[Thu Jul 23 08:26:08 2026] 127.0.0.1:64513 Accepted
+[Thu Jul 23 08:26:09 2026] 127.0.0.1:64513 Closing
+[Thu Jul 23 08:26:09 2026] 127.0.0.1:64514 Accepted
+[Thu Jul 23 08:26:14 2026] 127.0.0.1:64514 Closing
+[Thu Jul 23 08:26:14 2026] 127.0.0.1:64517 Accepted
+[Thu Jul 23 08:26:14 2026] 127.0.0.1:64517 Closing
+[Thu Jul 23 08:26:14 2026] 127.0.0.1:64520 Accepted
+[Thu Jul 23 08:26:14 2026] 127.0.0.1:64520 [200]: GET /assets/styles.css
+[Thu Jul 23 08:26:14 2026] 127.0.0.1:64520 Closing
+[Thu Jul 23 08:26:15 2026] 127.0.0.1:64523 Accepted
+[Thu Jul 23 08:26:15 2026] 127.0.0.1:64523 Closing
+[Thu Jul 23 08:26:15 2026] 127.0.0.1:64524 Accepted
+[Thu Jul 23 08:26:17 2026] 127.0.0.1:64524 Closing
+[Thu Jul 23 08:26:17 2026] 127.0.0.1:64527 Accepted
+[Thu Jul 23 08:26:17 2026] 127.0.0.1:64527 Closing
+[Thu Jul 23 08:26:17 2026] 127.0.0.1:64530 Accepted
+[Thu Jul 23 08:26:17 2026] 127.0.0.1:64530 [200]: GET /assets/styles.css
+[Thu Jul 23 08:26:17 2026] 127.0.0.1:64530 Closing
+[Thu Jul 23 08:26:18 2026] 127.0.0.1:64533 Accepted
+[Thu Jul 23 08:26:18 2026] 127.0.0.1:64533 Closing
+[Thu Jul 23 08:26:18 2026] 127.0.0.1:64534 Accepted
+[Thu Jul 23 08:26:39 2026] 127.0.0.1:64534 Closing
+[Thu Jul 23 08:26:39 2026] 127.0.0.1:64543 Accepted
+[Thu Jul 23 08:26:40 2026] 127.0.0.1:64543 Closing
+[Thu Jul 23 08:26:40 2026] 127.0.0.1:64549 Accepted
+[Thu Jul 23 08:26:40 2026] 127.0.0.1:64550 Accepted
+[Thu Jul 23 08:26:40 2026] 127.0.0.1:64549 [200]: GET /assets/styles.css
+[Thu Jul 23 08:26:40 2026] 127.0.0.1:64550 Closing
+[Thu Jul 23 08:26:40 2026] 127.0.0.1:64549 Closing
+[Thu Jul 23 08:26:41 2026] 127.0.0.1:64551 Accepted
+[Thu Jul 23 08:26:42 2026] 127.0.0.1:64551 Closing
+[Thu Jul 23 08:27:06 2026] 127.0.0.1:64563 Accepted
+[Thu Jul 23 08:27:06 2026] 127.0.0.1:64563 Closing
+[Thu Jul 23 08:27:06 2026] 127.0.0.1:64564 Accepted
+[Thu Jul 23 08:27:06 2026] 127.0.0.1:64565 Accepted
+[Thu Jul 23 08:27:07 2026] 127.0.0.1:64564 Closing
+[Thu Jul 23 08:27:07 2026] 127.0.0.1:64565 [200]: GET /assets/styles.css
+[Thu Jul 23 08:27:07 2026] 127.0.0.1:64565 Closing
+[Thu Jul 23 08:27:07 2026] 127.0.0.1:64572 Accepted
+[Thu Jul 23 08:27:07 2026] 127.0.0.1:64573 Accepted
+[Thu Jul 23 08:27:07 2026] 127.0.0.1:64572 [200]: GET /assets/product-device-black.png
+[Thu Jul 23 08:27:07 2026] 127.0.0.1:64572 Closing
+[Thu Jul 23 08:27:07 2026] 127.0.0.1:64573 [200]: GET /assets/part-solar.png
+[Thu Jul 23 08:27:07 2026] 127.0.0.1:64573 Closing
+[Thu Jul 23 08:27:07 2026] 127.0.0.1:64575 Accepted
+[Thu Jul 23 08:27:07 2026] 127.0.0.1:64576 Accepted
+[Thu Jul 23 08:27:07 2026] 127.0.0.1:64577 Accepted
+[Thu Jul 23 08:27:07 2026] 127.0.0.1:64578 Accepted
+[Thu Jul 23 08:27:07 2026] 127.0.0.1:64575 [200]: GET /assets/exploded-body.png
+[Thu Jul 23 08:27:07 2026] 127.0.0.1:64576 [200]: GET /assets/exploded-pcb.png
+[Thu Jul 23 08:27:07 2026] 127.0.0.1:64577 [200]: GET /assets/exploded-battery.png
+[Thu Jul 23 08:27:07 2026] 127.0.0.1:64578 [200]: GET /assets/exploded-base.png
+[Thu Jul 23 08:27:07 2026] 127.0.0.1:64578 Closing
+[Thu Jul 23 08:27:07 2026] 127.0.0.1:64575 Closing
+[Thu Jul 23 08:27:07 2026] 127.0.0.1:64577 Closing
+[Thu Jul 23 08:27:07 2026] 127.0.0.1:64576 Closing
+[Thu Jul 23 08:27:07 2026] 127.0.0.1:64579 Accepted
+[Thu Jul 23 08:27:07 2026] 127.0.0.1:64579 [200]: GET /assets/product-lifestyle.png
+[Thu Jul 23 08:27:07 2026] 127.0.0.1:64579 Closing
+[Thu Jul 23 08:27:08 2026] 127.0.0.1:64583 Accepted
+[Thu Jul 23 08:27:08 2026] 127.0.0.1:64583 Closing
+[Thu Jul 23 08:27:08 2026] 127.0.0.1:64584 Accepted
+[Thu Jul 23 08:27:12 2026] 127.0.0.1:64584 Closing
+[Thu Jul 23 08:27:12 2026] 127.0.0.1:64586 Accepted
+[Thu Jul 23 08:27:12 2026] 127.0.0.1:64586 Closing
+[Thu Jul 23 08:27:12 2026] 127.0.0.1:64591 Accepted
+[Thu Jul 23 08:27:12 2026] 127.0.0.1:64592 Accepted
+[Thu Jul 23 08:27:12 2026] 127.0.0.1:64593 Accepted
+[Thu Jul 23 08:27:12 2026] 127.0.0.1:64591 [200]: GET /assets/styles.css
+[Thu Jul 23 08:27:12 2026] 127.0.0.1:64592 [200]: GET /assets/product-device.png
+[Thu Jul 23 08:27:12 2026] 127.0.0.1:64593 [200]: GET /assets/product-kit.png
+[Thu Jul 23 08:27:12 2026] 127.0.0.1:64591 Closing
+[Thu Jul 23 08:27:12 2026] 127.0.0.1:64592 Closing
+[Thu Jul 23 08:27:12 2026] 127.0.0.1:64593 Closing
+[Thu Jul 23 08:27:12 2026] 127.0.0.1:64595 Accepted
+[Thu Jul 23 08:27:12 2026] 127.0.0.1:64595 [200]: GET /assets/product-solar.png
+[Thu Jul 23 08:27:12 2026] 127.0.0.1:64595 Closing
+[Thu Jul 23 08:27:13 2026] 127.0.0.1:64598 Accepted
+[Thu Jul 23 08:27:13 2026] 127.0.0.1:64598 Closing
+[Thu Jul 23 08:27:13 2026] 127.0.0.1:64600 Accepted
+[Thu Jul 23 08:27:15 2026] 127.0.0.1:64600 [200]: GET /assets/product-lifestyle.png
+[Thu Jul 23 08:27:15 2026] 127.0.0.1:64600 Closing
+[Thu Jul 23 08:27:32 2026] 127.0.0.1:64626 Accepted
+[Thu Jul 23 08:27:33 2026] 127.0.0.1:64626 Closing
+[Thu Jul 23 08:27:33 2026] 127.0.0.1:64628 Accepted
+[Thu Jul 23 08:27:36 2026] 127.0.0.1:64628 Closing
+[Thu Jul 23 08:27:42 2026] 127.0.0.1:64638 Accepted
+[Thu Jul 23 08:27:42 2026] 127.0.0.1:64638 Closing
+[Thu Jul 23 08:27:42 2026] 127.0.0.1:64639 Accepted
+[Thu Jul 23 08:27:42 2026] 127.0.0.1:64640 Accepted
+[Thu Jul 23 08:27:42 2026] 127.0.0.1:64639 Closing
+[Thu Jul 23 08:27:42 2026] 127.0.0.1:64640 [200]: GET /assets/styles.css
+[Thu Jul 23 08:27:42 2026] 127.0.0.1:64640 Closing
+[Thu Jul 23 08:27:42 2026] 127.0.0.1:64644 Accepted
+[Thu Jul 23 08:27:42 2026] 127.0.0.1:64645 Accepted
+[Thu Jul 23 08:27:42 2026] 127.0.0.1:64644 [200]: GET /assets/product-device.png
+[Thu Jul 23 08:27:42 2026] 127.0.0.1:64645 [200]: GET /assets/product-kit.png
+[Thu Jul 23 08:27:42 2026] 127.0.0.1:64644 Closing
+[Thu Jul 23 08:27:42 2026] 127.0.0.1:64645 Closing
+[Thu Jul 23 08:27:43 2026] 127.0.0.1:64646 Accepted
+[Thu Jul 23 08:27:43 2026] 127.0.0.1:64646 [200]: GET /assets/product-solar.png
+[Thu Jul 23 08:27:43 2026] 127.0.0.1:64646 Closing
+[Thu Jul 23 08:27:43 2026] 127.0.0.1:64649 Accepted
+[Thu Jul 23 08:27:44 2026] 127.0.0.1:64649 Closing
+[Thu Jul 23 08:27:44 2026] 127.0.0.1:64650 Accepted
+[Thu Jul 23 08:27:49 2026] 127.0.0.1:64650 Closing
+[Thu Jul 23 08:27:52 2026] 127.0.0.1:64657 Accepted
+[Thu Jul 23 08:27:53 2026] 127.0.0.1:64657 Closing
+[Thu Jul 23 08:27:53 2026] 127.0.0.1:64658 Accepted
+[Thu Jul 23 08:32:15 2026] 127.0.0.1:64658 Closed without sending a request; it was probably just an unused speculative preconnection
+[Thu Jul 23 08:32:15 2026] 127.0.0.1:64658 Closing
+[Thu Jul 23 08:33:05 2026] 127.0.0.1:50276 Accepted
+[Thu Jul 23 08:33:06 2026] 127.0.0.1:50276 Closing
+[Thu Jul 23 08:33:06 2026] 127.0.0.1:50277 Accepted
+[Thu Jul 23 08:33:06 2026] 127.0.0.1:50278 Accepted
+[Thu Jul 23 08:33:06 2026] 127.0.0.1:50277 Closing
+[Thu Jul 23 08:33:06 2026] 127.0.0.1:50278 [200]: GET /assets/styles.css
+[Thu Jul 23 08:33:06 2026] 127.0.0.1:50278 Closing
+[Thu Jul 23 08:33:06 2026] 127.0.0.1:50281 Accepted
+[Thu Jul 23 08:33:06 2026] 127.0.0.1:50282 Accepted
+[Thu Jul 23 08:33:06 2026] 127.0.0.1:50282 [200]: GET /assets/product-device-black.png
+[Thu Jul 23 08:33:06 2026] 127.0.0.1:50281 [200]: GET /assets/part-solar.png
+[Thu Jul 23 08:33:06 2026] 127.0.0.1:50282 Closing
+[Thu Jul 23 08:33:06 2026] 127.0.0.1:50281 Closing
+[Thu Jul 23 08:33:07 2026] 127.0.0.1:50289 Accepted
+[Thu Jul 23 08:33:07 2026] 127.0.0.1:50290 Accepted
+[Thu Jul 23 08:33:07 2026] 127.0.0.1:50291 Accepted
+[Thu Jul 23 08:33:07 2026] 127.0.0.1:50292 Accepted
+[Thu Jul 23 08:33:07 2026] 127.0.0.1:50289 [200]: GET /assets/exploded-body.png
+[Thu Jul 23 08:33:07 2026] 127.0.0.1:50290 [200]: GET /assets/exploded-pcb.png
+[Thu Jul 23 08:33:07 2026] 127.0.0.1:50291 [200]: GET /assets/exploded-battery.png
+[Thu Jul 23 08:33:07 2026] 127.0.0.1:50292 [200]: GET /assets/exploded-base.png
+[Thu Jul 23 08:33:07 2026] 127.0.0.1:50292 Closing
+[Thu Jul 23 08:33:07 2026] 127.0.0.1:50293 Accepted
+[Thu Jul 23 08:33:07 2026] 127.0.0.1:50289 Closing
+[Thu Jul 23 08:33:07 2026] 127.0.0.1:50293 [200]: GET /assets/product-lifestyle.png
+[Thu Jul 23 08:33:07 2026] 127.0.0.1:50291 Closing
+[Thu Jul 23 08:33:07 2026] 127.0.0.1:50290 Closing
+[Thu Jul 23 08:33:07 2026] 127.0.0.1:50293 Closing
+[Thu Jul 23 08:33:07 2026] 127.0.0.1:50297 Accepted
+[Thu Jul 23 08:33:08 2026] 127.0.0.1:50297 Closing
+[Thu Jul 23 08:33:08 2026] 127.0.0.1:50298 Accepted
+[Thu Jul 23 08:33:59 2026] 127.0.0.1:50321 Accepted
+[Thu Jul 23 08:34:00 2026] 127.0.0.1:50321 Closing
+[Thu Jul 23 08:34:00 2026] 127.0.0.1:50323 Accepted
+[Thu Jul 23 08:34:00 2026] 127.0.0.1:50323 Closing
+[Thu Jul 23 08:34:01 2026] 127.0.0.1:50326 Accepted
+[Thu Jul 23 08:34:01 2026] 127.0.0.1:50326 Closing
+[Thu Jul 23 08:34:01 2026] 127.0.0.1:50327 Accepted
+[Thu Jul 23 08:34:01 2026] 127.0.0.1:50327 Closing
+[Thu Jul 23 08:34:02 2026] 127.0.0.1:50329 Accepted
+[Thu Jul 23 08:34:02 2026] 127.0.0.1:50329 Closing
+[Thu Jul 23 08:34:02 2026] 127.0.0.1:50330 Accepted
+[Thu Jul 23 08:34:02 2026] 127.0.0.1:50330 Closing
+[Thu Jul 23 08:36:07 2026] 127.0.0.1:50298 Closed without sending a request; it was probably just an unused speculative preconnection
+[Thu Jul 23 08:36:07 2026] 127.0.0.1:50298 Closing
+[Thu Jul 23 08:38:32 2026] 127.0.0.1:60195 Accepted
+[Thu Jul 23 08:38:32 2026] 127.0.0.1:60195 Closing
+[Thu Jul 23 08:38:32 2026] 127.0.0.1:60196 Accepted
+[Thu Jul 23 08:38:32 2026] 127.0.0.1:60197 Accepted
+[Thu Jul 23 08:38:32 2026] 127.0.0.1:60196 Closing
+[Thu Jul 23 08:38:32 2026] 127.0.0.1:60197 [200]: GET /assets/styles.css
+[Thu Jul 23 08:38:32 2026] 127.0.0.1:60197 Closing
+[Thu Jul 23 08:38:32 2026] 127.0.0.1:60203 Accepted
+[Thu Jul 23 08:38:32 2026] 127.0.0.1:60204 Accepted
+[Thu Jul 23 08:38:32 2026] 127.0.0.1:60203 [200]: GET /assets/product-device.png
+[Thu Jul 23 08:38:32 2026] 127.0.0.1:60204 [200]: GET /assets/product-kit.png
+[Thu Jul 23 08:38:32 2026] 127.0.0.1:60203 Closing
+[Thu Jul 23 08:38:32 2026] 127.0.0.1:60204 Closing
+[Thu Jul 23 08:38:33 2026] 127.0.0.1:60205 Accepted
+[Thu Jul 23 08:38:33 2026] 127.0.0.1:60205 [200]: GET /assets/product-solar.png
+[Thu Jul 23 08:38:33 2026] 127.0.0.1:60205 Closing
+[Thu Jul 23 08:38:33 2026] 127.0.0.1:60209 Accepted
+[Thu Jul 23 08:38:34 2026] 127.0.0.1:60209 Closing
+[Thu Jul 23 08:38:34 2026] 127.0.0.1:60210 Accepted
+[Thu Jul 23 08:40:22 2026] 127.0.0.1:60210 Closed without sending a request; it was probably just an unused speculative preconnection
+[Thu Jul 23 08:40:22 2026] 127.0.0.1:60210 Closing
+[Thu Jul 23 09:09:32 2026] 127.0.0.1:56308 Accepted
+[Thu Jul 23 09:09:32 2026] 127.0.0.1:56308 Closing
+[Thu Jul 23 09:09:32 2026] 127.0.0.1:56309 Accepted
+[Thu Jul 23 09:09:32 2026] 127.0.0.1:56309 Closing
+[Thu Jul 23 09:09:48 2026] 127.0.0.1:56320 Accepted
+[Thu Jul 23 09:09:49 2026] 127.0.0.1:56320 Closing
+[Thu Jul 23 09:10:21 2026] 127.0.0.1:56340 Accepted
+[Thu Jul 23 09:10:21 2026] 127.0.0.1:56340 Closing
+[Thu Jul 23 09:11:02 2026] 127.0.0.1:50642 Accepted
+[Thu Jul 23 09:11:03 2026] 127.0.0.1:50642 Closing
+[Thu Jul 23 09:11:43 2026] 127.0.0.1:50669 Accepted
+[Thu Jul 23 09:11:43 2026] 127.0.0.1:50669 Closing
+[Thu Jul 23 09:11:44 2026] 127.0.0.1:50670 Accepted
+[Thu Jul 23 09:11:44 2026] 127.0.0.1:50670 Closing
+[Thu Jul 23 09:11:44 2026] 127.0.0.1:50672 Accepted
+[Thu Jul 23 09:11:45 2026] 127.0.0.1:50672 Closing
+[Thu Jul 23 09:11:45 2026] 127.0.0.1:50674 Accepted
+[Thu Jul 23 09:11:46 2026] 127.0.0.1:50674 Closing
+[Thu Jul 23 09:28:48 2026] 127.0.0.1:65528 Accepted
+[Thu Jul 23 09:28:49 2026] 127.0.0.1:65528 Closing
+[Thu Jul 23 09:28:49 2026] 127.0.0.1:65529 Accepted
+[Thu Jul 23 09:28:49 2026] 127.0.0.1:65531 Accepted
+[Thu Jul 23 09:28:49 2026] 127.0.0.1:65529 Closing
+[Thu Jul 23 09:28:49 2026] 127.0.0.1:65531 [200]: GET /assets/styles.css
+[Thu Jul 23 09:28:49 2026] 127.0.0.1:65531 Closing
+[Thu Jul 23 09:28:49 2026] 127.0.0.1:49152 Accepted
+[Thu Jul 23 09:28:49 2026] 127.0.0.1:49153 Accepted
+[Thu Jul 23 09:28:49 2026] 127.0.0.1:49152 [200]: GET /assets/product-device.png
+[Thu Jul 23 09:28:49 2026] 127.0.0.1:49153 [200]: GET /assets/product-kit.png
+[Thu Jul 23 09:28:49 2026] 127.0.0.1:49152 Closing
+[Thu Jul 23 09:28:49 2026] 127.0.0.1:49153 Closing
+[Thu Jul 23 09:28:50 2026] 127.0.0.1:49156 Accepted
+[Thu Jul 23 09:28:50 2026] 127.0.0.1:49156 [200]: GET /assets/product-solar.png
+[Thu Jul 23 09:28:50 2026] 127.0.0.1:49156 Closing
+[Thu Jul 23 09:28:50 2026] 127.0.0.1:49157 Accepted
+[Thu Jul 23 09:28:51 2026] 127.0.0.1:49157 Closing
+[Thu Jul 23 09:28:51 2026] 127.0.0.1:49167 Accepted
+[Thu Jul 23 09:28:52 2026] 127.0.0.1:49167 Closing
+[Thu Jul 23 09:28:52 2026] 127.0.0.1:49168 Accepted
+[Thu Jul 23 09:28:52 2026] 127.0.0.1:49170 Accepted
+[Thu Jul 23 09:28:52 2026] 127.0.0.1:49170 [200]: GET /assets/styles.css
+[Thu Jul 23 09:28:52 2026] 127.0.0.1:49168 Closing
+[Thu Jul 23 09:28:52 2026] 127.0.0.1:49170 Closing
+[Thu Jul 23 09:28:52 2026] 127.0.0.1:49173 Accepted
+[Thu Jul 23 09:28:52 2026] 127.0.0.1:49174 Accepted
+[Thu Jul 23 09:28:52 2026] 127.0.0.1:49173 [200]: GET /assets/product-device-black.png
+[Thu Jul 23 09:28:52 2026] 127.0.0.1:49174 [200]: GET /assets/part-solar.png
+[Thu Jul 23 09:28:52 2026] 127.0.0.1:49173 Closing
+[Thu Jul 23 09:28:52 2026] 127.0.0.1:49174 Closing
+[Thu Jul 23 09:28:53 2026] 127.0.0.1:49180 Accepted
+[Thu Jul 23 09:28:53 2026] 127.0.0.1:49181 Accepted
+[Thu Jul 23 09:28:53 2026] 127.0.0.1:49182 Accepted
+[Thu Jul 23 09:28:53 2026] 127.0.0.1:49183 Accepted
+[Thu Jul 23 09:28:53 2026] 127.0.0.1:49180 [200]: GET /assets/exploded-body.png
+[Thu Jul 23 09:28:53 2026] 127.0.0.1:49181 [200]: GET /assets/exploded-pcb.png
+[Thu Jul 23 09:28:53 2026] 127.0.0.1:49182 [200]: GET /assets/exploded-battery.png
+[Thu Jul 23 09:28:53 2026] 127.0.0.1:49183 [200]: GET /assets/exploded-base.png
+[Thu Jul 23 09:28:53 2026] 127.0.0.1:49184 Accepted
+[Thu Jul 23 09:28:53 2026] 127.0.0.1:49183 Closing
+[Thu Jul 23 09:28:53 2026] 127.0.0.1:49184 [200]: GET /assets/product-lifestyle.png
+[Thu Jul 23 09:28:53 2026] 127.0.0.1:49180 Closing
+[Thu Jul 23 09:28:53 2026] 127.0.0.1:49182 Closing
+[Thu Jul 23 09:28:53 2026] 127.0.0.1:49181 Closing
+[Thu Jul 23 09:28:53 2026] 127.0.0.1:49184 Closing
+[Thu Jul 23 09:28:53 2026] 127.0.0.1:49188 Accepted
+[Thu Jul 23 09:28:53 2026] 127.0.0.1:49189 Accepted
+[Thu Jul 23 09:28:54 2026] 127.0.0.1:49188 Closing
+[Thu Jul 23 09:28:54 2026] 127.0.0.1:49190 Accepted
+[Thu Jul 23 09:28:54 2026] 127.0.0.1:49189 [200]: GET /favicon.ico
+[Thu Jul 23 09:28:54 2026] 127.0.0.1:49189 Closing
+[Thu Jul 23 09:28:59 2026] 127.0.0.1:49190 Closing
+[Thu Jul 23 09:28:59 2026] 127.0.0.1:49199 Accepted
+[Thu Jul 23 09:28:59 2026] 127.0.0.1:49199 Closing
+[Thu Jul 23 09:28:59 2026] 127.0.0.1:49202 Accepted
+[Thu Jul 23 09:28:59 2026] 127.0.0.1:49202 [200]: GET /assets/styles.css
+[Thu Jul 23 09:28:59 2026] 127.0.0.1:49202 Closing
+[Thu Jul 23 09:29:00 2026] 127.0.0.1:49205 Accepted
+[Thu Jul 23 09:29:00 2026] 127.0.0.1:49205 Closing
+[Thu Jul 23 09:29:00 2026] 127.0.0.1:49206 Accepted
+[Thu Jul 23 09:29:03 2026] 127.0.0.1:49206 Closing
+[Thu Jul 23 09:29:03 2026] 127.0.0.1:49208 Accepted
+[Thu Jul 23 09:29:04 2026] 127.0.0.1:49208 Closing
+[Thu Jul 23 09:29:04 2026] 127.0.0.1:49213 Accepted
+[Thu Jul 23 09:29:04 2026] 127.0.0.1:49213 [200]: GET /assets/styles.css
+[Thu Jul 23 09:29:04 2026] 127.0.0.1:49213 Closing
+[Thu Jul 23 09:29:04 2026] 127.0.0.1:49217 Accepted
+[Thu Jul 23 09:29:05 2026] 127.0.0.1:49217 Closing
+[Thu Jul 23 09:29:05 2026] 127.0.0.1:49218 Accepted
+[Thu Jul 23 09:29:05 2026] 127.0.0.1:49219 Accepted
+[Thu Jul 23 09:29:05 2026] 127.0.0.1:49218 Closing
+[Thu Jul 23 09:29:14 2026] 127.0.0.1:49219 Closing
+[Thu Jul 23 09:29:24 2026] 127.0.0.1:49229 Accepted
+[Thu Jul 23 09:29:25 2026] 127.0.0.1:49229 Closing
+[Thu Jul 23 09:29:25 2026] 127.0.0.1:49231 Accepted
+[Thu Jul 23 09:29:31 2026] 127.0.0.1:49231 Closing
+[Thu Jul 23 09:29:34 2026] 127.0.0.1:49240 Accepted
+[Thu Jul 23 09:29:34 2026] 127.0.0.1:49240 Closing
+[Thu Jul 23 09:29:34 2026] 127.0.0.1:49241 Accepted
+[Thu Jul 23 09:29:34 2026] 127.0.0.1:49241 Closing
+[Thu Jul 23 09:29:35 2026] 127.0.0.1:49246 Accepted
+[Thu Jul 23 09:29:36 2026] 127.0.0.1:49246 Closing
+[Thu Jul 23 09:29:36 2026] 127.0.0.1:49248 Accepted
+[Thu Jul 23 09:29:36 2026] 127.0.0.1:49248 Closing
+[Thu Jul 23 09:29:37 2026] 127.0.0.1:49252 Accepted
+[Thu Jul 23 09:29:37 2026] 127.0.0.1:49252 Closing
+[Thu Jul 23 09:29:37 2026] 127.0.0.1:49254 Accepted
+[Thu Jul 23 09:29:38 2026] 127.0.0.1:49254 Closing
+[Thu Jul 23 09:29:39 2026] 127.0.0.1:49258 Accepted
+[Thu Jul 23 09:29:40 2026] 127.0.0.1:49258 Closing
+[Thu Jul 23 09:29:40 2026] 127.0.0.1:49260 Accepted
+[Thu Jul 23 09:29:44 2026] 127.0.0.1:49260 Closing
+[Thu Jul 23 09:29:54 2026] 127.0.0.1:49268 Accepted
+[Thu Jul 23 09:29:55 2026] 127.0.0.1:49268 Closing
+[Thu Jul 23 09:29:55 2026] 127.0.0.1:49269 Accepted
+[Thu Jul 23 09:30:04 2026] 127.0.0.1:49269 Closing
+[Thu Jul 23 09:30:11 2026] 127.0.0.1:49281 Accepted
+[Thu Jul 23 09:30:12 2026] 127.0.0.1:49281 Closing
+[Thu Jul 23 09:30:12 2026] 127.0.0.1:49282 Accepted
+[Thu Jul 23 09:30:12 2026] 127.0.0.1:49283 Accepted
+[Thu Jul 23 09:30:12 2026] 127.0.0.1:49282 Closing
+[Thu Jul 23 09:30:12 2026] 127.0.0.1:49283 [200]: GET /assets/styles.css
+[Thu Jul 23 09:30:12 2026] 127.0.0.1:49283 Closing
+[Thu Jul 23 09:30:13 2026] 127.0.0.1:49290 Accepted
+[Thu Jul 23 09:30:13 2026] 127.0.0.1:49290 Closing
+[Thu Jul 23 09:30:13 2026] 127.0.0.1:49291 Accepted
+[Thu Jul 23 09:30:21 2026] 127.0.0.1:49291 Closing
+[Thu Jul 23 09:30:21 2026] 127.0.0.1:49293 Accepted
+[Thu Jul 23 09:30:21 2026] 127.0.0.1:49293 Closing
+[Thu Jul 23 09:30:21 2026] 127.0.0.1:49297 Accepted
+[Thu Jul 23 09:30:21 2026] 127.0.0.1:49297 [200]: GET /assets/styles.css
+[Thu Jul 23 09:30:21 2026] 127.0.0.1:49297 Closing
+[Thu Jul 23 09:30:22 2026] 127.0.0.1:49302 Accepted
+[Thu Jul 23 09:30:22 2026] 127.0.0.1:49302 Closing
+[Thu Jul 23 09:30:22 2026] 127.0.0.1:49303 Accepted
+[Thu Jul 23 09:30:22 2026] 127.0.0.1:49304 Accepted
+[Thu Jul 23 09:30:22 2026] 127.0.0.1:49303 Closing
+[Thu Jul 23 09:30:32 2026] 127.0.0.1:49304 Closing
+[Thu Jul 23 09:30:40 2026] 127.0.0.1:49315 Accepted
+[Thu Jul 23 09:30:41 2026] 127.0.0.1:49315 Closing
+[Thu Jul 23 09:30:41 2026] 127.0.0.1:49316 Accepted
+[Thu Jul 23 09:30:41 2026] 127.0.0.1:49317 Accepted
+[Thu Jul 23 09:30:41 2026] 127.0.0.1:49316 Closing
+[Thu Jul 23 09:30:41 2026] 127.0.0.1:49317 [200]: GET /assets/styles.css
+[Thu Jul 23 09:30:41 2026] 127.0.0.1:49317 Closing
+[Thu Jul 23 09:30:41 2026] 127.0.0.1:49321 Accepted
+[Thu Jul 23 09:30:42 2026] 127.0.0.1:49321 Closing
+[Thu Jul 23 09:30:42 2026] 127.0.0.1:49322 Accepted
+[Thu Jul 23 09:30:52 2026] 127.0.0.1:49322 Closing
+[Thu Jul 23 09:30:52 2026] 127.0.0.1:49329 Accepted
+[Thu Jul 23 09:30:53 2026] 127.0.0.1:49329 Closing
+[Thu Jul 23 09:30:53 2026] 127.0.0.1:49334 Accepted
+[Thu Jul 23 09:30:53 2026] 127.0.0.1:49335 Accepted
+[Thu Jul 23 09:30:54 2026] 127.0.0.1:49334 Closing
+[Thu Jul 23 09:30:54 2026] 127.0.0.1:49335 Closing
+[Thu Jul 23 09:30:55 2026] 127.0.0.1:49339 Accepted
+[Thu Jul 23 09:30:55 2026] 127.0.0.1:49339 Closing
+[Thu Jul 23 09:30:55 2026] 127.0.0.1:49340 Accepted
+[Thu Jul 23 09:31:02 2026] 127.0.0.1:49340 Closing
+[Thu Jul 23 09:31:02 2026] 127.0.0.1:54015 Accepted
+[Thu Jul 23 09:31:04 2026] 127.0.0.1:54015 Closing
+[Thu Jul 23 09:31:04 2026] 127.0.0.1:54022 Accepted
+[Thu Jul 23 09:31:04 2026] 127.0.0.1:54022 Closing
+[Thu Jul 23 09:31:14 2026] 127.0.0.1:54029 Accepted
+[Thu Jul 23 09:31:14 2026] 127.0.0.1:54029 Closing
+[Thu Jul 23 09:31:14 2026] 127.0.0.1:54031 Accepted
+[Thu Jul 23 09:31:24 2026] 127.0.0.1:54031 Closing
+[Thu Jul 23 09:31:34 2026] 127.0.0.1:54040 Accepted
+[Thu Jul 23 09:31:34 2026] 127.0.0.1:54040 Closing
+[Thu Jul 23 09:31:34 2026] 127.0.0.1:54042 Accepted
+[Thu Jul 23 09:31:44 2026] 127.0.0.1:54042 Closing
+[Thu Jul 23 09:31:54 2026] 127.0.0.1:54054 Accepted
+[Thu Jul 23 09:31:54 2026] 127.0.0.1:54054 Closing
+[Thu Jul 23 09:31:54 2026] 127.0.0.1:54056 Accepted
+[Thu Jul 23 09:32:04 2026] 127.0.0.1:54056 Closing
+[Thu Jul 23 09:32:14 2026] 127.0.0.1:54070 Accepted
+[Thu Jul 23 09:32:14 2026] 127.0.0.1:54070 Closing
+[Thu Jul 23 09:32:14 2026] 127.0.0.1:54071 Accepted
+[Thu Jul 23 09:32:15 2026] 127.0.0.1:54071 Closed without sending a request; it was probably just an unused speculative preconnection
+[Thu Jul 23 09:32:15 2026] 127.0.0.1:54071 Closing
+[Thu Jul 23 09:32:52 2026] 127.0.0.1:54087 Accepted
+[Thu Jul 23 09:32:52 2026] 127.0.0.1:54087 Closing
+[Thu Jul 23 09:32:52 2026] 127.0.0.1:54088 Accepted
+[Thu Jul 23 09:32:54 2026] 127.0.0.1:54088 Closing
+[Thu Jul 23 09:33:04 2026] 127.0.0.1:54118 Accepted
+[Thu Jul 23 09:33:04 2026] 127.0.0.1:54118 Closing
+[Thu Jul 23 09:33:04 2026] 127.0.0.1:54119 Accepted
+[Thu Jul 23 09:33:14 2026] 127.0.0.1:54119 Closing
+[Thu Jul 23 09:33:24 2026] 127.0.0.1:54131 Accepted
+[Thu Jul 23 09:33:24 2026] 127.0.0.1:54131 Closing
+[Thu Jul 23 09:33:24 2026] 127.0.0.1:54132 Accepted
+[Thu Jul 23 09:33:34 2026] 127.0.0.1:54132 Closing
+[Thu Jul 23 09:33:44 2026] 127.0.0.1:54143 Accepted
+[Thu Jul 23 09:33:44 2026] 127.0.0.1:54143 Closing
+[Thu Jul 23 09:33:44 2026] 127.0.0.1:54145 Accepted
+[Thu Jul 23 09:34:02 2026] 127.0.0.1:54145 Closing
+[Thu Jul 23 09:35:02 2026] 127.0.0.1:54214 Accepted
+[Thu Jul 23 09:35:02 2026] 127.0.0.1:54214 Closing
+[Thu Jul 23 09:35:02 2026] 127.0.0.1:54215 Accepted
+[Thu Jul 23 09:36:02 2026] 127.0.0.1:54215 Closing
+[Thu Jul 23 09:37:02 2026] 127.0.0.1:57842 Accepted
+[Thu Jul 23 09:37:03 2026] 127.0.0.1:57842 Closing
+[Thu Jul 23 09:37:03 2026] 127.0.0.1:57845 Accepted
+[Thu Jul 23 09:38:02 2026] 127.0.0.1:57845 Closing
+[Thu Jul 23 09:39:02 2026] 127.0.0.1:57958 Accepted
+[Thu Jul 23 09:39:02 2026] 127.0.0.1:57958 Closing
+[Thu Jul 23 09:39:02 2026] 127.0.0.1:57959 Accepted
+[Thu Jul 23 09:40:02 2026] 127.0.0.1:57959 Closing
+[Thu Jul 23 09:41:02 2026] 127.0.0.1:62403 Accepted
+[Thu Jul 23 09:41:02 2026] 127.0.0.1:62403 Closing
+[Thu Jul 23 09:41:02 2026] 127.0.0.1:62404 Accepted
+[Thu Jul 23 09:42:02 2026] 127.0.0.1:62404 Closing
+[Thu Jul 23 09:43:02 2026] 127.0.0.1:62463 Accepted
+[Thu Jul 23 09:43:02 2026] 127.0.0.1:62463 Closing
+[Thu Jul 23 09:43:02 2026] 127.0.0.1:62465 Accepted
+[Thu Jul 23 09:44:02 2026] 127.0.0.1:62465 Closing
+[Thu Jul 23 09:45:02 2026] 127.0.0.1:62528 Accepted
+[Thu Jul 23 09:45:02 2026] 127.0.0.1:62528 Closing
+[Thu Jul 23 09:45:02 2026] 127.0.0.1:62529 Accepted
+[Thu Jul 23 09:45:26 2026] 127.0.0.1:62529 Closing
+[Thu Jul 23 09:45:34 2026] 127.0.0.1:62544 Accepted
+[Thu Jul 23 09:45:34 2026] 127.0.0.1:62544 Closing
+[Thu Jul 23 09:45:34 2026] 127.0.0.1:62546 Accepted
+[Thu Jul 23 09:45:44 2026] 127.0.0.1:62546 Closing
+[Thu Jul 23 09:45:54 2026] 127.0.0.1:62554 Accepted
+[Thu Jul 23 09:45:54 2026] 127.0.0.1:62554 Closing
+[Thu Jul 23 09:45:54 2026] 127.0.0.1:62556 Accepted
+[Thu Jul 23 09:46:04 2026] 127.0.0.1:62556 Closing
+[Thu Jul 23 09:46:14 2026] 127.0.0.1:54950 Accepted
+[Thu Jul 23 09:46:14 2026] 127.0.0.1:54950 Closing
+[Thu Jul 23 09:46:14 2026] 127.0.0.1:54951 Accepted
+[Thu Jul 23 09:46:24 2026] 127.0.0.1:54951 Closing
+[Thu Jul 23 09:46:34 2026] 127.0.0.1:54963 Accepted
+[Thu Jul 23 09:46:34 2026] 127.0.0.1:54963 Closing
+[Thu Jul 23 09:46:34 2026] 127.0.0.1:54965 Accepted
+[Thu Jul 23 09:46:44 2026] 127.0.0.1:54965 Closing
+[Thu Jul 23 09:46:54 2026] 127.0.0.1:54975 Accepted
+[Thu Jul 23 09:46:54 2026] 127.0.0.1:54975 Closing
+[Thu Jul 23 09:46:54 2026] 127.0.0.1:54978 Accepted
+[Thu Jul 23 09:47:04 2026] 127.0.0.1:54978 Closing
+[Thu Jul 23 09:47:14 2026] 127.0.0.1:54987 Accepted
+[Thu Jul 23 09:47:14 2026] 127.0.0.1:54987 Closing
+[Thu Jul 23 09:47:14 2026] 127.0.0.1:54989 Accepted
+[Thu Jul 23 09:47:24 2026] 127.0.0.1:54989 Closing
+[Thu Jul 23 09:47:34 2026] 127.0.0.1:55002 Accepted
+[Thu Jul 23 09:47:34 2026] 127.0.0.1:55002 Closing
+[Thu Jul 23 09:47:34 2026] 127.0.0.1:55004 Accepted
+[Thu Jul 23 09:47:44 2026] 127.0.0.1:55004 Closing
+[Thu Jul 23 09:47:54 2026] 127.0.0.1:55016 Accepted
+[Thu Jul 23 09:47:54 2026] 127.0.0.1:55016 Closing
+[Thu Jul 23 09:47:54 2026] 127.0.0.1:55018 Accepted
+[Thu Jul 23 09:48:04 2026] 127.0.0.1:55018 Closing
+[Thu Jul 23 09:48:14 2026] 127.0.0.1:55029 Accepted
+[Thu Jul 23 09:48:14 2026] 127.0.0.1:55029 Closing
+[Thu Jul 23 09:48:14 2026] 127.0.0.1:55031 Accepted
+[Thu Jul 23 09:48:24 2026] 127.0.0.1:55031 Closing
+[Thu Jul 23 09:48:34 2026] 127.0.0.1:55041 Accepted
+[Thu Jul 23 09:48:34 2026] 127.0.0.1:55041 Closing
+[Thu Jul 23 09:48:34 2026] 127.0.0.1:55043 Accepted
+[Thu Jul 23 09:48:44 2026] 127.0.0.1:55043 Closing
+[Thu Jul 23 09:48:54 2026] 127.0.0.1:55052 Accepted
+[Thu Jul 23 09:48:54 2026] 127.0.0.1:55052 Closing
+[Thu Jul 23 09:48:54 2026] 127.0.0.1:55055 Accepted
+[Thu Jul 23 09:49:04 2026] 127.0.0.1:55055 Closing
+[Thu Jul 23 09:49:14 2026] 127.0.0.1:55069 Accepted
+[Thu Jul 23 09:49:14 2026] 127.0.0.1:55069 Closing
+[Thu Jul 23 09:49:14 2026] 127.0.0.1:55070 Accepted
+[Thu Jul 23 09:49:24 2026] 127.0.0.1:55070 Closing
+[Thu Jul 23 09:49:34 2026] 127.0.0.1:55084 Accepted
+[Thu Jul 23 09:49:34 2026] 127.0.0.1:55084 Closing
+[Thu Jul 23 09:49:34 2026] 127.0.0.1:55085 Accepted
+[Thu Jul 23 09:49:44 2026] 127.0.0.1:55085 Closing
+[Thu Jul 23 09:49:54 2026] 127.0.0.1:55097 Accepted
+[Thu Jul 23 09:49:54 2026] 127.0.0.1:55097 Closing
+[Thu Jul 23 09:49:54 2026] 127.0.0.1:55099 Accepted
+[Thu Jul 23 09:50:04 2026] 127.0.0.1:55099 Closing
+[Thu Jul 23 09:50:14 2026] 127.0.0.1:55110 Accepted
+[Thu Jul 23 09:50:14 2026] 127.0.0.1:55110 Closing
+[Thu Jul 23 09:50:14 2026] 127.0.0.1:55111 Accepted
+[Thu Jul 23 09:50:24 2026] 127.0.0.1:55111 Closing
+[Thu Jul 23 09:50:34 2026] 127.0.0.1:55124 Accepted
+[Thu Jul 23 09:50:34 2026] 127.0.0.1:55124 Closing
+[Thu Jul 23 09:50:34 2026] 127.0.0.1:55125 Accepted
+[Thu Jul 23 09:50:44 2026] 127.0.0.1:55125 Closing
+[Thu Jul 23 09:50:54 2026] 127.0.0.1:55140 Accepted
+[Thu Jul 23 09:50:54 2026] 127.0.0.1:55140 Closing
+[Thu Jul 23 09:50:54 2026] 127.0.0.1:55142 Accepted
+[Thu Jul 23 09:51:04 2026] 127.0.0.1:55142 Closing
+[Thu Jul 23 09:51:14 2026] 127.0.0.1:60142 Accepted
+[Thu Jul 23 09:51:14 2026] 127.0.0.1:60142 Closing
+[Thu Jul 23 09:51:14 2026] 127.0.0.1:60144 Accepted
+[Thu Jul 23 09:51:24 2026] 127.0.0.1:60144 Closing
+[Thu Jul 23 09:52:02 2026] 127.0.0.1:60162 Accepted
+[Thu Jul 23 09:52:02 2026] 127.0.0.1:60162 Closing
+[Thu Jul 23 09:52:02 2026] 127.0.0.1:60164 Accepted
+[Thu Jul 23 09:53:02 2026] 127.0.0.1:60164 Closing
+[Thu Jul 23 09:54:02 2026] 127.0.0.1:60213 Accepted
+[Thu Jul 23 09:54:02 2026] 127.0.0.1:60213 Closing
+[Thu Jul 23 09:54:02 2026] 127.0.0.1:60215 Accepted
+[Thu Jul 23 09:55:02 2026] 127.0.0.1:60215 Closing
+[Thu Jul 23 09:56:02 2026] 127.0.0.1:62319 Accepted
+[Thu Jul 23 09:56:02 2026] 127.0.0.1:62319 Closing
+[Thu Jul 23 09:56:02 2026] 127.0.0.1:62321 Accepted
+[Thu Jul 23 09:57:02 2026] 127.0.0.1:62321 Closing
+[Thu Jul 23 09:58:02 2026] 127.0.0.1:62370 Accepted
+[Thu Jul 23 09:58:02 2026] 127.0.0.1:62370 Closing
+[Thu Jul 23 09:58:02 2026] 127.0.0.1:62371 Accepted
