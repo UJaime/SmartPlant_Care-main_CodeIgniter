@@ -105,37 +105,28 @@ if (isset($_GET['tab']) && $_GET['tab'] === 'new' || isset($_GET['action']) && $
             min-height: 7.5rem;
         }
 
-        /* Estilos de Alta Visibilidad */
-        .card-soil {
-            background: #ecfdf5;
-            border: 2px solid #059669;
+        /* Tarjeta de sensor genérica: el color lo define --accent / --accent-dark / --accent-soft */
+        .card-sensor {
+            background: var(--accent-soft);
+            border: 2px solid var(--accent);
         }
-        .card-light {
-            background: #fffbeb;
-            border: 2px solid #d97706;
+        html[data-theme="dark"] .card-sensor {
+            background: var(--accent-soft-dark);
+            border: 2px solid var(--accent-dark);
         }
-        html[data-theme="dark"] .card-soil {
-            background: rgba(6, 78, 59, 0.4);
-            border: 2px solid #10b981;
-        }
-        html[data-theme="dark"] .card-light {
-            background: rgba(120, 53, 15, 0.4);
-            border: 2px solid #f59e0b;
-        }
-        .card-title-soil { color: #064e3b; font-weight: 900; }
-        .card-title-light { color: #78350f; font-weight: 900; }
-        html[data-theme="dark"] .card-title-soil { color: #a7f3d0; font-weight: 900; }
-        html[data-theme="dark"] .card-title-light { color: #fde68a; font-weight: 900; }
-        .badge-live-soil { background-color: #059669; color: #ffffff; font-weight: 800; }
-        .badge-live-light { background-color: #d97706; color: #ffffff; font-weight: 800; }
-        .val-soil { color: #064e3b; font-weight: 900; }
-        .val-light { color: #78350f; font-weight: 900; }
-        html[data-theme="dark"] .val-soil { color: #ffffff; font-weight: 900; }
-        html[data-theme="dark"] .val-light { color: #ffffff; font-weight: 900; }
-        .sub-soil { color: #065f46; font-weight: 700; }
-        .sub-light { color: #92400e; font-weight: 700; }
-        html[data-theme="dark"] .sub-soil { color: #d1fae5; font-weight: 700; }
-        html[data-theme="dark"] .sub-light { color: #fef3c7; font-weight: 700; }
+        .card-sensor .card-title { color: var(--accent-text); font-weight: 900; }
+        html[data-theme="dark"] .card-sensor .card-title { color: var(--accent-text-dark); font-weight: 900; }
+        .card-sensor .badge-live { background-color: var(--accent); color: #fff; font-weight: 800; }
+        .card-sensor .val { color: var(--accent-text); font-weight: 900; }
+        html[data-theme="dark"] .card-sensor .val { color: #ffffff; font-weight: 900; }
+        .card-sensor .sub { color: var(--accent-text); font-weight: 700; opacity: 0.85; }
+        html[data-theme="dark"] .card-sensor .sub { color: var(--accent-text-dark); font-weight: 700; }
+
+        .accent-soil   { --accent: #059669; --accent-dark: #10b981; --accent-soft: #ecfdf5; --accent-soft-dark: rgba(6, 78, 59, 0.4);   --accent-text: #064e3b; --accent-text-dark: #a7f3d0; }
+        .accent-light  { --accent: #d97706; --accent-dark: #f59e0b; --accent-soft: #fffbeb; --accent-soft-dark: rgba(120, 53, 15, 0.4); --accent-text: #78350f; --accent-text-dark: #fde68a; }
+        .accent-dht    { --accent: #0284c7; --accent-dark: #38bdf8; --accent-soft: #f0f9ff; --accent-soft-dark: rgba(12, 74, 110, 0.4); --accent-text: #0c4a6e; --accent-text-dark: #bae6fd; }
+        .accent-ph     { --accent: #c026d3; --accent-dark: #e879f9; --accent-soft: #fdf4ff; --accent-soft-dark: rgba(112, 26, 117, 0.4); --accent-text: #701a75; --accent-text-dark: #f5d0fe; }
+        .accent-tanque { --accent: #0d9488; --accent-dark: #2dd4bf; --accent-soft: #f0fdfa; --accent-soft-dark: rgba(19, 78, 74, 0.4);   --accent-text: #134e4a; --accent-text-dark: #99f6e4; }
 
         /* Estilos de las pestañas unificadas */
         .tab-btn {
@@ -282,8 +273,8 @@ if (isset($_GET['tab']) && $_GET['tab'] === 'new' || isset($_GET['action']) && $
         </section>
 
         <?php if ($selectedDevice): ?>
-        <!-- Tarjetas Principales de Lectura -->
-        <section class="grid sm:grid-cols-2 md:grid-cols-4 gap-4 mt-6">
+        <!-- Resumen del hardware -->
+        <section class="grid sm:grid-cols-2 gap-4 mt-6">
             <div class="hw-panel rounded-2xl p-5 hw-reading border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 shadow-sm flex flex-col justify-between">
                 <div>
                     <p class="text-[11px] font-bold text-slate-500 uppercase tracking-wider mb-1">Componentes online</p>
@@ -292,56 +283,112 @@ if (isset($_GET['tab']) && $_GET['tab'] === 'new' || isset($_GET['action']) && $
                 <p class="text-[11px] text-slate-500 font-medium">Sensores físicos sincronizados.</p>
             </div>
 
-            <!-- Tarjeta Humedad Suelo (P32) -->
-            <div class="hw-panel card-soil rounded-2xl p-5 hw-reading flex flex-col justify-between">
-                <div>
-                    <div class="flex items-center justify-between mb-1">
-                        <p class="text-[11px] font-black uppercase tracking-wider card-title-soil">Humedad Suelo</p>
-                        <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] badge-live-soil shadow-sm">
-                            <span class="w-1.5 h-1.5 rounded-full bg-white animate-pulse"></span> EN VIVO
-                        </span>
-                    </div>
-                    <p class="text-3xl font-black val-soil"><span id="readingSoil"><?= $latest ? number_format((float) $latest['humedad_suelo'], 1) : '-' ?></span><span class="text-lg font-bold text-emerald-600 dark:text-emerald-400 ml-0.5">%</span></p>
-                </div>
-                <div>
-                    <div class="w-full bg-emerald-200 dark:bg-white/10 rounded-full h-2 overflow-hidden">
-                        <div id="soilProgressBar" class="bg-emerald-600 h-full transition-all duration-500 rounded-full" style="width: <?= $latest ? max(5, min(100, (float) $latest['humedad_suelo'])) : 0 ?>%"></div>
-                    </div>
-                    <p class="text-[11px] font-bold mt-1.5 flex justify-between items-center">
-                        <span class="sub-soil">Ideal: 35% - 65%</span> 
-                        <span id="soilStatusLabel" class="font-bold text-emerald-700 dark:text-emerald-300">Normal</span>
-                    </p>
-                </div>
-            </div>
-
-            <!-- Tarjeta Sensor BH-1750 (I2C) -->
-            <div class="hw-panel card-light rounded-2xl p-5 hw-reading flex flex-col justify-between">
-                <div>
-                    <div class="flex items-center justify-between mb-1">
-                        <p class="text-[11px] font-black uppercase tracking-wider card-title-light">Luz BH-1750</p>
-                        <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] badge-live-light shadow-sm">
-                            <span class="w-1.5 h-1.5 rounded-full bg-white animate-pulse"></span> EN VIVO
-                        </span>
-                    </div>
-                    <p class="text-3xl font-black val-light"><span id="readingLightTop"><?= $latest ? (int) $latest['luz_ambiental'] : '-' ?></span><span class="text-lg font-bold text-amber-600 dark:text-amber-400 ml-0.5">lx</span></p>
-                </div>
-                <div>
-                    <div class="w-full bg-amber-200 dark:bg-white/10 rounded-full h-2 overflow-hidden">
-                        <div id="lightProgressBar" class="bg-amber-500 h-full transition-all duration-500 rounded-full" style="width: <?= $latest ? max(5, min(100, ((float) $latest['luz_ambiental'] / 3000.0) * 100)) : 0 ?>%"></div>
-                    </div>
-                    <p class="text-[11px] font-bold mt-1.5 flex justify-between items-center">
-                        <span class="sub-light">Bus I2C (P21/P22)</span> 
-                        <span id="lightStatusLabel" class="font-bold text-amber-700 dark:text-amber-300">Luz Óptima</span>
-                    </p>
-                </div>
-            </div>
-
             <div class="hw-panel rounded-2xl p-5 hw-reading border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 shadow-sm flex flex-col justify-between">
                 <div>
                     <p class="text-[11px] font-bold text-slate-500 uppercase tracking-wider mb-1">Estado de Salud</p>
                     <p class="text-lg font-bold text-emerald-600 dark:text-emerald-400 leading-tight" id="analysisSummary"><?= h($analysis['resumen']) ?></p>
                 </div>
                 <p class="text-[11px] text-slate-400 font-medium">Diagnóstico automatizado.</p>
+            </div>
+        </section>
+
+        <!-- Tarjetas de sensores en vivo -->
+        <section class="grid sm:grid-cols-2 lg:grid-cols-3 gap-4 mt-4">
+
+            <!-- Humedad Suelo (capacitivo, P32) -->
+            <div class="hw-panel card-sensor accent-soil rounded-2xl p-5 hw-reading flex flex-col justify-between" data-sensor="humedad_suelo">
+                <div>
+                    <div class="flex items-center justify-between mb-1">
+                        <p class="text-[11px] font-black uppercase tracking-wider card-title">Humedad Suelo</p>
+                        <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] badge-live shadow-sm">
+                            <span class="w-1.5 h-1.5 rounded-full bg-white animate-pulse"></span> EN VIVO
+                        </span>
+                    </div>
+                    <p class="text-3xl font-black val"><span id="readingSoil"><?= $latest ? number_format((float) $latest['humedad_suelo'], 1) : '-' ?></span><span class="text-lg font-bold ml-0.5">%</span></p>
+                </div>
+                <div>
+                    <div class="w-full bg-black/10 dark:bg-white/10 rounded-full h-2 overflow-hidden">
+                        <div id="soilProgressBar" class="h-full transition-all duration-500 rounded-full" style="width: <?= $latest ? max(5, min(100, (float) $latest['humedad_suelo'])) : 0 ?>%; background: var(--accent);"></div>
+                    </div>
+                    <p class="text-[11px] font-bold mt-1.5 flex justify-between items-center">
+                        <span class="sub">Ideal: 35% - 65%</span>
+                        <span id="soilStatusLabel" class="font-bold sub">Normal</span>
+                    </p>
+                </div>
+            </div>
+
+            <!-- Luz (BH1750, I2C) -->
+            <div class="hw-panel card-sensor accent-light rounded-2xl p-5 hw-reading flex flex-col justify-between" data-sensor="luz_ambiental">
+                <div>
+                    <div class="flex items-center justify-between mb-1">
+                        <p class="text-[11px] font-black uppercase tracking-wider card-title">Luz BH-1750</p>
+                        <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] badge-live shadow-sm">
+                            <span class="w-1.5 h-1.5 rounded-full bg-white animate-pulse"></span> EN VIVO
+                        </span>
+                    </div>
+                    <p class="text-3xl font-black val"><span id="readingLightTop"><?= $latest ? (int) $latest['luz_ambiental'] : '-' ?></span><span class="text-lg font-bold ml-0.5">lx</span></p>
+                </div>
+                <div>
+                    <div class="w-full bg-black/10 dark:bg-white/10 rounded-full h-2 overflow-hidden">
+                        <div id="lightProgressBar" class="h-full transition-all duration-500 rounded-full" style="width: <?= $latest ? max(5, min(100, ((float) $latest['luz_ambiental'] / 3000.0) * 100)) : 0 ?>%; background: var(--accent);"></div>
+                    </div>
+                    <p class="text-[11px] font-bold mt-1.5 flex justify-between items-center">
+                        <span class="sub">Bus I2C (P21/P22)</span>
+                        <span id="lightStatusLabel" class="font-bold sub">Luz Óptima</span>
+                    </p>
+                </div>
+            </div>
+
+            <!-- Temperatura + Humedad ambiente (DHT22) -->
+            <div class="hw-panel card-sensor accent-dht rounded-2xl p-5 hw-reading flex flex-col justify-between" data-sensor="dht22">
+                <div>
+                    <div class="flex items-center justify-between mb-1">
+                        <p class="text-[11px] font-black uppercase tracking-wider card-title">DHT22</p>
+                        <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] badge-live shadow-sm">
+                            <span class="w-1.5 h-1.5 rounded-full bg-white animate-pulse"></span> EN VIVO
+                        </span>
+                    </div>
+                    <p class="text-3xl font-black val"><span id="readingTemp"><?= $latest && $latest['temperatura'] !== null ? number_format((float) $latest['temperatura'], 1) : '-' ?></span><span class="text-lg font-bold ml-0.5">°C</span></p>
+                </div>
+                <p class="text-[11px] font-bold sub">
+                    Humedad ambiente: <span id="readingAirHumidity"><?= $latest && $latest['humedad_ambiente'] !== null ? number_format((float) $latest['humedad_ambiente'], 1) . '%' : 'Sin datos' ?></span>
+                </p>
+            </div>
+
+            <!-- pH (PH-4502C) -->
+            <div class="hw-panel card-sensor accent-ph rounded-2xl p-5 hw-reading flex flex-col justify-between" data-sensor="ph">
+                <div>
+                    <div class="flex items-center justify-between mb-1">
+                        <p class="text-[11px] font-black uppercase tracking-wider card-title">pH PH-4502C</p>
+                        <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] badge-live shadow-sm">
+                            <span class="w-1.5 h-1.5 rounded-full bg-white animate-pulse"></span> EN VIVO
+                        </span>
+                    </div>
+                    <p class="text-3xl font-black val"><span id="readingPh"><?= $latest && $latest['ph'] !== null ? number_format((float) $latest['ph'], 2) : '-' ?></span></p>
+                </div>
+                <p class="text-[11px] font-bold mt-1.5 flex justify-between items-center">
+                    <span class="sub">Ideal: 5.5 - 7.5</span>
+                    <span id="phStatusLabel" class="font-bold sub">—</span>
+                </p>
+            </div>
+
+            <!-- Nivel de tanque -->
+            <div class="hw-panel card-sensor accent-tanque rounded-2xl p-5 hw-reading flex flex-col justify-between" data-sensor="nivel_tanque">
+                <div>
+                    <div class="flex items-center justify-between mb-1">
+                        <p class="text-[11px] font-black uppercase tracking-wider card-title">Depósito de agua</p>
+                        <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] badge-live shadow-sm">
+                            <span class="w-1.5 h-1.5 rounded-full bg-white animate-pulse"></span> EN VIVO
+                        </span>
+                    </div>
+                    <p class="text-3xl font-black val"><span id="readingTank"><?= $latest ? (int) $latest['nivel_tanque'] : '-' ?></span><span class="text-lg font-bold ml-0.5">%</span></p>
+                </div>
+                <div>
+                    <div class="w-full bg-black/10 dark:bg-white/10 rounded-full h-2 overflow-hidden">
+                        <div id="tankProgressBar" class="h-full transition-all duration-500 rounded-full" style="width: <?= $latest ? max(5, min(100, (int) $latest['nivel_tanque'])) : 0 ?>%; background: var(--accent);"></div>
+                    </div>
+                    <p class="text-[11px] font-bold mt-1.5"><span class="sub">Minibomba 5V + microtubo 4mm</span></p>
+                </div>
             </div>
         </section>
 
@@ -634,15 +681,31 @@ if (isset($_GET['tab']) && $_GET['tab'] === 'new' || isset($_GET['action']) && $
                 const luxVal = Number(reading.luz_ambiental) || 0;
                 if (luxVal < 100) {
                     lightLabel.textContent = 'Oscuro / Sombra';
-                    lightLabel.className = 'font-bold text-gray-700 dark:text-gray-300';
                 } else if (luxVal > 2000) {
                     lightLabel.textContent = 'Luz Alta';
-                    lightLabel.className = 'font-bold text-yellow-700 dark:text-yellow-300';
                 } else {
                     lightLabel.textContent = 'Luz Óptima';
-                    lightLabel.className = 'font-bold text-amber-700 dark:text-amber-300';
                 }
             }
+
+            if (reading.temperatura !== null && reading.temperatura !== undefined) {
+                setText('readingTemp', Number(reading.temperatura).toFixed(1));
+            }
+            setText('readingAirHumidity', reading.humedad_ambiente !== null && reading.humedad_ambiente !== undefined
+                ? Number(reading.humedad_ambiente).toFixed(1) + '%'
+                : 'Sin datos');
+
+            if (reading.ph !== null && reading.ph !== undefined) {
+                const phVal = Number(reading.ph);
+                setText('readingPh', phVal.toFixed(2));
+                const phLabel = document.getElementById('phStatusLabel');
+                if (phLabel) phLabel.textContent = (phVal >= 5.5 && phVal <= 7.5) ? 'Ideal' : 'Fuera de rango';
+            }
+
+            const tankVal = Number(reading.nivel_tanque) || 0;
+            setText('readingTank', tankVal);
+            const tankBar = document.getElementById('tankProgressBar');
+            if (tankBar) tankBar.style.width = `${Math.max(5, Math.min(100, tankVal))}%`;
         }
 
         if (data.analysis) {

@@ -35,6 +35,48 @@ class HardwareKit
                 'unidad' => 'lx',
                 'esperado' => 'Mide luz ambiental.',
             ],
+            'dht22' => [
+                'nombre' => 'Sensor DHT22',
+                'categoria' => 'Sensor',
+                'pin' => 'GPIO 4',
+                'unidad' => '',
+                'esperado' => 'Mide temperatura y humedad ambiente.',
+            ],
+            'ph4502c' => [
+                'nombre' => 'Sensor de pH PH-4502C',
+                'categoria' => 'Sensor',
+                'pin' => 'GPIO 34 ADC',
+                'unidad' => 'pH',
+                'esperado' => 'Mide el pH del agua de riego.',
+            ],
+            'bomba_sumergible' => [
+                'nombre' => 'Minibomba sumergible 5V',
+                'categoria' => 'Actuador',
+                'pin' => 'Relé GPIO 26',
+                'unidad' => '',
+                'esperado' => 'Impulsa el agua del depósito hacia la planta.',
+            ],
+            'fuente_5v' => [
+                'nombre' => 'Fuente de alimentación 5V',
+                'categoria' => 'Alimentación',
+                'pin' => 'Externa',
+                'unidad' => 'V',
+                'esperado' => 'Alimenta la minibomba sumergible.',
+            ],
+            'microtubo_4mm' => [
+                'nombre' => 'Microtubo 4mm',
+                'categoria' => 'Riego',
+                'pin' => 'N/A',
+                'unidad' => '',
+                'esperado' => 'Conduce el agua desde la bomba hasta la planta.',
+            ],
+            'deposito_interno' => [
+                'nombre' => 'Depósito interno de agua',
+                'categoria' => 'Riego',
+                'pin' => 'N/A',
+                'unidad' => '%',
+                'esperado' => 'Reserva de agua disponible para el riego.',
+            ],
         ];
     }
 

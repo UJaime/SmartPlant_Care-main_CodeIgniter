@@ -188,12 +188,23 @@ class SmartPlant extends BaseController
         $eventos    = $planta_id ? $this->eventoModel->obtenerRecientes($planta_id) : [];
         $inventario = $planta_id ? $this->inventarioModel->obtenerPorPlanta($planta_id, $usuario_id) : [];
 
-        $humedad = $ultima ? (float)$ultima['humedad_suelo'] : 0;
-        $temp    = $ultima ? (float)$ultima['temperatura']   : 0;
-        $luz     = $ultima ? (int)  $ultima['luz_ambiental'] : 0;
-        $tanque  = $ultima ? (int)  $ultima['nivel_tanque']  : 0;
-        $bateria = $ultima ? (int)  $ultima['bateria']       : 0;
-        $salud   = $ultima ? min(100, round(($humedad + $bateria) / 2)) : 0;
+        $humedad          = $ultima ? (float)$ultima['humedad_suelo']    : 0;
+        $temp             = $ultima ? (float)$ultima['temperatura']      : 0;
+        $humedad_ambiente = $ultima && $ultima['humedad_ambiente'] !== null ? (float)$ultima['humedad_ambiente'] : null;
+        $luz              = $ultima ? (int)  $ultima['luz_ambiental']    : 0;
+        $ph               = $ultima && $ultima['ph'] !== null ? (float)$ultima['ph'] : null;
+        $tanque           = $ultima ? (int)  $ultima['nivel_tanque']      : 0;
+        $bateria          = $ultima ? (int)  $ultima['bateria']          : 0;
+        $salud            = $ultima ? min(100, round(($humedad + $bateria) / 2)) : 0;
+
+        // Dispositivo vinculado a la planta actual (para el polling en vivo del Dashboard)
+        $device_id = 0;
+        foreach ($dispositivos as $d) {
+            if ((int) $d['planta_id'] === (int) $planta_id) {
+                $device_id = (int) $d['id'];
+                break;
+            }
+        }
 
         // Estado del hardware
         $is_online = false;
@@ -229,13 +240,16 @@ class SmartPlant extends BaseController
             'planta_id'          => $planta_id,
             'planta_actual'      => $planta_actual,
             'dispositivos'       => $dispositivos,
+            'device_id'          => $device_id,
             'ultima'             => $ultima,
             'historial'          => $historial,
             'eventos'            => $eventos,
             'inventario'         => $inventario,
             'humedad'            => $humedad,
             'temp'               => $temp,
+            'humedad_ambiente'   => $humedad_ambiente,
             'luz'                => $luz,
+            'ph'                 => $ph,
             'tanque'             => $tanque,
             'bateria'            => $bateria,
             'salud'              => $salud,

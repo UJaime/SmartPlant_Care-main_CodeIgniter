@@ -16,10 +16,13 @@ $eventos            = $eventos ?? [];
 $inventario         = $inventario ?? [];
 $humedad            = $humedad ?? 0;
 $temp               = $temp ?? 0;
+$humedad_ambiente   = $humedad_ambiente ?? null;
 $luz                = $luz ?? 0;
+$ph                 = $ph ?? null;
 $tanque             = $tanque ?? 0;
 $bateria            = $bateria ?? 0;
 $salud              = $salud ?? 0;
+$device_id          = $device_id ?? 0;
 $is_online          = $is_online ?? false;
 $status_label       = $status_label ?? 'Sin dispositivos';
 $status_badge_class = $status_badge_class ?? 'bg-slate-100 dark:bg-slate-800/80 text-slate-600 dark:text-slate-400 border-slate-200 dark:border-slate-700';
@@ -113,9 +116,9 @@ $evento_icono = [
             </h2>
             <p class="text-slate-500 text-sm mt-1">
                 <?php if ($ultima): ?>
-                    Última sincronización: <span class="font-medium text-slate-700 dark:text-slate-300"><?= date('d/m/Y H:i', strtotime($ultima['creada_en'])) ?></span>
+                    Última sincronización: <span class="font-medium text-slate-700 dark:text-slate-300" id="lastSyncLabel"><?= date('d/m/Y H:i', strtotime($ultima['creada_en'])) ?></span>
                 <?php else: ?>
-                    Sin lecturas recientes. Conectá tu módulo ESP32.
+                    <span id="lastSyncLabel">Sin lecturas recientes. Conectá tu módulo ESP32.</span>
                 <?php endif; ?>
             </p>
         </div>
@@ -187,10 +190,10 @@ $evento_icono = [
 
     <!-- STATS CARDS -->
     <section class="max-w-6xl mx-auto px-6 py-4">
-        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4" id="statsGrid">
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4" id="statsGrid">
 
-            <!-- Humedad -->
-            <div class="stat-card-clean">
+            <!-- Humedad de suelo -->
+            <div class="stat-card-clean" data-sensor="humedad_suelo">
                 <div class="flex items-center justify-between mb-4">
                     <span class="text-xs font-semibold text-slate-500 uppercase tracking-wider">Humedad de suelo</span>
                     <div class="w-9 h-9 rounded-xl bg-emerald-50 dark:bg-emerald-950/50 flex items-center justify-center text-emerald-600 border border-emerald-200/60 dark:border-emerald-800/40">
@@ -199,7 +202,7 @@ $evento_icono = [
                 </div>
                 <div class="flex items-baseline justify-between">
                     <p class="text-4xl font-extrabold tracking-tight text-slate-900 dark:text-white" data-target="<?= $humedad ?>" data-suffix="%">0%</p>
-                    <span class="badge-status <?= $humedad >= 40 && $humedad <= 60 ? 'badge-status-green' : 'badge-status-amber' ?>">
+                    <span class="badge-status <?= $humedad >= 40 && $humedad <= 60 ? 'badge-status-green' : 'badge-status-amber' ?>" data-field="badge">
                         <?= $humedad >= 40 && $humedad <= 60 ? 'Óptimo' : ($humedad < 40 ? 'Bajo' : 'Exceso') ?>
                     </span>
                 </div>
@@ -208,8 +211,8 @@ $evento_icono = [
                 </div>
             </div>
 
-            <!-- Temperatura -->
-            <div class="stat-card-clean">
+            <!-- Temperatura (DHT22) -->
+            <div class="stat-card-clean" data-sensor="temperatura">
                 <div class="flex items-center justify-between mb-4">
                     <span class="text-xs font-semibold text-slate-500 uppercase tracking-wider">Temperatura</span>
                     <div class="w-9 h-9 rounded-xl bg-amber-50 dark:bg-amber-950/50 flex items-center justify-center text-amber-600 border border-amber-200/60 dark:border-amber-800/40">
@@ -218,7 +221,7 @@ $evento_icono = [
                 </div>
                 <div class="flex items-baseline justify-between">
                     <p class="text-4xl font-extrabold tracking-tight text-slate-900 dark:text-white" data-target="<?= $temp ?>" data-suffix="°C">0°C</p>
-                    <span class="badge-status <?= ($temp >= 20 && $temp <= 28) ? 'badge-status-green' : 'badge-status-amber' ?>">
+                    <span class="badge-status <?= ($temp >= 20 && $temp <= 28) ? 'badge-status-green' : 'badge-status-amber' ?>" data-field="badge">
                         <?= ($temp >= 20 && $temp <= 28) ? 'Ideal' : ($temp < 20 ? 'Frío' : 'Calor') ?>
                     </span>
                 </div>
@@ -227,8 +230,32 @@ $evento_icono = [
                 </div>
             </div>
 
-            <!-- Luz -->
-            <div class="stat-card-clean">
+            <!-- Humedad ambiente (DHT22) -->
+            <div class="stat-card-clean" data-sensor="humedad_ambiente">
+                <div class="flex items-center justify-between mb-4">
+                    <span class="text-xs font-semibold text-slate-500 uppercase tracking-wider">Humedad ambiente</span>
+                    <div class="w-9 h-9 rounded-xl bg-sky-50 dark:bg-sky-950/50 flex items-center justify-center text-sky-600 border border-sky-200/60 dark:border-sky-800/40">
+                        <i data-lucide="cloud-drizzle" class="w-4 h-4"></i>
+                    </div>
+                </div>
+                <div class="flex items-baseline justify-between">
+                    <?php if ($humedad_ambiente !== null): ?>
+                        <p class="text-4xl font-extrabold tracking-tight text-slate-900 dark:text-white" data-target="<?= $humedad_ambiente ?>" data-suffix="%">0%</p>
+                        <span class="badge-status <?= ($humedad_ambiente >= 30 && $humedad_ambiente <= 85) ? 'badge-status-green' : 'badge-status-amber' ?>" data-field="badge">
+                            <?= ($humedad_ambiente >= 30 && $humedad_ambiente <= 85) ? 'Normal' : 'Alerta' ?>
+                        </span>
+                    <?php else: ?>
+                        <p class="text-4xl font-extrabold tracking-tight text-slate-300 dark:text-slate-700">—</p>
+                        <span class="badge-status badge-status-amber" data-field="badge">Sin datos</span>
+                    <?php endif; ?>
+                </div>
+                <div class="progress-track h-1 mt-4 bg-slate-100 dark:bg-slate-800 rounded-full overflow-hidden">
+                    <div class="progress-fill h-full bg-sky-500 rounded-full" style="width:0%" data-width="<?= $humedad_ambiente !== null ? min(100, round($humedad_ambiente)) : 0 ?>%"></div>
+                </div>
+            </div>
+
+            <!-- Luz (BH1750) -->
+            <div class="stat-card-clean" data-sensor="luz_ambiental">
                 <div class="flex items-center justify-between mb-4">
                     <span class="text-xs font-semibold text-slate-500 uppercase tracking-wider">Luz Solar</span>
                     <div class="w-9 h-9 rounded-xl bg-yellow-50 dark:bg-yellow-950/50 flex items-center justify-center text-yellow-600 border border-yellow-200/60 dark:border-yellow-800/40">
@@ -237,7 +264,7 @@ $evento_icono = [
                 </div>
                 <div class="flex items-baseline justify-between">
                     <p class="text-4xl font-extrabold tracking-tight text-slate-900 dark:text-white" data-target="<?= $luz ?>" data-suffix=" lx">0 lx</p>
-                    <span class="badge-status <?= $luz > 200 ? 'badge-status-green' : 'badge-status-blue' ?>">
+                    <span class="badge-status <?= $luz > 200 ? 'badge-status-green' : 'badge-status-blue' ?>" data-field="badge">
                         <?= $luz > 600 ? 'Alta' : ($luz > 200 ? 'Normal' : 'Poca') ?>
                     </span>
                 </div>
@@ -245,9 +272,33 @@ $evento_icono = [
                     <div class="progress-fill h-full bg-yellow-500 rounded-full" style="width:0%" data-width="<?= min(100, round($luz / 1000 * 100)) ?>%"></div>
                 </div>
             </div>
-                
+
+            <!-- pH (PH-4502C) -->
+            <div class="stat-card-clean" data-sensor="ph">
+                <div class="flex items-center justify-between mb-4">
+                    <span class="text-xs font-semibold text-slate-500 uppercase tracking-wider">pH del agua</span>
+                    <div class="w-9 h-9 rounded-xl bg-fuchsia-50 dark:bg-fuchsia-950/50 flex items-center justify-center text-fuchsia-600 border border-fuchsia-200/60 dark:border-fuchsia-800/40">
+                        <i data-lucide="flask-conical" class="w-4 h-4"></i>
+                    </div>
+                </div>
+                <div class="flex items-baseline justify-between">
+                    <?php if ($ph !== null): ?>
+                        <p class="text-4xl font-extrabold tracking-tight text-slate-900 dark:text-white" data-target="<?= $ph ?>" data-suffix="">0</p>
+                        <span class="badge-status <?= ($ph >= 5.5 && $ph <= 7.5) ? 'badge-status-green' : 'badge-status-amber' ?>" data-field="badge">
+                            <?= ($ph >= 5.5 && $ph <= 7.5) ? 'Ideal' : 'Alerta' ?>
+                        </span>
+                    <?php else: ?>
+                        <p class="text-4xl font-extrabold tracking-tight text-slate-300 dark:text-slate-700">—</p>
+                        <span class="badge-status badge-status-amber" data-field="badge">Sin datos</span>
+                    <?php endif; ?>
+                </div>
+                <div class="progress-track h-1 mt-4 bg-slate-100 dark:bg-slate-800 rounded-full overflow-hidden">
+                    <div class="progress-fill h-full bg-fuchsia-500 rounded-full" style="width:0%" data-width="<?= $ph !== null ? min(100, round($ph / 14 * 100)) : 0 ?>%"></div>
+                </div>
+            </div>
+
             <!-- Tanque -->
-            <div class="stat-card-clean">
+            <div class="stat-card-clean" data-sensor="nivel_tanque">
                 <div class="flex items-center justify-between mb-4">
                     <span class="text-xs font-semibold text-slate-500 uppercase tracking-wider">Agua en tanque</span>
                     <div class="w-9 h-9 rounded-xl bg-teal-50 dark:bg-teal-950/50 flex items-center justify-center text-teal-600 border border-teal-200/60 dark:border-teal-800/40">
@@ -256,15 +307,16 @@ $evento_icono = [
                 </div>
                 <div class="flex items-baseline justify-between">
                     <p class="text-4xl font-extrabold tracking-tight text-slate-900 dark:text-white" data-target="<?= $tanque ?>" data-suffix="%">0%</p>
-                    <span class="badge-status <?= $tanque > 40 ? 'badge-status-green' : ($tanque > 20 ? 'badge-status-amber' : 'badge-status-red') ?>">
+                    <span class="badge-status <?= $tanque > 40 ? 'badge-status-green' : ($tanque > 20 ? 'badge-status-amber' : 'badge-status-red') ?>" data-field="badge">
                         <?= $tanque > 50 ? 'Suficiente' : ($tanque > 20 ? 'Medio' : 'Rellenar') ?>
                     </span>
                 </div>
                 <div class="progress-track h-1 mt-4 bg-slate-100 dark:bg-slate-800 rounded-full overflow-hidden">
                     <div class="progress-fill h-full bg-teal-500 rounded-full" style="width:0%" data-width="<?= $tanque ?>%"></div>
                 </div>
-            
+            </div>
 
+        </div>
     </section>
 
     <!-- CHART + ESTADO SALUD -->
@@ -364,10 +416,10 @@ $evento_icono = [
                     <p class="text-slate-500 text-xs mt-0.5">Comandos de acción inmediata sobre tus dispositivos.</p>
                 </div>
                 <div class="flex items-center gap-2 flex-wrap">
-                    <button class="bg-emerald-600 hover:bg-emerald-500 text-white font-semibold px-4 py-2 rounded-xl text-xs flex items-center gap-1.5 shadow-sm transition-all">
+                    <button onclick="regarAhora(this)" id="btnRegarAhora" class="bg-emerald-600 hover:bg-emerald-500 text-white font-semibold px-4 py-2 rounded-xl text-xs flex items-center gap-1.5 shadow-sm transition-all disabled:opacity-50" <?= $device_id ? '' : 'disabled title="Vinculá un dispositivo para poder regar"' ?>>
                         <i data-lucide="droplets" class="w-3.5 h-3.5"></i> Regar ahora
                     </button>
-                    <button onclick="location.reload()" class="bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-300 font-semibold px-3.5 py-2 rounded-xl text-xs flex items-center gap-1.5 transition-all">
+                    <button onclick="refreshSensors(true)" class="bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-300 font-semibold px-3.5 py-2 rounded-xl text-xs flex items-center gap-1.5 transition-all">
                         <i data-lucide="refresh-cw" class="w-3.5 h-3.5"></i> Actualizar
                     </button>
                     <button onclick="openSettingsModal()" class="bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-300 font-semibold px-3.5 py-2 rounded-xl text-xs flex items-center gap-1.5 transition-all">
@@ -779,6 +831,61 @@ $evento_icono = [
     </div>
 </div>
 
+<!-- ═══ MODAL SUBIR FOTO (INVENTARIO) ═══ -->
+<div class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm opacity-0 pointer-events-none transition-all duration-300" id="invUploadModal">
+    <div class="glass-form rounded-[2.5rem] p-6 md:p-8 max-w-md w-full shadow-2xl transform scale-95 transition-all duration-300 relative border border-black/10 dark:border-white/10 overflow-hidden" id="invUploadModalContent">
+        <div class="flex justify-between items-center mb-6">
+            <div class="flex items-center gap-3">
+                <div class="w-10 h-10 rounded-2xl bg-emerald-500/20 text-emerald-600 flex items-center justify-center">
+                    <i data-lucide="camera" class="w-5 h-5"></i>
+                </div>
+                <h3 class="text-xl font-bold text-gray-900 dark:text-white">Subir foto de la planta</h3>
+            </div>
+            <button type="button" onclick="closeInventoryUpload()" class="w-8 h-8 rounded-full flex items-center justify-center text-gray-500 hover:text-gray-900 dark:hover:text-white hover:bg-black/5 dark:hover:bg-white/10">
+                <i data-lucide="x" class="w-5 h-5"></i>
+            </button>
+        </div>
+
+        <form onsubmit="handleInventoryUpload(event)">
+            <div id="invDropzone" class="p-6 border-2 border-dashed border-gray-300 dark:border-white/15 rounded-3xl text-center bg-black/5 dark:bg-white/5 transition-colors hover:border-emerald-500 flex flex-col items-center justify-center gap-3 cursor-pointer" onclick="document.getElementById('invFileInput').click()">
+                <img id="invPreviewImg" src="" class="w-full max-h-56 object-cover rounded-2xl hidden" alt="Vista previa">
+                <div id="invDropzoneContent">
+                    <i data-lucide="upload-cloud" class="w-8 h-8 text-emerald-600 mx-auto mb-2"></i>
+                    <p class="text-sm font-bold text-gray-900 dark:text-gray-100">Arrastrá una imagen o hacé clic para elegir</p>
+                    <p class="text-xs font-medium text-gray-600 dark:text-gray-400 mt-1">JPG, JPEG, PNG, WEBP — máx. 10MB</p>
+                </div>
+            </div>
+            <input type="file" id="invFileInput" accept="image/*" class="hidden" onchange="previewInventoryImage(event)">
+
+            <div class="pt-6 flex items-center gap-3">
+                <button type="button" onclick="closeInventoryUpload()" class="w-1/3 py-3 rounded-2xl text-sm font-bold border border-gray-300 dark:border-white/10 text-gray-800 dark:text-gray-200">
+                    Cancelar
+                </button>
+                <button type="submit" id="invUploadBtn" disabled class="flex-1 bg-emerald-600 hover:bg-emerald-500 disabled:opacity-50 disabled:pointer-events-none text-white font-semibold rounded-2xl py-3 text-sm shadow-lg shadow-emerald-600/25 flex items-center justify-center gap-2">
+                    <span id="invUploadBtnText" class="flex items-center gap-2"><i data-lucide="upload" class="w-4 h-4"></i> Subir y analizar</span>
+                    <span id="invUploadBtnLoading" class="hidden items-center gap-2">
+                        <i data-lucide="loader-2" class="w-4 h-4 animate-spin"></i> Analizando...
+                    </span>
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!-- ═══ MODAL DETALLE DE FOTO (INVENTARIO) ═══ -->
+<div class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm opacity-0 pointer-events-none transition-all duration-300" id="invDetailModal">
+    <div class="glass-form rounded-[2.5rem] p-6 md:p-8 max-w-lg w-full shadow-2xl transform scale-95 transition-all duration-300 relative border border-black/10 dark:border-white/10 overflow-hidden" id="invDetailModalContent">
+        <div class="flex justify-between items-center mb-4">
+            <span class="text-xs font-semibold text-slate-500" id="invDetailDate"></span>
+            <button type="button" onclick="closeInventoryDetail()" class="w-8 h-8 rounded-full flex items-center justify-center text-gray-500 hover:text-gray-900 dark:hover:text-white hover:bg-black/5 dark:hover:bg-white/10">
+                <i data-lucide="x" class="w-5 h-5"></i>
+            </button>
+        </div>
+        <img id="invDetailImg" src="" alt="Foto planta" class="w-full max-h-80 object-cover rounded-2xl mb-4">
+        <p class="text-sm text-slate-700 dark:text-slate-300 leading-relaxed" id="invDetailDiag"></p>
+    </div>
+</div>
+
 <script>
     // ─── Theme Toggle ───
     function applyTheme(theme) {
@@ -835,60 +942,136 @@ $evento_icono = [
         }
     }
 
-    // ─── Profile Modal & Interactive Features ───
-    function openProfileModal() {
-        const modal = document.getElementById('profileModal');
-        const content = document.getElementById('profileModalContent');
+    // ─── Sensores en vivo (polling liviano, sin recargar la página) ───
+    const deviceId = <?= (int) $device_id ?>;
+    const statusUrl = deviceId ? `/hardware/api?action=status&device_id=${deviceId}` : null;
+
+    const SENSOR_RANGES = {
+        humedad_suelo:    { max: 100, ok: v => v >= 40 && v <= 60 },
+        temperatura:      { max: 50,  ok: v => v >= 20 && v <= 28 },
+        humedad_ambiente: { max: 100, ok: v => v >= 30 && v <= 85 },
+        luz_ambiental:    { max: 1000, ok: v => v > 200 },
+        ph:               { max: 14,  ok: v => v >= 5.5 && v <= 7.5 },
+        nivel_tanque:     { max: 100, ok: v => v > 40 },
+    };
+
+    function applySensorReading(sensor, value) {
+        const card = document.querySelector(`[data-sensor="${sensor}"]`);
+        if (!card || value === null || value === undefined) return;
+        const range = SENSOR_RANGES[sensor];
+        const num = Number(value);
+
+        const valueEl = card.querySelector('[data-target]');
+        if (valueEl) {
+            const suffix = valueEl.getAttribute('data-suffix') || '';
+            valueEl.textContent = (Number.isInteger(num) ? num : num.toFixed(1)) + suffix;
+        }
+
+        const bar = card.querySelector('.progress-fill');
+        if (bar) bar.style.width = Math.max(3, Math.min(100, (num / range.max) * 100)) + '%';
+
+        const badge = card.querySelector('[data-field="badge"]');
+        if (badge) {
+            const isOk = range.ok(num);
+            badge.classList.remove('badge-status-green', 'badge-status-amber', 'badge-status-red', 'badge-status-blue');
+            badge.classList.add(isOk ? 'badge-status-green' : 'badge-status-amber');
+        }
+    }
+
+    async function refreshSensors(manual = false) {
+        if (!statusUrl) return;
+        const btn = document.getElementById('btnRegarAhora');
+        try {
+            const res = await fetch(statusUrl);
+            const data = await res.json();
+            if (!data.success || !data.reading) return;
+
+            const r = data.reading;
+            applySensorReading('humedad_suelo', r.humedad_suelo);
+            applySensorReading('temperatura', r.temperatura);
+            applySensorReading('humedad_ambiente', r.humedad_ambiente);
+            applySensorReading('luz_ambiental', r.luz_ambiental);
+            applySensorReading('ph', r.ph);
+            applySensorReading('nivel_tanque', r.nivel_tanque);
+
+            const syncLabel = document.getElementById('lastSyncLabel');
+            if (syncLabel && r.creada_en) {
+                syncLabel.textContent = new Date(r.creada_en.replace(' ', 'T')).toLocaleString('es-AR', {
+                    day: '2-digit', month: '2-digit', year: 'numeric', hour: '2-digit', minute: '2-digit'
+                });
+            }
+        } catch (err) {
+            // Silencioso: no interrumpe la vista si falla el polling en segundo plano.
+        } finally {
+            if (manual && btn) {
+                btn.classList.add('animate-pulse');
+                setTimeout(() => btn.classList.remove('animate-pulse'), 400);
+            }
+        }
+    }
+
+    async function regarAhora(btn) {
+        if (!deviceId) return;
+        btn.disabled = true;
+        try {
+            const res = await fetch('/hardware/api?action=control', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ device_id: deviceId, comando: 'WATER_PUMP_ON' })
+            });
+            const data = await res.json();
+            if (data.success) {
+                setTimeout(() => refreshSensors(), 1500);
+            }
+        } catch (err) {
+            // Silencioso
+        } finally {
+            btn.disabled = false;
+        }
+    }
+
+    if (statusUrl) {
+        setInterval(() => refreshSensors(false), 10000);
+    }
+
+    // ─── Modal helper genérico (abre/cierra cualquier modal "<id>" + "<id>Content") ───
+    function openModal(id) {
+        const modal = document.getElementById(id);
+        const content = document.getElementById(id + 'Content');
+        if (!modal) return;
         modal.classList.remove('opacity-0', 'pointer-events-none');
-        content.classList.remove('scale-95');
-        content.classList.add('scale-100');
+        if (content) {
+            content.classList.remove('scale-95');
+            content.classList.add('scale-100');
+        }
         if (window.lucide) lucide.createIcons();
     }
 
-    function closeProfileModal() {
-        const modal = document.getElementById('profileModal');
-        const content = document.getElementById('profileModalContent');
-        content.classList.remove('scale-100');
-        content.classList.add('scale-95');
+    function closeModal(id) {
+        const modal = document.getElementById(id);
+        const content = document.getElementById(id + 'Content');
+        if (!modal) return;
+        if (content) {
+            content.classList.remove('scale-100');
+            content.classList.add('scale-95');
+        }
         modal.classList.add('opacity-0', 'pointer-events-none');
     }
+
+    // ─── Profile Modal ───
+    function openProfileModal() { openModal('profileModal'); }
+    function closeProfileModal() { closeModal('profileModal'); }
 
     // ─── Add & Delete Plant Modals ───
-    function openAddPlantModal() {
-        const modal = document.getElementById('addPlantModal');
-        const content = document.getElementById('addPlantModalContent');
-        modal.classList.remove('opacity-0', 'pointer-events-none');
-        content.classList.remove('scale-95');
-        content.classList.add('scale-100');
-        if (window.lucide) lucide.createIcons();
-    }
-
-    function closeAddPlantModal() {
-        const modal = document.getElementById('addPlantModal');
-        const content = document.getElementById('addPlantModalContent');
-        content.classList.remove('scale-100');
-        content.classList.add('scale-95');
-        modal.classList.add('opacity-0', 'pointer-events-none');
-    }
+    function openAddPlantModal() { openModal('addPlantModal'); }
+    function closeAddPlantModal() { closeModal('addPlantModal'); }
 
     function openDeletePlantModal(id, name) {
         document.getElementById('deletePlantIdInput').value = id;
         document.getElementById('deletePlantName').textContent = name;
-        const modal = document.getElementById('deletePlantModal');
-        const content = document.getElementById('deletePlantModalContent');
-        modal.classList.remove('opacity-0', 'pointer-events-none');
-        content.classList.remove('scale-95');
-        content.classList.add('scale-100');
-        if (window.lucide) lucide.createIcons();
+        openModal('deletePlantModal');
     }
-
-    function closeDeletePlantModal() {
-        const modal = document.getElementById('deletePlantModal');
-        const content = document.getElementById('deletePlantModalContent');
-        content.classList.remove('scale-100');
-        content.classList.add('scale-95');
-        modal.classList.add('opacity-0', 'pointer-events-none');
-    }
+    function closeDeletePlantModal() { closeModal('deletePlantModal'); }
 
     function switchProfileTab(tab) {
         const tabs = ['info', 'foto', 'security'];
@@ -1040,21 +1223,8 @@ $evento_icono = [
     }
 
     // ── Settings Modal ──
-    function openSettingsModal() {
-        const modal = document.getElementById('settingsModal');
-        const content = document.getElementById('settingsModalContent');
-        modal.classList.remove('opacity-0', 'pointer-events-none');
-        content.classList.remove('scale-95');
-        content.classList.add('scale-100');
-    }
-
-    function closeSettingsModal() {
-        const modal = document.getElementById('settingsModal');
-        const content = document.getElementById('settingsModalContent');
-        content.classList.remove('scale-100');
-        content.classList.add('scale-95');
-        modal.classList.add('opacity-0', 'pointer-events-none');
-    }
+    function openSettingsModal() { openModal('settingsModal'); }
+    function closeSettingsModal() { closeModal('settingsModal'); }
 
     // ─── Init ───
     window.addEventListener('DOMContentLoaded', () => {
@@ -1075,19 +1245,9 @@ $evento_icono = [
     // ═══ INVENTORY ═══
 
     // ── Modals ──
-    function openInventoryUpload() {
-        const modal = document.getElementById('invUploadModal');
-        const content = document.getElementById('invUploadModalContent');
-        modal.classList.remove('opacity-0', 'pointer-events-none');
-        content.classList.remove('scale-95');
-        content.classList.add('scale-100');
-    }
+    function openInventoryUpload() { openModal('invUploadModal'); }
     function closeInventoryUpload() {
-        const modal = document.getElementById('invUploadModal');
-        const content = document.getElementById('invUploadModalContent');
-        content.classList.remove('scale-100');
-        content.classList.add('scale-95');
-        modal.classList.add('opacity-0', 'pointer-events-none');
+        closeModal('invUploadModal');
         // Reset form
         document.getElementById('invFileInput').value = '';
         document.getElementById('invPreviewImg').classList.add('hidden');
@@ -1100,25 +1260,15 @@ $evento_icono = [
     });
 
     function openInventoryDetail(id, foto, diagnostico, fecha) {
-        const modal = document.getElementById('invDetailModal');
-        const content = document.getElementById('invDetailModalContent');
         document.getElementById('invDetailImg').src = foto;
         document.getElementById('invDetailDiag').textContent = diagnostico;
         const d = new Date(fecha);
         document.getElementById('invDetailDate').textContent =
             d.toLocaleDateString('es-AR', { day: '2-digit', month: 'long', year: 'numeric' }) +
             ' — ' + d.toLocaleTimeString('es-AR', { hour: '2-digit', minute: '2-digit' });
-        modal.classList.remove('opacity-0', 'pointer-events-none');
-        content.classList.remove('scale-95');
-        content.classList.add('scale-100');
+        openModal('invDetailModal');
     }
-    function closeInventoryDetail() {
-        const modal = document.getElementById('invDetailModal');
-        const content = document.getElementById('invDetailModalContent');
-        content.classList.remove('scale-100');
-        content.classList.add('scale-95');
-        modal.classList.add('opacity-0', 'pointer-events-none');
-    }
+    function closeInventoryDetail() { closeModal('invDetailModal'); }
     document.getElementById('invDetailModal').addEventListener('click', e => {
         if (e.target === e.currentTarget) closeInventoryDetail();
     });
