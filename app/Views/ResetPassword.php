@@ -91,17 +91,19 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['new_password']) && $v
 
 
 <!-- ═══ HEADER ═══ -->
-<header class="sticky top-6 z-50 mx-auto max-w-5xl px-4">
-    <div class="glass-clean flex items-center justify-between px-8 py-3.5 rounded-full shadow-sm">
-        <a href="/" class="flex items-center gap-3 group">
-            <img src="/assets/logo.svg" alt="SmartPlant Logo" class="w-8 h-8 transition-transform group-hover:scale-105">
-            <span class="text-xl font-bold tracking-tight text-slate-900">SmartPlant <span class="text-emerald-600 font-black">CARE</span></span>
-        </a>
-        <nav class="hidden md:flex gap-7 items-center text-sm font-medium text-slate-700">
-            <a href="/" class="hover:text-emerald-600 transition-colors">Inicio</a>
-            <a href="/store" class="hover:text-emerald-600 transition-colors">Tienda</a>
-            <a href="/login" class="btn-emerald px-5 py-2 rounded-full font-semibold hover:scale-105 transition-all text-xs">Iniciar sesión</a>
-        </nav>
+<header class="sticky top-0 z-50 w-full">
+    <div class="glass-clean">
+        <div class="max-w-6xl mx-auto px-6 py-3.5 flex items-center justify-between gap-4">
+            <a href="/" class="flex items-center gap-2.5 group">
+                <img src="/assets/logo.svg" alt="SmartPlant Logo" class="w-8 h-8 transition-transform group-hover:scale-105">
+                <span class="text-xl font-bold tracking-tight">SmartPlant <span class="text-emerald-400 font-black">CARE</span></span>
+            </a>
+            <nav class="hidden md:flex gap-7 items-center text-sm font-medium">
+                <a href="/" class="hover:text-emerald-400 transition-colors">Inicio</a>
+                <a href="/store" class="hover:text-emerald-400 transition-colors">Tienda</a>
+                <a href="/login" class="btn-emerald px-5 py-2 rounded-xl font-semibold transition-all text-xs">Iniciar sesión</a>
+            </nav>
+        </div>
     </div>
 </header>
 
@@ -109,14 +111,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['new_password']) && $v
 <main class="flex-1 flex items-center justify-center px-6 py-20">
     <div class="w-full max-w-md relative">
 
-        <div class="orbit-ring" style="width:500px;height:500px;top:50%;left:50%;margin-top:-250px;margin-left:-250px;"></div>
-
         <div class="form-glow relative">
 
             <?php if ($success): ?>
             <!-- ═══ ÉXITO ═══ -->
             <div class="glass-form rounded-[2.5rem] p-10 md:p-12 relative z-10 reveal-scale text-center">
-                <div class="w-20 h-20 mx-auto mb-6 rounded-full bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center shadow-lg text-emerald-600 dark:text-emerald-400">
+                <div class="w-20 h-20 mx-auto mb-6 rounded-3xl bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center shadow-lg text-emerald-600 dark:text-emerald-400">
                     <i data-lucide="check-circle-2" class="w-9 h-9"></i>
                 </div>
                 <h2 class="text-3xl font-semibold tracking-tight mb-4">
@@ -137,7 +137,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['new_password']) && $v
                 <input type="hidden" name="email" value="<?= htmlspecialchars($email) ?>">
 
                 <div class="text-center mb-8">
-                    <div class="w-20 h-20 mx-auto mb-5 rounded-full bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center shadow-lg text-emerald-600 dark:text-emerald-400">
+                    <div class="w-20 h-20 mx-auto mb-5 rounded-3xl bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center shadow-lg text-emerald-600 dark:text-emerald-400">
                         <i data-lucide="key-round" class="w-8 h-8"></i>
                     </div>
                     <h2 class="text-3xl md:text-4xl font-semibold tracking-tight">
@@ -158,7 +158,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['new_password']) && $v
 
                 <!-- Nueva contraseña -->
                 <div class="mb-5">
-                    <label class="text-xs font-medium text-gray-400 tracking-widest uppercase mb-2 block ml-1">Nueva contraseña</label>
+                    <label class="text-xs font-semibold text-gray-600 tracking-wide uppercase mb-2 block ml-1">Nueva contraseña</label>
                     <div class="relative">
                         <input type="password" name="new_password" id="newPassInput"
                             placeholder="Mínimo 6 caracteres"
@@ -166,7 +166,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['new_password']) && $v
                             required minlength="6" autocomplete="new-password"
                             oninput="checkStrength(this.value)">
                         <button type="button" onclick="togglePass('newPassInput','tb1')"
-                            id="tb1" class="absolute right-4 top-1/2 -translate-y-1/2 text-white/30 hover:text-white/60 transition-colors">
+                            id="tb1" class="absolute right-4 top-1/2 -translate-y-1/2 text-white/60 hover:text-white transition-colors">
                             <i data-lucide="eye" class="w-5 h-5"></i>
                         </button>
                     </div>
@@ -181,14 +181,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['new_password']) && $v
 
                 <!-- Confirmar contraseña -->
                 <div class="mb-8">
-                    <label class="text-xs font-medium text-gray-400 tracking-widest uppercase mb-2 block ml-1">Confirmar contraseña</label>
+                    <label class="text-xs font-semibold text-gray-600 tracking-wide uppercase mb-2 block ml-1">Confirmar contraseña</label>
                     <div class="relative">
                         <input type="password" name="confirm_password" id="confirmPassInput"
                             placeholder="Repetí tu contraseña"
                             class="input-glass w-full rounded-2xl px-5 py-4 text-sm font-light pr-14"
                             required autocomplete="new-password" oninput="checkMatch()">
                         <button type="button" onclick="togglePass('confirmPassInput','tb2')"
-                            id="tb2" class="absolute right-4 top-1/2 -translate-y-1/2 text-white/30 hover:text-white/60 transition-colors">
+                            id="tb2" class="absolute right-4 top-1/2 -translate-y-1/2 text-white/60 hover:text-white transition-colors">
                             <i data-lucide="eye" class="w-5 h-5"></i>
                         </button>
                     </div>
@@ -208,7 +208,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['new_password']) && $v
             <?php else: ?>
             <!-- ═══ ERROR / ENLACE INVÁLIDO ═══ -->
             <div class="glass-form rounded-[2.5rem] p-10 md:p-12 relative z-10 reveal-scale text-center">
-                <div class="w-20 h-20 mx-auto mb-6 rounded-full bg-red-500/10 border border-red-500/20 flex items-center justify-center shadow-lg text-red-600 dark:text-red-400">
+                <div class="w-20 h-20 mx-auto mb-6 rounded-3xl bg-red-500/10 border border-red-500/20 flex items-center justify-center shadow-lg text-red-600 dark:text-red-400">
                     <i data-lucide="alert-triangle" class="w-9 h-9"></i>
                 </div>
                 <h2 class="text-3xl font-semibold tracking-tight mb-4">

@@ -15,47 +15,49 @@ $logged = isset($_SESSION['usuario_id']);
 
 <body class="bg-overlay text-white min-h-screen">
 
-<header class="sticky top-6 z-50 mx-auto max-w-5xl px-4">
-    <div class="glass-clean flex items-center justify-between px-8 py-3.5 rounded-full shadow-sm">
-        <a href="/" class="flex items-center gap-3 group">
-            <img src="/assets/logo.svg" alt="SmartPlant Logo" class="w-8 h-8 transition-transform group-hover:scale-105">
-            <span class="text-xl font-bold tracking-tight text-slate-900">SmartPlant <span class="text-emerald-600 font-black">CARE</span></span>
-        </a>
-        <nav class="hidden md:flex gap-7 items-center text-sm font-medium text-slate-700">
-            <a href="/" data-i18n="nav_inicio" class="hover:text-emerald-600 transition-colors">Inicio</a>
-            <a href="#utilidades" data-i18n="nav_utilidades" class="hover:text-emerald-600 transition-colors">Utilidades</a>
-            <a href="#asistente-ia" data-i18n="nav_ia" class="hover:text-emerald-600 transition-colors">IA</a>
-            <a href="#producto" data-i18n="nav_producto" class="hover:text-emerald-600 transition-colors">Producto</a>
-            <a href="/store" data-i18n="nav_tienda" class="hover:text-emerald-600 transition-colors">Tienda</a>
-            
-            <div class="flex items-center gap-1.5 bg-slate-100/80 px-2.5 py-1 rounded-full border border-slate-200/80 text-xs">
-                <i data-lucide="globe" class="w-3.5 h-3.5 text-slate-500"></i>
-                <select id="langSelector" class="bg-transparent text-slate-800 text-xs outline-none cursor-pointer font-medium">
-                    <option value="es" class="text-slate-900">ES</option>
-                    <option value="en" class="text-slate-900">EN</option>
-                    <option value="pt" class="text-slate-900">PT</option>
-                    <option value="fr" class="text-slate-900">FR</option>
-                    <option value="de" class="text-slate-900">DE</option>
-                    <option value="ru" class="text-slate-900">RU</option>
-                    <option value="zh" class="text-slate-900">ZH</option>
-                </select>
-            </div>
+<header class="sticky top-0 z-50 w-full">
+    <div class="glass-clean">
+        <div class="max-w-6xl mx-auto px-6 py-3.5 flex items-center justify-between gap-4">
+            <a href="/" class="flex items-center gap-2.5 group">
+                <img src="/assets/logo.svg" alt="SmartPlant Logo" class="w-8 h-8 transition-transform group-hover:scale-105">
+                <span class="text-xl font-bold tracking-tight">SmartPlant <span class="text-emerald-400 font-black">CARE</span></span>
+            </a>
+            <nav class="hidden md:flex gap-7 items-center text-sm font-medium">
+                <a href="/" data-i18n="nav_inicio" class="hover:text-emerald-400 transition-colors">Inicio</a>
+                <a href="#utilidades" data-i18n="nav_utilidades" class="hover:text-emerald-400 transition-colors">Utilidades</a>
+                <a href="#asistente-ia" data-i18n="nav_ia" class="hover:text-emerald-400 transition-colors">IA</a>
+                <a href="#producto" data-i18n="nav_producto" class="hover:text-emerald-400 transition-colors">Producto</a>
+                <a href="/store" data-i18n="nav_tienda" class="hover:text-emerald-400 transition-colors">Tienda</a>
 
-            <?php if ($logged): ?>
-                <a href="/dashboard" data-i18n="nav_dashboard" class="btn-emerald px-5 py-2 rounded-full font-semibold hover:scale-105 transition-all text-xs">
-                    Mi Dashboard
-                </a>
-            <?php else: ?>
-                <a href="/login" data-i18n="nav_cuenta" class="btn-emerald px-5 py-2 rounded-full font-semibold hover:scale-105 transition-all text-xs">
-                    Mi cuenta
-                </a>
-            <?php endif; ?>
-        </nav>
+                <div class="chrome-chip flex items-center gap-1.5 px-2.5 py-1.5 text-xs">
+                    <i data-lucide="globe" class="w-3.5 h-3.5"></i>
+                    <select id="langSelector" class="bg-transparent text-xs outline-none cursor-pointer font-medium">
+                        <option value="es" style="color:#0f172a">ES</option>
+                        <option value="en" style="color:#0f172a">EN</option>
+                        <option value="pt" style="color:#0f172a">PT</option>
+                        <option value="fr" style="color:#0f172a">FR</option>
+                        <option value="de" style="color:#0f172a">DE</option>
+                        <option value="ru" style="color:#0f172a">RU</option>
+                        <option value="zh" style="color:#0f172a">ZH</option>
+                    </select>
+                </div>
+
+                <?php if ($logged): ?>
+                    <a href="/dashboard" data-i18n="nav_dashboard" class="btn-emerald px-5 py-2 rounded-xl font-semibold hover:scale-105 transition-all text-xs">
+                        Mi Dashboard
+                    </a>
+                <?php else: ?>
+                    <a href="/login" data-i18n="nav_cuenta" class="btn-emerald px-5 py-2 rounded-xl font-semibold hover:scale-105 transition-all text-xs">
+                        Mi cuenta
+                    </a>
+                <?php endif; ?>
+            </nav>
+        </div>
     </div>
 </header>
 
 <section class="flex flex-col items-center justify-center text-center pt-28 pb-20 px-6">
-    <span data-i18n="hero_tag" class="reveal-blur bg-emerald-50 text-emerald-700 border border-emerald-200/80 font-bold tracking-[0.15em] text-xs uppercase mb-6 px-4 py-1.5 rounded-full shadow-sm">Innovación Sustentable</span>
+    <span data-i18n="hero_tag" class="reveal-blur bg-emerald-50 text-emerald-700 border border-emerald-200/80 font-bold tracking-[0.15em] text-xs uppercase mb-6 px-4 py-1.5 rounded-lg shadow-sm">Innovación Sustentable</span>
 
     <h2 class="reveal-blur text-5xl md:text-7xl font-bold tracking-tight mb-6 leading-[1.1] text-slate-900">
         <span data-i18n="hero_title_1">Inteligente por</span> <br><span data-i18n="hero_title_2" class="text-gradient-anim">naturaleza.</span>
@@ -66,10 +68,10 @@ $logged = isset($_SESSION['usuario_id']);
     </p>
 
     <div class="reveal mt-10 flex flex-col sm:flex-row gap-4">
-        <a href="/store" data-i18n="hero_btn_1" class="btn-emerald px-8 py-3.5 rounded-full text-base font-semibold hover:scale-105 transition-all shadow-md">
+        <a href="/store" data-i18n="hero_btn_1" class="btn-emerald px-8 py-3.5 rounded-xl text-base font-semibold hover:scale-105 transition-all shadow-md">
             Comprar ahora
         </a>
-        <a href="#producto" data-i18n="hero_btn_2" class="btn-emerald-outline px-8 py-3.5 rounded-full text-base font-semibold transition">
+        <a href="#producto" data-i18n="hero_btn_2" class="btn-emerald-outline px-8 py-3.5 rounded-xl text-base font-semibold transition">
             Más información →
         </a>
     </div>
@@ -88,7 +90,6 @@ $logged = isset($_SESSION['usuario_id']);
     <div class="grid md:grid-cols-2 gap-16 items-center">
         <div class="reveal-left flex justify-center">
             <div class="product-glow relative">
-                <div class="orbit-ring" style="width:350px;height:350px;top:50%;left:50%;margin-top:-175px;margin-left:-175px;"></div>
                 <div class="product-image-container float-product">
                     <div class="w-[300px] h-[300px] md:w-[380px] md:h-[380px] rounded-[3rem] border border-white/10 overflow-hidden relative">
                         <img src="/assets/product-lifestyle.png" alt="SmartPlant" class="w-full h-full object-cover">
@@ -102,10 +103,10 @@ $logged = isset($_SESSION['usuario_id']);
                 <div class="line-accent mb-6"></div>
                 <h3 data-i18n="prod_desc_title" class="text-4xl md:text-5xl font-semibold tracking-tight leading-tight">Diseñado para <br>vivir al aire libre.</h3>
             </div>
-            <p data-i18n="prod_desc" class="text-gray-400 text-lg font-light leading-relaxed max-w-md">
+            <p data-i18n="prod_desc" class="text-slate-600 text-lg font-light leading-relaxed max-w-md">
                 Un dispositivo compacto, resistente al agua y alimentado por energía solar. Monitorea tus plantas 24/7 y riega automáticamente.
             </p>
-            <a href="/store" data-i18n="prod_btn" class="inline-block px-8 py-4 rounded-full bg-white text-black font-semibold text-lg hover:opacity-90 transition-all">
+            <a href="/store" data-i18n="prod_btn" class="inline-block px-8 py-4 rounded-xl bg-white text-black font-semibold text-lg hover:opacity-90 transition-all">
                 Comprar SmartPlant →
             </a>
         </div>
@@ -121,22 +122,22 @@ $logged = isset($_SESSION['usuario_id']);
         <div class="card-glass rounded-[3rem] p-12">
             <i data-lucide="globe" class="w-10 h-10 mb-6 text-white/80"></i>
             <h3 class="text-3xl font-semibold mb-4">Monitoreo global.</h3>
-            <p class="text-gray-400 font-light">Humedad, luz y temperatura bajo control total desde tu dispositivo, estés donde estés.</p>
+            <p class="text-slate-600 font-light">Humedad, luz y temperatura bajo control total desde tu dispositivo, estés donde estés.</p>
         </div>
         <div class="card-glass rounded-[3rem] p-12">
             <i data-lucide="droplets" class="w-10 h-10 mb-6 text-cyan-400"></i>
             <h3 class="text-3xl font-semibold mb-4">Riego autónomo.</h3>
-            <p class="text-gray-400 font-light">El sistema decide el momento exacto de riego según los datos del sensor. Sin intervención.</p>
+            <p class="text-slate-600 font-light">El sistema decide el momento exacto de riego según los datos del sensor. Sin intervención.</p>
         </div>
         <div class="card-glass rounded-[3rem] p-12">
             <i data-lucide="sun" class="w-10 h-10 mb-6 text-yellow-400"></i>
             <h3 class="text-3xl font-semibold mb-4">Energía Solar.</h3>
-            <p class="text-gray-400 font-light">Panel integrado de alta eficiencia para un funcionamiento continuo 24/7.</p>
+            <p class="text-slate-600 font-light">Panel integrado de alta eficiencia para un funcionamiento continuo 24/7.</p>
         </div>
         <div class="card-glass rounded-[3rem] p-12">
             <i data-lucide="bar-chart-2" class="w-10 h-10 mb-6 text-green-400"></i>
             <h3 class="text-3xl font-semibold mb-4">Dashboard intuitivo.</h3>
-            <p class="text-gray-400 font-light">Visualizá la salud de tu jardín con estadísticas precisas y una interfaz impecable.</p>
+            <p class="text-slate-600 font-light">Visualizá la salud de tu jardín con estadísticas precisas y una interfaz impecable.</p>
         </div>
     </div>
 </section>
@@ -146,7 +147,7 @@ $logged = isset($_SESSION['usuario_id']);
         <div class="text-center mb-20 reveal-blur">
             <span class="text-white/50 font-semibold tracking-[0.2em] text-xs uppercase">Inteligencia artificial</span>
             <h2 class="text-4xl md:text-6xl font-semibold tracking-tight mt-4">Tu experta en <span class="text-gradient-anim">plantas.</span></h2>
-            <p class="text-gray-400 text-lg font-light mt-6 max-w-2xl mx-auto">
+            <p class="text-slate-600 text-lg font-light mt-6 max-w-2xl mx-auto">
                 Integrada directamente, nuestra IA analiza los datos de tus sensores en tiempo real.
             </p>
         </div>
@@ -157,21 +158,21 @@ $logged = isset($_SESSION['usuario_id']);
                     <div class="w-12 h-12 rounded-xl bg-white/5 flex items-center justify-center text-lg"><i data-lucide="brain" class="text-purple-400"></i></div>
                     <div>
                         <p class="text-white font-medium">Diagnósticos en tiempo real</p>
-                        <p class="text-gray-500 text-sm font-light">Analiza humedad, temperatura y luz.</p>
+                        <p class="text-slate-600 text-sm font-light">Analiza humedad, temperatura y luz.</p>
                     </div>
                 </div>
                 <div class="flex items-start gap-4 group">
                     <div class="w-12 h-12 rounded-xl bg-white/5 flex items-center justify-center text-lg"><i data-lucide="camera" class="text-blue-400"></i></div>
                     <div>
                         <p class="text-white font-medium">Identificación por foto</p>
-                        <p class="text-gray-500 text-sm font-light">Sube una foto y la IA te ayuda a identificarla.</p>
+                        <p class="text-slate-600 text-sm font-light">Sube una foto y la IA te ayuda a identificarla.</p>
                     </div>
                 </div>
                 <div class="flex items-start gap-4 group">
                     <div class="w-12 h-12 rounded-xl bg-white/5 flex items-center justify-center text-lg"><i data-lucide="message-square" class="text-green-400"></i></div>
                     <div>
                         <p class="text-white font-medium">Chat conversacional</p>
-                        <p class="text-gray-500 text-sm font-light">Preguntale como a un experto botánico.</p>
+                        <p class="text-slate-600 text-sm font-light">Preguntale como a un experto botánico.</p>
                     </div>
                 </div>
             </div>
@@ -182,10 +183,14 @@ $logged = isset($_SESSION['usuario_id']);
 <!-- ═══ AI ASSISTANT CHAT WIDGET (GEMINI) ═══ -->
 <?php include APPPATH . 'Views/partials/ai_assistant_widget.php'; ?>
 
-<footer class="py-20 text-center text-gray-500 text-sm border-t border-white/10 glass-clean rounded-t-[3rem] mt-20">
-    <div class="max-w-4xl mx-auto px-6">
-        <p class="mb-4 flex items-center justify-center gap-2"><i data-lucide="leaf" class="w-4 h-4 text-emerald-500"></i> SmartPlant CARE</p>
-        <p class="mt-10 opacity-50">© 2026 Todos los derechos reservados.</p>
+<footer class="glass-clean mt-20 w-full">
+    <div class="max-w-6xl mx-auto px-6 py-7 flex flex-col sm:flex-row items-center justify-between gap-3 text-sm">
+        <span class="flex items-center gap-1.5 font-medium"><i data-lucide="leaf" class="w-4 h-4 text-emerald-400"></i> SmartPlant CARE</span>
+        <div class="flex gap-4">
+            <a href="/store" data-i18n="nav_tienda" class="hover:text-emerald-400 transition-colors">Tienda</a>
+            <a href="/support" class="hover:text-emerald-400 transition-colors">Soporte</a>
+        </div>
+        <p class="text-xs">© 2026 Todos los derechos reservados.</p>
     </div>
 </footer>
 

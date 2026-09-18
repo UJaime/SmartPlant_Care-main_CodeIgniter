@@ -115,25 +115,27 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <link rel="stylesheet" href="/assets/styles.css">
 </head>
 <body class="bg-overlay text-white min-h-screen flex flex-col">
-<header class="sticky top-6 z-50 mx-auto max-w-5xl px-4">
-    <div class="glass-clean flex items-center justify-between px-8 py-4 rounded-[2.5rem]">
-        <a href="/" class="flex items-center gap-3 group">
-            <img src="/assets/logo.svg" alt="SmartPlant Logo" class="w-9 h-9 transition-transform group-hover:scale-105 filter drop-shadow-[0_2px_8px_rgba(16,185,129,0.35)]">
-            <span class="text-2xl font-bold tracking-tight text-slate-900">SmartPlant <span class="text-emerald-600 font-black">CARE</span></span>
-        </a>
-        <nav class="hidden md:flex gap-6 items-center text-sm font-medium text-slate-700">
-            <a href="/dashboard" class="hover:text-emerald-600 transition-colors">Dashboard</a>
-            <a href="/hardware/connect" class="hover:text-emerald-600 transition-colors">Hardware</a>
-            <a href="/store" class="hover:text-emerald-600 transition-colors">Tienda</a>
-            <a href="/dashboard?logout=1" class="bg-red-50 text-red-600 border border-red-200 px-4 py-2 rounded-full font-semibold hover:bg-red-100 transition-all">Salir</a>
-        </nav>
+<header class="sticky top-0 z-50 w-full">
+    <div class="glass-clean">
+        <div class="max-w-5xl mx-auto px-6 py-3.5 flex items-center justify-between gap-4">
+            <a href="/" class="flex items-center gap-3 group">
+                <img src="/assets/logo.svg" alt="SmartPlant Logo" class="w-9 h-9 transition-transform group-hover:scale-105 filter drop-shadow-[0_2px_8px_rgba(16,185,129,0.35)]">
+                <span class="text-2xl font-bold tracking-tight">SmartPlant <span class="text-emerald-400 font-black">CARE</span></span>
+            </a>
+            <nav class="hidden md:flex gap-6 items-center text-sm font-medium">
+                <a href="/dashboard" class="hover:text-emerald-400 transition-colors">Dashboard</a>
+                <a href="/hardware/connect" class="hover:text-emerald-400 transition-colors">Hardware</a>
+                <a href="/store" class="hover:text-emerald-400 transition-colors">Tienda</a>
+                <a href="/dashboard?logout=1" class="px-4 py-2 rounded-[0.75rem] text-xs font-semibold border border-red-400/30 bg-red-500/10 text-red-300 hover:bg-red-500/20 transition-all">Salir</a>
+            </nav>
+        </div>
     </div>
 </header>
 
 <main class="flex-1 max-w-5xl mx-auto px-6 py-16 w-full">
     <section class="grid lg:grid-cols-[0.9fr_1.1fr] gap-10 items-start">
         <div class="pt-6">
-            <span class="bg-emerald-100 text-emerald-800 border border-emerald-300 font-bold tracking-[0.15em] text-xs uppercase px-3 py-1 rounded-full shadow-sm">Alta de dispositivo</span>
+            <span class="bg-emerald-100 text-emerald-800 border border-emerald-300 font-bold tracking-[0.15em] text-xs uppercase px-3 py-1 rounded-lg shadow-sm">Alta de dispositivo</span>
             <h1 class="text-4xl md:text-6xl font-semibold tracking-tight mt-4 mb-6 text-slate-900">Conecta un nuevo SmartPlant.</h1>
             <p class="text-slate-600 text-lg font-light leading-relaxed">
                 Registra el nombre del dispositivo, el tipo de equipo y la planta o sector al que corresponde para que aparezca en tu sistema.
@@ -155,13 +157,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 <div class="text-sm bg-slate-50 border border-slate-200 rounded-2xl p-4 space-y-3">
                     <div>
                         <p class="text-slate-500 text-xs uppercase tracking-widest mb-1">Codigo</p>
-                        <code class="break-all text-slate-800 bg-white border border-slate-200 px-2 py-1 rounded-lg text-xs font-mono inline-block"><?= htmlspecialchars($createdDevice['codigo']) ?></code>
+                        <code class="break-all text-slate-800 bg-white border border-slate-200 px-2.5 py-1.5 rounded-lg text-sm font-mono inline-block"><?= htmlspecialchars($createdDevice['codigo']) ?></code>
                     </div>
                     <div>
                         <p class="text-slate-500 text-xs uppercase tracking-widest mb-1">API key</p>
-                        <code class="break-all text-slate-800 bg-white border border-slate-200 px-2 py-1 rounded-lg text-xs font-mono inline-block"><?= htmlspecialchars($createdDevice['api_key']) ?></code>
+                        <code class="break-all text-slate-800 bg-white border border-slate-200 px-2.5 py-1.5 rounded-lg text-sm font-mono inline-block"><?= htmlspecialchars($createdDevice['api_key']) ?></code>
                     </div>
-                    <a href="/hardware/connect?device=<?= (int) $createdDevice['id'] ?>" class="btn-emerald inline-flex items-center gap-1.5 px-5 py-2.5 rounded-full text-xs font-bold">
+                    <a href="/hardware/connect?device=<?= (int) $createdDevice['id'] ?>" class="btn-emerald inline-flex items-center gap-1.5 px-5 py-2.5 rounded-xl text-xs font-bold">
                         Abrir conexion de hardware <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i>
                     </a>
                 </div>
@@ -211,14 +213,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 </main>
 
 <!-- Footer -->
-<footer class="max-w-5xl mx-auto px-6 py-8 mt-6 border-t border-slate-200/80 text-slate-500 text-xs w-full">
-    <div class="flex flex-col sm:flex-row items-center justify-between gap-3">
-        <span class="flex items-center gap-1.5 font-medium"><i data-lucide="sprout" class="w-4 h-4 text-emerald-600"></i> SmartPlant CARE</span>
+<footer class="glass-clean mt-10 w-full">
+    <div class="max-w-5xl mx-auto px-6 py-7 flex flex-col sm:flex-row items-center justify-between gap-3 text-sm">
+        <span class="flex items-center gap-1.5 font-medium"><i data-lucide="sprout" class="w-4 h-4 text-emerald-400"></i> SmartPlant CARE</span>
         <div class="flex gap-4">
-            <a href="/" class="hover:text-slate-900 transition-colors">Inicio</a>
-            <a href="/support" class="hover:text-slate-900 transition-colors">Soporte</a>
+            <a href="/" class="hover:text-emerald-400 transition-colors">Inicio</a>
+            <a href="/support" class="hover:text-emerald-400 transition-colors">Soporte</a>
         </div>
-        <p class="text-[11px]">© 2026 Todos los derechos reservados.</p>
+        <p class="text-xs">© 2026 Todos los derechos reservados.</p>
     </div>
 </footer>
 

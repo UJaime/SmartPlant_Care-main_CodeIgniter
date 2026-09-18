@@ -21,13 +21,15 @@ $msg_estado    = $msg_estado ?? '';
 <body class="bg-overlay text-white font-['Inter'] min-h-screen flex flex-col antialiased selection:bg-white/20 overflow-x-hidden">
 
 <!-- Header -->
-<header class="sticky top-4 z-50 mx-auto max-w-6xl px-4">
-    <div class="glass-clean flex items-center justify-between px-6 py-3.5 rounded-2xl shadow-sm border border-slate-200/80">
-        <a href="/" class="flex items-center gap-2.5 group">
-            <img src="/assets/logo.svg" alt="SmartPlant Logo" class="w-8 h-8 transition-transform group-hover:scale-105">
-            <span class="text-xl font-bold tracking-tight text-slate-900">SmartPlant <span class="text-emerald-600 font-black">CARE</span></span>
-        </a>
-        <a href="/dashboard" class="btn-emerald-outline px-4 py-1.5 rounded-full text-xs font-semibold transition-all">Volver al Dashboard</a>
+<header class="sticky top-0 z-50 w-full">
+    <div class="glass-clean">
+        <div class="max-w-6xl mx-auto px-6 py-3.5 flex items-center justify-between gap-4">
+            <a href="/" class="flex items-center gap-2.5 group">
+                <img src="/assets/logo.svg" alt="SmartPlant Logo" class="w-8 h-8 transition-transform group-hover:scale-105">
+                <span class="text-xl font-bold tracking-tight">SmartPlant <span class="text-emerald-400 font-black">CARE</span></span>
+            </a>
+            <a href="/dashboard" class="chrome-chip px-4 py-1.5 text-xs font-semibold transition-all">Volver al Dashboard</a>
+        </div>
     </div>
 </header>
 
@@ -73,10 +75,10 @@ $msg_estado    = $msg_estado ?? '';
 </main>
 
 <!-- Footer -->
-<footer class="w-full border-t border-slate-200/80 py-8 mt-auto">
-    <div class="max-w-6xl mx-auto px-6 text-center flex flex-col items-center">
-        <span class="text-xs text-slate-500 font-medium flex items-center gap-1.5 mb-2"><i data-lucide="sprout" class="w-4 h-4 text-emerald-600"></i> SmartPlant CARE</span>
-        <p class="text-[10px] text-slate-400">© 2026 Todos los derechos reservados.</p>
+<footer class="glass-clean mt-10 w-full">
+    <div class="max-w-6xl mx-auto px-6 py-7 text-center flex flex-col items-center gap-2 text-sm">
+        <span class="flex items-center gap-1.5 font-medium"><i data-lucide="sprout" class="w-4 h-4 text-emerald-400"></i> SmartPlant CARE</span>
+        <p class="text-xs">© 2026 Todos los derechos reservados.</p>
     </div>
 </footer>
 

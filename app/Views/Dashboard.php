@@ -61,47 +61,49 @@ $evento_icono = [
 <div id="scrollProgress" class="fixed top-0 left-0 h-1 bg-emerald-500 z-[100] transition-all duration-150" style="width:0%"></div>
 
 <!-- ═══ HEADER ═══ -->
-<header class="sticky top-4 z-50 mx-auto max-w-6xl px-4">
-    <div class="glass-clean flex items-center justify-between px-6 py-3.5 rounded-2xl shadow-sm border border-slate-200/80 dark:border-slate-800">
-        <a href="/" class="flex items-center gap-2.5 group">
-            <img src="/assets/logo.svg" alt="SmartPlant Logo" class="w-8 h-8 transition-transform group-hover:scale-105">
-            <span class="text-xl font-bold tracking-tight text-slate-900 dark:text-white">SmartPlant <span class="text-emerald-600 font-black">CARE</span></span>
-        </a>
-        
-        <div class="hidden sm:flex items-center gap-2 <?= $status_badge_class ?> border px-3 py-1 rounded-full text-xs font-semibold">
-            <span class="w-2 h-2 rounded-full <?= $status_dot_class ?>"></span>
-            <span><?= $status_label ?></span>
-        </div>
+<header class="sticky top-0 z-50 w-full">
+    <div class="glass-clean">
+        <div class="max-w-6xl mx-auto px-6 py-3.5 flex items-center justify-between gap-4">
+            <a href="/" class="flex items-center gap-2.5 group">
+                <img src="/assets/logo.svg" alt="SmartPlant Logo" class="w-8 h-8 transition-transform group-hover:scale-105">
+                <span class="text-xl font-bold tracking-tight">SmartPlant <span class="text-emerald-400 font-black">CARE</span></span>
+            </a>
 
-        <div class="flex items-center gap-3">
-            <!-- Theme Toggle -->
-            <button onclick="toggleTheme()" class="w-8 h-8 rounded-full bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-200 flex items-center justify-center hover:bg-slate-200 dark:hover:bg-slate-700 transition-all shadow-sm" title="Cambiar tema" id="themeToggleBtn">
-                <i data-lucide="moon" class="w-4 h-4"></i>
-            </button>
-            
-            <div class="flex items-center gap-2.5 pl-2 border-l border-slate-200 dark:border-slate-800">
-                <div class="w-8 h-8 rounded-full bg-gradient-to-br from-emerald-400 to-teal-600 border border-emerald-300 flex items-center justify-center text-xs text-white font-bold overflow-hidden shadow-sm cursor-pointer hover:scale-105 transition-transform" onclick="openProfileModal()" title="Mi Perfil">
-                    <?php if(!empty($_SESSION['foto_perfil'])): ?>
-                        <img id="headerAvatarImg" src="<?= htmlspecialchars($_SESSION['foto_perfil']) ?>" class="w-full h-full object-cover" alt="Perfil">
-                        <span id="headerAvatarEmoji" class="hidden"><i data-lucide="user" class="w-3.5 h-3.5"></i></span>
-                    <?php else: ?>
-                        <span id="headerAvatarEmoji"><i data-lucide="user" class="w-3.5 h-3.5"></i></span>
-                        <img id="headerAvatarImg" src="" class="w-full h-full object-cover hidden" alt="Perfil">
-                    <?php endif; ?>
-                </div>
-                <div class="hidden md:block text-left">
-                    <p class="text-xs font-bold text-slate-900 dark:text-white leading-tight"><?= htmlspecialchars(explode(' ', $nombre)[0]) ?></p>
-                    <p class="text-[9px] text-emerald-600 dark:text-emerald-400 font-semibold uppercase tracking-wider"><?= $_SESSION['plan'] ?? 'free' ?></p>
-                </div>
+            <div class="hidden sm:flex items-center gap-2 chrome-chip px-3 py-1.5 text-xs font-semibold">
+                <span class="w-2 h-2 rounded-full <?= $status_dot_class ?>"></span>
+                <span><?= $status_label ?></span>
             </div>
 
-            <div class="flex items-center gap-1.5 ml-1">
-                <button onclick="openProfileModal()" class="bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-200 px-3 py-1.5 rounded-full text-xs font-semibold hover:bg-slate-200 dark:hover:bg-slate-700 transition-all">
-                    Perfil
+            <div class="flex items-center gap-3">
+                <!-- Theme Toggle -->
+                <button onclick="toggleTheme()" class="chrome-chip w-9 h-9 flex items-center justify-center" title="Cambiar tema" id="themeToggleBtn">
+                    <i data-lucide="moon" class="w-4 h-4"></i>
                 </button>
-                <a href="?logout=1" class="bg-red-50 dark:bg-red-950/30 text-red-600 dark:text-red-400 border border-red-200/80 dark:border-red-900/40 px-3 py-1.5 rounded-full text-xs font-semibold hover:bg-red-100 dark:hover:bg-red-950/60 transition-all">
-                    Salir
-                </a>
+
+                <div class="flex items-center gap-2.5 pl-3 border-l border-white/10">
+                    <div class="w-8 h-8 rounded-full bg-gradient-to-br from-emerald-400 to-teal-600 border border-emerald-300/40 flex items-center justify-center text-xs text-white font-bold overflow-hidden shadow-sm cursor-pointer hover:scale-105 transition-transform" onclick="openProfileModal()" title="Mi Perfil">
+                        <?php if(!empty($_SESSION['foto_perfil'])): ?>
+                            <img id="headerAvatarImg" src="<?= htmlspecialchars($_SESSION['foto_perfil']) ?>" class="w-full h-full object-cover" alt="Perfil">
+                            <span id="headerAvatarEmoji" class="hidden"><i data-lucide="user" class="w-3.5 h-3.5"></i></span>
+                        <?php else: ?>
+                            <span id="headerAvatarEmoji"><i data-lucide="user" class="w-3.5 h-3.5"></i></span>
+                            <img id="headerAvatarImg" src="" class="w-full h-full object-cover hidden" alt="Perfil">
+                        <?php endif; ?>
+                    </div>
+                    <div class="hidden md:block text-left">
+                        <p class="text-xs font-bold leading-tight"><?= htmlspecialchars(explode(' ', $nombre)[0]) ?></p>
+                        <p class="text-[11px] text-emerald-400 font-semibold uppercase tracking-wider"><?= $_SESSION['plan'] ?? 'free' ?></p>
+                    </div>
+                </div>
+
+                <div class="flex items-center gap-1.5 ml-1">
+                    <button onclick="openProfileModal()" class="chrome-chip px-3 py-1.5 text-xs font-semibold">
+                        Perfil
+                    </button>
+                    <a href="?logout=1" class="px-3 py-1.5 rounded-[0.75rem] text-xs font-semibold border border-red-400/30 bg-red-500/10 text-red-300 hover:bg-red-500/20 transition-all">
+                        Salir
+                    </a>
+                </div>
             </div>
         </div>
     </div>
@@ -127,19 +129,19 @@ $evento_icono = [
         <div class="flex items-center gap-2 flex-wrap">
             <?php foreach ($plantas as $p): ?>
             <a href="?planta=<?= $p['id'] ?>"
-               class="px-4 py-2 rounded-full text-xs font-semibold border transition-all flex items-center gap-1.5 <?= $p['id'] == $planta_id ? 'bg-emerald-600 text-white border-emerald-600 shadow-sm' : 'border-slate-300 dark:border-slate-700 text-slate-700 dark:text-slate-300 bg-white dark:bg-slate-800 hover:border-emerald-400' ?>">
+               class="px-4 py-2 rounded-xl text-xs font-semibold border transition-all flex items-center gap-1.5 <?= $p['id'] == $planta_id ? 'bg-emerald-600 text-white border-emerald-600 shadow-sm' : 'border-slate-300 dark:border-slate-700 text-slate-700 dark:text-slate-300 bg-white dark:bg-slate-800 hover:border-emerald-400' ?>">
                 <i data-lucide="sprout" class="w-3.5 h-3.5"></i> <?= htmlspecialchars($p['nombre']) ?>
             </a>
             <?php endforeach; ?>
 
             <?php if (count($plantas) > 0): ?>
-            <button onclick="openAddPlantModal()" class="px-3.5 py-2 rounded-full text-xs border border-dashed border-emerald-500 text-emerald-600 dark:text-emerald-400 hover:bg-emerald-50 dark:hover:bg-emerald-950/30 transition-all font-semibold flex items-center gap-1.5">
+            <button onclick="openAddPlantModal()" class="px-3.5 py-2 rounded-xl text-xs border border-dashed border-emerald-500 text-emerald-600 dark:text-emerald-400 hover:bg-emerald-50 dark:hover:bg-emerald-950/30 transition-all font-semibold flex items-center gap-1.5">
                 <i data-lucide="plus" class="w-3.5 h-3.5"></i> Agregar
             </button>
             <?php endif; ?>
 
             <?php if ($planta_actual): ?>
-            <button onclick="openDeletePlantModal(<?= $planta_actual['id'] ?>, '<?= htmlspecialchars(addslashes($planta_actual['nombre'])) ?>')" class="px-3 py-2 rounded-full text-xs text-red-500 hover:bg-red-50 dark:hover:bg-red-950/30 transition-all font-medium flex items-center gap-1 border border-red-200 dark:border-red-900/40" title="Eliminar esta planta">
+            <button onclick="openDeletePlantModal(<?= $planta_actual['id'] ?>, '<?= htmlspecialchars(addslashes($planta_actual['nombre'])) ?>')" class="px-3 py-2 rounded-xl text-xs text-red-500 hover:bg-red-50 dark:hover:bg-red-950/30 transition-all font-medium flex items-center gap-1 border border-red-200 dark:border-red-900/40" title="Eliminar esta planta">
                 <i data-lucide="trash-2" class="w-3.5 h-3.5"></i>
             </button>
             <?php endif; ?>
@@ -330,7 +332,7 @@ $evento_icono = [
                         <span class="text-xs font-semibold text-slate-500 uppercase tracking-wider">Humedad en el tiempo</span>
                         <h3 class="text-lg font-bold text-slate-900 dark:text-white mt-0.5">Últimas 12 horas</h3>
                     </div>
-                    <span class="text-xs text-slate-500 font-medium bg-slate-100 dark:bg-slate-800 px-3 py-1 rounded-full">Lecturas cada 30 min</span>
+                    <span class="text-xs text-slate-500 font-medium bg-slate-100 dark:bg-slate-800 px-3 py-1 rounded-lg">Lecturas cada 30 min</span>
                 </div>
                 <div class="flex items-end gap-1.5 h-32" id="chartBars">
                     <?php if (!empty($historial)): ?>
@@ -432,7 +434,7 @@ $evento_icono = [
                     <h3 class="text-lg font-bold text-slate-900 dark:text-white">Registro de Actividad</h3>
                     <p class="text-slate-500 text-xs mt-0.5">Eventos automáticos, alertas de umbrales y riegos ejecutados.</p>
                 </div>
-                <span class="text-xs text-slate-500 font-medium bg-slate-100 dark:bg-slate-800 px-3 py-1 rounded-full">Últimos eventos</span>
+                <span class="text-xs text-slate-500 font-medium bg-slate-100 dark:bg-slate-800 px-3 py-1 rounded-lg">Últimos eventos</span>
             </div>
             
             <div class="space-y-3">
@@ -536,14 +538,14 @@ $evento_icono = [
 </div>
 
 <!-- Footer -->
-<footer class="max-w-6xl mx-auto px-6 py-8 mt-6 border-t border-slate-200/80 dark:border-slate-800 text-slate-500 text-xs">
-    <div class="flex flex-col sm:flex-row items-center justify-between gap-3">
-        <span class="flex items-center gap-1.5 font-medium"><i data-lucide="sprout" class="w-4 h-4 text-emerald-600"></i> SmartPlant CARE</span>
+<footer class="glass-clean mt-10 w-full">
+    <div class="max-w-6xl mx-auto px-6 py-7 flex flex-col sm:flex-row items-center justify-between gap-3 text-sm">
+        <span class="flex items-center gap-1.5 font-medium"><i data-lucide="sprout" class="w-4 h-4 text-emerald-400"></i> SmartPlant CARE</span>
         <div class="flex gap-4">
-            <a href="/" class="hover:text-slate-900 dark:hover:text-white transition-colors">Inicio</a>
-            <a href="/support" class="hover:text-slate-900 dark:hover:text-white transition-colors">Soporte</a>
+            <a href="/" class="hover:text-emerald-400 transition-colors">Inicio</a>
+            <a href="/support" class="hover:text-emerald-400 transition-colors">Soporte</a>
         </div>
-        <p class="text-[11px]">© 2026 Todos los derechos reservados.</p>
+        <p class="text-xs">© 2026 Todos los derechos reservados.</p>
     </div>
 </footer>
 
@@ -888,9 +890,9 @@ $evento_icono = [
         document.body.classList.toggle('text-gray-900', next === 'light');
 
         if (btn) {
-            btn.innerHTML = next === 'dark' 
-                ? '<i data-lucide="sun" class="w-4 h-4 text-amber-400"></i>' 
-                : '<i data-lucide="moon" class="w-4 h-4 text-slate-700"></i>';
+            btn.innerHTML = next === 'dark'
+                ? '<i data-lucide="sun" class="w-4 h-4 text-amber-400"></i>'
+                : '<i data-lucide="moon" class="w-4 h-4"></i>';
             btn.setAttribute('aria-label', next === 'dark' ? 'Cambiar a modo claro' : 'Cambiar a modo oscuro');
             btn.setAttribute('title', next === 'dark' ? 'Cambiar a modo claro' : 'Cambiar a modo oscuro');
             if (typeof lucide !== 'undefined') lucide.createIcons();

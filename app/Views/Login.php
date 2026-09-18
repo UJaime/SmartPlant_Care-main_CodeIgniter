@@ -234,39 +234,39 @@ $google_auth_url = 'https://accounts.google.com/o/oauth2/v2/auth?' . http_build_
 
 <body class="bg-overlay text-white min-h-screen flex flex-col">
 
-<header class="sticky top-6 z-50 mx-auto max-w-5xl px-4">
-    <div class="glass-clean flex items-center justify-between px-8 py-3.5 rounded-full shadow-sm">
-        <a href="/" class="flex items-center gap-3 group">
-            <img src="/assets/logo.svg" alt="SmartPlant Logo" class="w-8 h-8 transition-transform group-hover:scale-105">
-            <span class="text-xl font-bold tracking-tight text-slate-900">SmartPlant <span class="text-emerald-600 font-black">CARE</span></span>
-        </a>
-        <nav class="hidden md:flex gap-7 items-center text-sm font-medium text-slate-700">
-            <a href="/#utilidades" data-i18n="nav_utilidades" class="hover:text-emerald-600 transition-colors">Utilidades</a>
-            <a href="/#producto" data-i18n="nav_producto" class="hover:text-emerald-600 transition-colors">Producto</a>
-            <a href="/store" data-i18n="nav_tienda" class="hover:text-emerald-600 transition-colors">Tienda</a>
+<header class="sticky top-0 z-50 w-full">
+    <div class="glass-clean">
+        <div class="max-w-6xl mx-auto px-6 py-3.5 flex items-center justify-between gap-4">
+            <a href="/" class="flex items-center gap-2.5 group">
+                <img src="/assets/logo.svg" alt="SmartPlant Logo" class="w-8 h-8 transition-transform group-hover:scale-105">
+                <span class="text-xl font-bold tracking-tight">SmartPlant <span class="text-emerald-400 font-black">CARE</span></span>
+            </a>
+            <nav class="hidden md:flex gap-7 items-center text-sm font-medium">
+                <a href="/#utilidades" data-i18n="nav_utilidades" class="hover:text-emerald-400 transition-colors">Utilidades</a>
+                <a href="/#producto" data-i18n="nav_producto" class="hover:text-emerald-400 transition-colors">Producto</a>
+                <a href="/store" data-i18n="nav_tienda" class="hover:text-emerald-400 transition-colors">Tienda</a>
 
-            <div class="flex items-center gap-1.5 bg-slate-100/80 px-2.5 py-1 rounded-full border border-slate-200/80 text-xs">
-                <i data-lucide="globe" class="w-3.5 h-3.5 text-slate-500"></i>
-                <select id="langSelector" class="bg-transparent text-slate-800 text-xs outline-none cursor-pointer font-medium">
-                    <option value="es" class="text-slate-900">ES</option>
-                    <option value="en" class="text-slate-900">EN</option>
-                    <option value="pt" class="text-slate-900">PT</option>
-                    <option value="fr" class="text-slate-900">FR</option>
-                    <option value="de" class="text-slate-900">DE</option>
-                    <option value="ru" class="text-slate-900">RU</option>
-                    <option value="zh" class="text-slate-900">ZH</option>
-                </select>
-            </div>
+                <div class="flex items-center gap-1.5 chrome-chip px-2.5 py-1 text-xs">
+                    <i data-lucide="globe" class="w-3.5 h-3.5"></i>
+                    <select id="langSelector" class="bg-transparent text-xs outline-none cursor-pointer font-medium">
+                        <option value="es" class="text-slate-900">ES</option>
+                        <option value="en" class="text-slate-900">EN</option>
+                        <option value="pt" class="text-slate-900">PT</option>
+                        <option value="fr" class="text-slate-900">FR</option>
+                        <option value="de" class="text-slate-900">DE</option>
+                        <option value="ru" class="text-slate-900">RU</option>
+                        <option value="zh" class="text-slate-900">ZH</option>
+                    </select>
+                </div>
 
-            <a href="/login" data-i18n="nav_cuenta" class="btn-emerald px-5 py-2 rounded-full font-semibold hover:scale-105 transition-all text-xs">Mi cuenta</a>
-        </nav>
+                <a href="/login" data-i18n="nav_cuenta" class="btn-emerald px-5 py-2 rounded-xl font-semibold transition-all text-xs">Mi cuenta</a>
+            </nav>
+        </div>
     </div>
 </header>
 
 <main class="flex-1 flex items-center justify-center px-6 py-20">
     <div class="w-full max-w-md relative">
-
-        <div class="orbit-ring" style="width:500px;height:500px;top:50%;left:50%;margin-top:-250px;margin-left:-250px;"></div>
 
         <div class="form-glow relative">
             <form method="POST" class="glass-form rounded-[2.5rem] p-10 md:p-12 relative z-10 reveal-scale shadow-2xl">
@@ -289,7 +289,7 @@ $google_auth_url = 'https://accounts.google.com/o/oauth2/v2/auth?' . http_build_
                 <?php endif; ?>
 
                 <div class="mb-5">
-                    <label data-i18n="label_email" class="text-xs font-medium text-gray-400 tracking-widest uppercase mb-2 block ml-1">Correo</label>
+                    <label data-i18n="label_email" class="text-xs font-semibold text-gray-600 tracking-wide uppercase mb-2 block ml-1">Correo</label>
                     <input type="email" name="email" placeholder="tucorreo@smartplant.com"
                         value="<?= htmlspecialchars($_POST['email'] ?? '') ?>"
                         class="input-glass w-full rounded-2xl px-5 py-4 text-sm font-light"
@@ -297,13 +297,13 @@ $google_auth_url = 'https://accounts.google.com/o/oauth2/v2/auth?' . http_build_
                 </div>
 
                 <div class="mb-6">
-                    <label data-i18n="label_pass" class="text-xs font-medium text-gray-400 tracking-widest uppercase mb-2 block ml-1">Contraseña</label>
+                    <label data-i18n="label_pass" class="text-xs font-semibold text-gray-600 tracking-wide uppercase mb-2 block ml-1">Contraseña</label>
                     <div class="relative">
                         <input type="password" name="password" id="passwordInput" placeholder="••••••••"
                             class="input-glass w-full rounded-2xl px-5 py-4 text-sm font-light pr-14"
                             required autocomplete="current-password">
                         <button type="button" onclick="togglePassword()"
-                            id="toggleBtn" class="absolute right-4 top-1/2 -translate-y-1/2 text-white/30 hover:text-white/60 transition-colors">
+                            id="toggleBtn" class="absolute right-4 top-1/2 -translate-y-1/2 text-white/60 hover:text-white transition-colors">
                             <i data-lucide="eye" class="w-5 h-5"></i>
                         </button>
                     </div>
@@ -465,7 +465,7 @@ $google_auth_url = 'https://accounts.google.com/o/oauth2/v2/auth?' . http_build_
         <form method="POST" class="space-y-5">
             <input type="hidden" name="forgot_password" value="1">
             <div>
-                <label data-i18n="label_email" class="block text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-widest mb-2 ml-1">Correo</label>
+                <label data-i18n="label_email" class="block text-xs font-semibold text-gray-600 dark:text-gray-300 uppercase tracking-wide mb-2 ml-1">Correo</label>
                 <div class="relative">
                     <input type="email" name="email_forgot" placeholder="tucorreo@smartplant.com" required class="w-full input-glass rounded-2xl px-5 py-3.5 text-sm font-light pl-11">
                     <i data-lucide="mail" class="w-5 h-5 absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 pointer-events-none"></i>

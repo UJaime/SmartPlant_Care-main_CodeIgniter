@@ -17,35 +17,57 @@
     --brand-green-deep: #047857;
     --brand-green-light: #ecfdf5;
     --brand-green-accent: #34d399;
-    --brand-green-glow: rgba(16, 185, 129, 0.25);
+    --brand-green-glow: rgba(5, 150, 105, 0.18);
 
-    --bg: #f0f7f2;
-    --bg-card: #fafdf9;
-    --surface: rgba(16, 185, 129, 0.04);
-    --surface-hover: rgba(16, 185, 129, 0.08);
-    --border: rgba(16, 185, 129, 0.12);
-    --border-md: rgba(16, 185, 129, 0.2);
-    --border-hi: rgba(16, 185, 129, 0.4);
+    /* Warm, grounded neutrals instead of a stark white canvas */
+    --bg: #f3f1ea;
+    --bg-card: #ffffff;
+    --surface: rgba(16, 185, 129, 0.05);
+    --surface-hover: rgba(16, 185, 129, 0.09);
+    --border: rgba(15, 23, 22, 0.09);
+    --border-md: rgba(15, 23, 22, 0.16);
+    --border-hi: rgba(5, 150, 105, 0.4);
 
-    --text: #0f172a;
-    --text-sub: #1e293b;
-    --text-muted: #475569;
-    --text-dim: #64748b;
+    --text: #14201b;
+    --text-sub: #263630;
+    --text-muted: #4b5b54;
+    --text-dim: #6b7b73;
 
-    --black: #0f172a;
+    --black: #14201b;
     --white: #ffffff;
 
+    /* Dark "chrome" for header/footer — the structural frame of every page */
+    --chrome-bg: #0d1712;
+    --chrome-bg-soft: #16241d;
+    --chrome-border: rgba(255, 255, 255, 0.08);
+    --chrome-text: #f3f7f4;
+    --chrome-text-muted: rgba(243, 247, 244, 0.64);
+    --chrome-text-dim: rgba(243, 247, 244, 0.42);
+    --chrome-accent: #34d399;
+
+    --radius-btn: 0.75rem;
+    --radius-badge: 0.5rem;
     --radius-xl: 1.25rem;
     --radius-2xl: 1.75rem;
     --radius-3xl: 2.25rem;
 
-    --shadow-sm: 0 2px 4px rgba(16, 185, 129, 0.04), 0 1px 2px rgba(0, 0, 0, 0.03);
-    --shadow-md: 0 8px 24px rgba(16, 185, 129, 0.08), 0 2px 6px rgba(0, 0, 0, 0.04);
-    --shadow-lg: 0 16px 40px rgba(16, 185, 129, 0.12), 0 4px 12px rgba(0, 0, 0, 0.04);
-    --shadow-xl: 0 24px 60px rgba(16, 185, 129, 0.16), 0 8px 24px rgba(0, 0, 0, 0.05);
+    --shadow-sm: 0 1px 3px rgba(15, 23, 22, 0.05), 0 1px 2px rgba(0, 0, 0, 0.04);
+    --shadow-md: 0 6px 18px rgba(15, 23, 22, 0.07), 0 2px 6px rgba(0, 0, 0, 0.04);
+    --shadow-lg: 0 14px 34px rgba(15, 23, 22, 0.10), 0 4px 12px rgba(0, 0, 0, 0.05);
+    --shadow-xl: 0 22px 54px rgba(15, 23, 22, 0.14), 0 8px 22px rgba(0, 0, 0, 0.06);
 
     --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
     --ease-std: cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Respect users who asked the OS for less motion — no looping/decorative animation for them */
+@media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+        animation-duration: 0.001ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.001ms !important;
+        scroll-behavior: auto !important;
+    }
 }
 
 [data-theme="dark"],
@@ -68,6 +90,10 @@ html.dark,
     --shadow-md: 0 8px 24px rgba(0, 0, 0, 0.4);
     --shadow-lg: 0 16px 44px rgba(16, 185, 129, 0.15);
     --shadow-xl: 0 28px 70px rgba(16, 185, 129, 0.2);
+
+    --chrome-bg: #060a08;
+    --chrome-bg-soft: #101d16;
+    --chrome-border: rgba(255, 255, 255, 0.06);
 }
 
 .ui-control {
@@ -77,7 +103,7 @@ html.dark,
     align-items: center;
     justify-content: center;
     gap: 0.45rem;
-    border-radius: 999px;
+    border-radius: var(--radius-btn);
     border: 1px solid var(--border);
     background: var(--surface);
     color: var(--text-sub);
@@ -104,7 +130,7 @@ html.dark,
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    border-radius: 999px;
+    border-radius: var(--radius-badge);
     border: 1px solid var(--border);
     color: var(--text-sub);
 }
@@ -220,20 +246,63 @@ html:not(.dark):not([data-theme="dark"]) .text-white\/25 {
 }
 
 /* ───────────────────────────────────────────────
-   GLASS / CARD STYLES  (clean, no heavy blur)
+   SITE CHROME — dark header/footer bar used on every page.
+   Deliberately solid (not glassy) and NOT a floating pill: a plain,
+   grounded bar reads as "a professional website" rather than "an app
+   widget", and keeps text contrast constant regardless of what
+   scrolls behind it (important for readability).
 ─────────────────────────────────────────────── */
 .glass-clean {
-    background: rgba(255, 255, 255, 0.82);
-    backdrop-filter: blur(20px) saturate(180%);
-    -webkit-backdrop-filter: blur(20px) saturate(180%);
-    border: 1px solid var(--border);
+    background: var(--chrome-bg);
+    border: 1px solid var(--chrome-border);
     box-shadow: var(--shadow-md);
+    color: var(--chrome-text);
 }
 
-[data-theme="dark"] .glass-clean {
-    background: rgba(23, 26, 32, 0.84);
-    border-color: var(--border-md);
-    box-shadow: var(--shadow-lg);
+/* Text-color utilities used inside header/footer markup resolve against the
+   dark chrome instead of the light-mode overrides defined further down. */
+.glass-clean, .glass-clean * {
+    --text: var(--chrome-text);
+    --text-sub: var(--chrome-text);
+    --text-muted: var(--chrome-text-muted);
+    --text-dim: var(--chrome-text-dim);
+}
+
+.glass-clean .text-slate-900,
+.glass-clean .text-slate-800,
+.glass-clean .text-slate-700,
+.glass-clean .text-gray-900,
+.glass-clean .text-gray-800,
+.glass-clean .text-gray-700 { color: var(--chrome-text) !important; }
+
+.glass-clean .text-slate-600,
+.glass-clean .text-slate-500,
+.glass-clean .text-gray-600,
+.glass-clean .text-gray-500 { color: var(--chrome-text-muted) !important; }
+
+.glass-clean .text-slate-400,
+.glass-clean .text-gray-400 { color: var(--chrome-text-dim) !important; }
+
+.glass-clean a:hover,
+.glass-clean button:hover { color: var(--chrome-accent); }
+
+.glass-clean .border-slate-200\/80,
+.glass-clean .border-slate-200,
+.glass-clean .border-slate-800 { border-color: var(--chrome-border) !important; }
+
+/* Rectangular "chip" controls that live inside the dark chrome — the
+   replacement for the old rounded-full pill buttons/badges. */
+.chrome-chip {
+    background: var(--chrome-bg-soft);
+    border: 1px solid var(--chrome-border);
+    color: var(--chrome-text);
+    border-radius: var(--radius-btn);
+    transition: background 0.2s var(--ease-out), border-color 0.2s var(--ease-out);
+}
+
+.chrome-chip:hover {
+    background: rgba(255, 255, 255, 0.1);
+    border-color: rgba(255, 255, 255, 0.18);
 }
 
 .glass-form {
@@ -314,12 +383,12 @@ html:not(.dark):not([data-theme="dark"]) .text-white\/25 {
 }
 
 .text-gradient-anim {
-    background: linear-gradient(90deg, #10b981, #059669, #34d399, #10b981);
-    background-size: 300% 100%;
+    /* Static gradient — a perpetually shifting headline reads as gimmicky,
+       not professional, and is one more thing fighting for attention. */
+    background: linear-gradient(135deg, #059669, #047857);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
-    animation: gradientShift 6s ease infinite;
 }
 
 .text-gradient-emerald {
@@ -340,17 +409,17 @@ html:not(.dark):not([data-theme="dark"]) .text-white\/25 {
 }
 
 .btn-emerald {
-    background: linear-gradient(135deg, #10b981, #059669);
+    background: linear-gradient(135deg, #059669, #047857);
     color: #ffffff !important;
     font-weight: 600;
-    box-shadow: 0 4px 14px rgba(16, 185, 129, 0.35);
-    transition: all 0.3s var(--ease-out);
+    box-shadow: 0 2px 8px rgba(4, 120, 87, 0.25);
+    transition: all 0.2s var(--ease-out);
 }
 
 .btn-emerald:hover {
-    background: linear-gradient(135deg, #059669, #047857);
-    box-shadow: 0 6px 20px rgba(16, 185, 129, 0.45);
-    transform: translateY(-2px);
+    background: linear-gradient(135deg, #047857, #065f46);
+    box-shadow: 0 4px 14px rgba(4, 120, 87, 0.3);
+    transform: translateY(-1px);
 }
 
 .btn-emerald-outline {
@@ -606,7 +675,6 @@ a.bg-white {
     position: absolute;
     border: 1px solid var(--border);
     border-radius: 50%;
-    animation: orbitSpin 30s linear infinite;
     pointer-events: none;
 }
 
@@ -719,13 +787,8 @@ a.bg-white {
     background: var(--black);
 }
 
-.progress-fill::after {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.18), transparent);
-    animation: shimmer 2.5s infinite;
-}
+/* Perpetual shimmer sweep removed — a filled bar reading a value doesn't
+   need to keep moving forever; the one-time width transition is enough. */
 
 @keyframes shimmer {
     0% {
@@ -824,7 +887,7 @@ a.bg-white {
     top: 20px;
     right: 20px;
     padding: 5px 14px;
-    border-radius: 999px;
+    border-radius: var(--radius-badge);
     font-size: 0.68rem;
     font-weight: 600;
     letter-spacing: 0.05em;
@@ -885,7 +948,7 @@ a.bg-white {
 .store-feature-tag {
     background: var(--surface);
     border: 1px solid var(--border);
-    border-radius: 999px;
+    border-radius: var(--radius-badge);
     padding: 3px 11px;
     font-size: 0.7rem;
     color: var(--text-muted);
@@ -900,7 +963,7 @@ a.bg-white {
     justify-content: center;
     gap: 8px;
     padding: 13px 22px;
-    border-radius: 999px;
+    border-radius: var(--radius-btn);
     border: none;
     background: var(--black);
     color: var(--white);
@@ -925,7 +988,7 @@ a.bg-white {
     left: 50%;
     transform: translateX(-50%) translateY(120px);
     background: var(--black);
-    border-radius: 999px;
+    border-radius: var(--radius-btn);
     padding: 13px 26px;
     display: flex;
     align-items: center;
@@ -952,7 +1015,7 @@ a.bg-white {
     justify-content: center;
     gap: 8px;
     padding: 13px 22px;
-    border-radius: 999px;
+    border-radius: var(--radius-btn);
     border: 1px solid var(--border-md);
     background: transparent;
     color: var(--text);
@@ -978,7 +1041,7 @@ a.bg-white {
     justify-content: center;
     gap: 8px;
     padding: 13px 22px;
-    border-radius: 999px;
+    border-radius: var(--radius-btn);
     border: 1px solid var(--border-md);
     background: transparent;
     color: var(--text);
@@ -1167,7 +1230,7 @@ a.bg-white {
     display: inline-block;
     width: fit-content;
     padding: 4px 12px;
-    border-radius: 999px;
+    border-radius: var(--radius-badge);
     font-size: 0.65rem;
     font-weight: 700;
     letter-spacing: 0.06em;
@@ -1449,7 +1512,7 @@ a.bg-white {
     justify-content: center;
     gap: 10px;
     padding: 14px 20px;
-    border-radius: 999px;
+    border-radius: var(--radius-btn);
     border: none;
     font-size: 0.92rem;
     font-weight: 700;
@@ -1681,7 +1744,7 @@ a.bg-white {
     border: 1px solid var(--border-md);
     color: var(--text-muted);
     padding: 0.35rem 0.75rem;
-    border-radius: 999px;
+    border-radius: var(--radius-btn);
     font-size: 0.73rem;
     font-weight: 500;
     cursor: pointer;
@@ -1771,197 +1834,6 @@ a.bg-white {
 }
 
 /* ───────────────────────────────────────────────
-   AI SHOWCASE (landing)
-─────────────────────────────────────────────── */
-.ai-showcase-visual {
-    position: relative;
-    width: 320px;
-    height: 320px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.ai-orb {
-    position: relative;
-    width: 160px;
-    height: 160px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.ai-orb-core {
-    width: 76px;
-    height: 76px;
-    border-radius: 50%;
-    background: var(--surface);
-    border: 1px solid var(--border-md);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    position: relative;
-    z-index: 2;
-    box-shadow: 0 0 30px rgba(0, 0, 0, 0.06);
-    animation: orbPulse 4s ease-in-out infinite;
-}
-
-.ai-orb-ring {
-    position: absolute;
-    border-radius: 50%;
-    border: 1px solid;
-    animation: orbitSpin linear infinite;
-}
-
-.ai-orb-ring-1 {
-    width: 136px;
-    height: 136px;
-    top: 50%;
-    left: 50%;
-    margin-top: -68px;
-    margin-left: -68px;
-    border-color: rgba(0, 0, 0, 0.08);
-    animation-duration: 14s;
-}
-
-.ai-orb-ring-1::after {
-    content: '';
-    position: absolute;
-    top: -2.5px;
-    left: 50%;
-    width: 5px;
-    height: 5px;
-    background: var(--text-muted);
-    border-radius: 50%;
-}
-
-.ai-orb-ring-2 {
-    width: 196px;
-    height: 196px;
-    top: 50%;
-    left: 50%;
-    margin-top: -98px;
-    margin-left: -98px;
-    border-color: rgba(0, 0, 0, 0.05);
-    animation-duration: 20s;
-    animation-direction: reverse;
-}
-
-.ai-orb-ring-2::after {
-    content: '';
-    position: absolute;
-    bottom: -2.5px;
-    right: 22%;
-    width: 4px;
-    height: 4px;
-    background: var(--text-dim);
-    border-radius: 50%;
-}
-
-.ai-orb-ring-3 {
-    width: 256px;
-    height: 256px;
-    top: 50%;
-    left: 50%;
-    margin-top: -128px;
-    margin-left: -128px;
-    border-color: rgba(0, 0, 0, 0.04);
-    animation-duration: 28s;
-}
-
-.ai-orb-ring-3::after {
-    content: '';
-    position: absolute;
-    top: 30%;
-    right: -2.5px;
-    width: 3px;
-    height: 3px;
-    background: var(--border-md);
-    border-radius: 50%;
-}
-
-@keyframes orbPulse {
-
-    0%,
-    100% {
-        box-shadow: 0 0 20px rgba(0, 0, 0, 0.06);
-        transform: scale(1);
-    }
-
-    50% {
-        box-shadow: 0 0 36px rgba(0, 0, 0, 0.10);
-        transform: scale(1.04);
-    }
-}
-
-.ai-data-bubble {
-    position: absolute;
-    background: var(--bg-card);
-    border: 1px solid var(--border);
-    border-radius: 1rem;
-    padding: 0.5rem 0.8rem;
-    display: flex;
-    flex-direction: column;
-    gap: 2px;
-    box-shadow: var(--shadow-md);
-    z-index: 3;
-}
-
-.ai-data-bubble-1 {
-    top: 15%;
-    right: 5%;
-    animation: floatBubble1 5s ease-in-out infinite;
-}
-
-.ai-data-bubble-2 {
-    bottom: 20%;
-    left: 0%;
-    animation: floatBubble2 6s ease-in-out infinite;
-}
-
-.ai-data-bubble-3 {
-    bottom: 5%;
-    right: 15%;
-    animation: floatBubble3 7s ease-in-out infinite;
-}
-
-@keyframes floatBubble1 {
-
-    0%,
-    100% {
-        transform: translateY(0) translateX(0);
-    }
-
-    50% {
-        transform: translateY(-8px) translateX(4px);
-    }
-}
-
-@keyframes floatBubble2 {
-
-    0%,
-    100% {
-        transform: translateY(0) translateX(0);
-    }
-
-    50% {
-        transform: translateY(7px) translateX(-5px);
-    }
-}
-
-@keyframes floatBubble3 {
-
-    0%,
-    100% {
-        transform: translateY(0) translateX(0);
-    }
-
-    50% {
-        transform: translateY(-5px) translateX(7px);
-    }
-}
-
-/* ───────────────────────────────────────────────
    AI CHAT BUTTON
 ─────────────────────────────────────────────── */
 .ai-chat-btn {
@@ -1988,19 +1860,6 @@ a.bg-white {
     box-shadow: 0 20px 40px rgba(0, 0, 0, 0.20);
 }
 
-.ai-btn-icon {
-    animation: aiIconSpin 10s linear infinite;
-}
-
-@keyframes aiIconSpin {
-    0% {
-        transform: rotate(0deg);
-    }
-
-    100% {
-        transform: rotate(360deg);
-    }
-}
 
 /* ───────────────────────────────────────────────
    HEADER BORDER / BACKDROP for sticky headers
@@ -2012,20 +1871,8 @@ header {
 /* ───────────────────────────────────────────────
    FOOTER
 ─────────────────────────────────────────────── */
-footer {
-    border-top-color: var(--border) !important;
-    background: var(--bg) !important;
-}
-
-footer span,
-footer a,
-footer p {
-    color: var(--text-muted) !important;
-}
-
-footer a:hover {
-    color: var(--text) !important;
-}
+/* Footers use .glass-clean (dark site chrome) everywhere now, which sets
+   its own background/text color — see the SITE CHROME rules above. */
 
 /* ───────────────────────────────────────────────
    MARQUEE TEXT  (very faint on light bg)
@@ -2088,9 +1935,9 @@ input[type="checkbox"] {
     align-items: center;
     gap: 0.5rem;
     padding: 0.6rem 1.15rem;
-    font-size: 0.825rem;
+    font-size: 0.875rem;
     font-weight: 600;
-    border-radius: 9999px;
+    border-radius: var(--radius-btn);
     color: var(--text-muted);
     background: transparent;
     border: 1px solid transparent;
@@ -2181,12 +2028,12 @@ html.dark .dash-tab-btn.active {
     display: inline-flex;
     align-items: center;
     gap: 0.35rem;
-    font-size: 0.7rem;
+    font-size: 0.75rem;
     font-weight: 700;
     text-transform: uppercase;
-    letter-spacing: 0.05em;
-    padding: 0.25rem 0.6rem;
-    border-radius: 9999px;
+    letter-spacing: 0.04em;
+    padding: 0.25rem 0.65rem;
+    border-radius: var(--radius-badge);
 }
 
 .badge-status-green {

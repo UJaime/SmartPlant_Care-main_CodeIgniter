@@ -47,8 +47,8 @@ function componentDisplayValue(array $component): string
 
 // Insignia de estado por tarjeta de sensor: sólo afirma "EN VIVO" cuando hay una lectura reciente.
 $liveBadge = $latest
-    ? '<span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] badge-live shadow-sm"><span class="w-1.5 h-1.5 rounded-full bg-white animate-pulse"></span> EN VIVO</span>'
-    : '<span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-bold bg-slate-200/70 dark:bg-slate-700/60 text-slate-500 dark:text-slate-400"><span class="w-1.5 h-1.5 rounded-full bg-slate-400"></span> SIN DATOS</span>';
+    ? '<span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-lg text-[10px] badge-live shadow-sm"><span class="w-1.5 h-1.5 rounded-full bg-white animate-pulse"></span> EN VIVO</span>'
+    : '<span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-lg text-[10px] font-bold bg-slate-200/70 dark:bg-slate-700/60 text-slate-500 dark:text-slate-400"><span class="w-1.5 h-1.5 rounded-full bg-slate-400"></span> SIN DATOS</span>';
 
 // Determinar pestaña inicial
 $initialTab = 'telemetry';
@@ -78,7 +78,7 @@ if (isset($_GET['tab']) && $_GET['tab'] === 'new' || isset($_GET['action']) && $
             display: inline-flex;
             align-items: center;
             gap: 0.45rem;
-            border-radius: 999px;
+            border-radius: 0.5rem;
             border: 1px solid var(--border);
             padding: 0.35rem 0.7rem;
             font-size: 0.72rem;
@@ -161,34 +161,36 @@ if (isset($_GET['tab']) && $_GET['tab'] === 'new' || isset($_GET['action']) && $
 </script>
 
 <!-- ═══ HEADER ═══ -->
-<header class="sticky top-4 z-50 mx-auto max-w-6xl px-4">
-    <div class="glass-clean flex items-center justify-between px-6 py-3.5 rounded-2xl shadow-sm border border-slate-200/80 dark:border-slate-800">
-        <a href="/" class="flex items-center gap-2.5 group">
-            <img src="/assets/logo.svg" alt="SmartPlant Logo" class="w-8 h-8 transition-transform group-hover:scale-105">
-            <span class="text-xl font-bold tracking-tight text-slate-900 dark:text-white">SmartPlant <span class="text-emerald-600 font-black">CARE</span></span>
-        </a>
-        
-        <div class="flex items-center gap-2 bg-slate-100 dark:bg-slate-800 p-1 rounded-xl border border-slate-200 dark:border-slate-700">
-            <button onclick="switchTab('telemetry')" id="btnTabTelemetry" class="tab-btn px-3.5 py-1.5 rounded-lg text-xs font-bold flex items-center gap-1.5 <?= $initialTab === 'telemetry' ? 'active' : 'text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white' ?>">
-                <i data-lucide="cpu" class="w-3.5 h-3.5"></i> Monitoreo
-            </button>
-            <button onclick="switchTab('new')" id="btnTabNew" class="tab-btn px-3.5 py-1.5 rounded-lg text-xs font-bold flex items-center gap-1.5 <?= $initialTab === 'new' ? 'active' : 'text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white' ?>">
-                <i data-lucide="plus-circle" class="w-3.5 h-3.5"></i> Alta de Sensor
-            </button>
-        </div>
+<header class="sticky top-0 z-50 w-full">
+    <div class="glass-clean">
+        <div class="max-w-6xl mx-auto px-6 py-3.5 flex items-center justify-between gap-4">
+            <a href="/" class="flex items-center gap-2.5 group">
+                <img src="/assets/logo.svg" alt="SmartPlant Logo" class="w-8 h-8 transition-transform group-hover:scale-105">
+                <span class="text-xl font-bold tracking-tight">SmartPlant <span class="text-emerald-400 font-black">CARE</span></span>
+            </a>
 
-        <div class="flex items-center gap-3">
-            <!-- Theme Toggle -->
-            <button onclick="toggleTheme()" class="w-8 h-8 rounded-full bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-200 flex items-center justify-center hover:bg-slate-200 dark:hover:bg-slate-700 transition-all shadow-sm" title="Cambiar tema" id="themeToggleBtn">
-                <i data-lucide="moon" class="w-4 h-4"></i>
-            </button>
-            
-            <a href="/dashboard" class="bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-200 px-3.5 py-1.5 rounded-full text-xs font-semibold hover:bg-slate-200 dark:hover:bg-slate-700 transition-all">
-                Dashboard
-            </a>
-            <a href="/dashboard?logout=1" class="bg-red-50 dark:bg-red-950/30 text-red-600 dark:text-red-400 border border-red-200/80 dark:border-red-900/40 px-3 py-1.5 rounded-full text-xs font-semibold hover:bg-red-100 dark:hover:bg-red-950/60 transition-all">
-                Salir
-            </a>
+            <div class="flex items-center gap-1 chrome-chip p-1">
+                <button onclick="switchTab('telemetry')" id="btnTabTelemetry" class="tab-btn px-3.5 py-1.5 rounded-lg text-xs font-bold flex items-center gap-1.5 <?= $initialTab === 'telemetry' ? 'active' : 'text-slate-500' ?>">
+                    <i data-lucide="cpu" class="w-3.5 h-3.5"></i> Monitoreo
+                </button>
+                <button onclick="switchTab('new')" id="btnTabNew" class="tab-btn px-3.5 py-1.5 rounded-lg text-xs font-bold flex items-center gap-1.5 <?= $initialTab === 'new' ? 'active' : 'text-slate-500' ?>">
+                    <i data-lucide="plus-circle" class="w-3.5 h-3.5"></i> Alta de Sensor
+                </button>
+            </div>
+
+            <div class="flex items-center gap-2.5">
+                <!-- Theme Toggle -->
+                <button onclick="toggleTheme()" class="chrome-chip w-9 h-9 flex items-center justify-center" title="Cambiar tema" id="themeToggleBtn">
+                    <i data-lucide="moon" class="w-4 h-4"></i>
+                </button>
+
+                <a href="/dashboard" class="chrome-chip px-3.5 py-1.5 text-xs font-semibold">
+                    Dashboard
+                </a>
+                <a href="/dashboard?logout=1" class="px-3 py-1.5 rounded-[0.75rem] text-xs font-semibold border border-red-400/30 bg-red-500/10 text-red-300 hover:bg-red-500/20 transition-all">
+                    Salir
+                </a>
+            </div>
         </div>
     </div>
 </header>
@@ -202,7 +204,7 @@ if (isset($_GET['tab']) && $_GET['tab'] === 'new' || isset($_GET['action']) && $
             <div>
                 <p><?= h($success_msg) ?></p>
                 <?php if ($createdDevice): ?>
-                    <p class="text-xs text-emerald-700 dark:text-emerald-400 mt-1 font-mono">Código: <strong><?= h($createdDevice['codigo']) ?></strong> | API Key: <strong><?= h($createdDevice['api_key']) ?></strong></p>
+                    <p class="text-sm text-emerald-700 dark:text-emerald-400 mt-1 font-mono">Código: <strong><?= h($createdDevice['codigo']) ?></strong> | API Key: <strong><?= h($createdDevice['api_key']) ?></strong></p>
                 <?php endif; ?>
             </div>
         </div>
@@ -221,7 +223,7 @@ if (isset($_GET['tab']) && $_GET['tab'] === 'new' || isset($_GET['action']) && $
     <div id="tabContentTelemetry" class="tab-content <?= $initialTab === 'telemetry' ? 'active' : '' ?>">
         <section class="grid lg:grid-cols-[1fr_0.72fr] gap-8 items-start">
             <div>
-                <span class="bg-emerald-100 dark:bg-emerald-950 text-emerald-800 dark:text-emerald-300 border border-emerald-300 dark:border-emerald-800 font-bold tracking-[0.15em] text-xs uppercase px-3 py-1 rounded-full shadow-sm">
+                <span class="bg-emerald-100 dark:bg-emerald-950 text-emerald-800 dark:text-emerald-300 border border-emerald-300 dark:border-emerald-800 font-bold tracking-[0.15em] text-xs uppercase px-3 py-1 rounded-lg shadow-sm">
                     Telemetría en tiempo real
                 </span>
                 <h1 class="text-3xl md:text-4xl font-black tracking-tight mt-3 mb-2 text-slate-900 dark:text-white">
@@ -415,11 +417,11 @@ if (isset($_GET['tab']) && $_GET['tab'] === 'new' || isset($_GET['action']) && $
                         </div>
                         <div class="grid grid-cols-2 gap-2 text-xs pt-1.5 border-t border-slate-100 dark:border-slate-800">
                             <div>
-                                <p class="text-[9px] text-slate-400 uppercase tracking-wider font-bold">Valor</p>
+                                <p class="text-[10px] text-slate-400 uppercase tracking-wider font-bold">Valor</p>
                                 <p class="font-extrabold text-slate-900 dark:text-white" data-field="value"><?= h(componentDisplayValue($component)) ?></p>
                             </div>
                             <div>
-                                <p class="text-[9px] text-slate-400 uppercase tracking-wider font-bold">Lectura</p>
+                                <p class="text-[10px] text-slate-400 uppercase tracking-wider font-bold">Lectura</p>
                                 <p class="font-semibold text-slate-600 dark:text-slate-300 text-[11px]" data-field="lastSeen"><?= h($component['ultima_conexion_relativa']) ?></p>
                             </div>
                         </div>
@@ -435,7 +437,7 @@ if (isset($_GET['tab']) && $_GET['tab'] === 'new' || isset($_GET['action']) && $
                         <h2 class="text-sm font-bold text-slate-900 dark:text-white flex items-center gap-2">
                             <i data-lucide="power" class="w-4 h-4 text-emerald-600 dark:text-emerald-400"></i> Control de Actuadores
                         </h2>
-                        <span class="text-[10px] font-bold uppercase px-2 py-0.5 rounded-full bg-emerald-500/10 text-emerald-700 dark:text-emerald-300 border border-emerald-500/20">ESP32 Relé</span>
+                        <span class="text-[10px] font-bold uppercase px-2 py-0.5 rounded-lg bg-emerald-500/10 text-emerald-700 dark:text-emerald-300 border border-emerald-500/20">ESP32 Relé</span>
                     </div>
                     <p class="text-xs text-slate-600 dark:text-slate-400 mb-4">Comandos manuales inmediatos sobre la bomba de agua y válvulas.</p>
                     
@@ -479,7 +481,7 @@ if (isset($_GET['tab']) && $_GET['tab'] === 'new' || isset($_GET['action']) && $
     <div id="tabContentNew" class="tab-content <?= $initialTab === 'new' ? 'active' : '' ?>">
         <section class="grid lg:grid-cols-[0.9fr_1.1fr] gap-8 items-start">
             <div>
-                <span class="bg-emerald-100 dark:bg-emerald-950 text-emerald-800 dark:text-emerald-300 border border-emerald-300 dark:border-emerald-800 font-bold tracking-[0.15em] text-xs uppercase px-3 py-1 rounded-full shadow-sm">
+                <span class="bg-emerald-100 dark:bg-emerald-950 text-emerald-800 dark:text-emerald-300 border border-emerald-300 dark:border-emerald-800 font-bold tracking-[0.15em] text-xs uppercase px-3 py-1 rounded-lg shadow-sm">
                     Registro de nuevo equipo
                 </span>
                 <h1 class="text-3xl md:text-4xl font-black tracking-tight mt-3 mb-2 text-slate-900 dark:text-white">
@@ -489,17 +491,17 @@ if (isset($_GET['tab']) && $_GET['tab'] === 'new' || isset($_GET['action']) && $
                     Asigna un nombre, tipo de hardware y la planta a la que pertenecerá para que empiece a reportar datos inmediatamente.
                 </p>
 
-                <div class="space-y-3.5 bg-slate-50 dark:bg-slate-900/60 p-5 rounded-2xl border border-slate-200/80 dark:border-slate-800 text-xs text-slate-600 dark:text-slate-400">
+                <div class="space-y-3.5 bg-slate-50 dark:bg-slate-900/60 p-5 rounded-2xl border border-slate-200/80 dark:border-slate-800 text-sm text-slate-600 dark:text-slate-400">
                     <div class="flex items-start gap-3">
-                        <div class="w-6 h-6 rounded-full bg-emerald-100 dark:bg-emerald-950 text-emerald-700 dark:text-emerald-300 flex items-center justify-center font-bold text-xs flex-shrink-0">1</div>
+                        <div class="w-6 h-6 rounded-lg bg-emerald-100 dark:bg-emerald-950 text-emerald-700 dark:text-emerald-300 flex items-center justify-center font-bold text-xs flex-shrink-0">1</div>
                         <p>Completa los datos del formulario y presiona <strong>Dar de alta</strong>.</p>
                     </div>
                     <div class="flex items-start gap-3">
-                        <div class="w-6 h-6 rounded-full bg-emerald-100 dark:bg-emerald-950 text-emerald-700 dark:text-emerald-300 flex items-center justify-center font-bold text-xs flex-shrink-0">2</div>
+                        <div class="w-6 h-6 rounded-lg bg-emerald-100 dark:bg-emerald-950 text-emerald-700 dark:text-emerald-300 flex items-center justify-center font-bold text-xs flex-shrink-0">2</div>
                         <p>El sistema generará automáticamente un <strong>Código de dispositivo</strong> y una <strong>API Key</strong> segura.</p>
                     </div>
                     <div class="flex items-start gap-3">
-                        <div class="w-6 h-6 rounded-full bg-emerald-100 dark:bg-emerald-950 text-emerald-700 dark:text-emerald-300 flex items-center justify-center font-bold text-xs flex-shrink-0">3</div>
+                        <div class="w-6 h-6 rounded-lg bg-emerald-100 dark:bg-emerald-950 text-emerald-700 dark:text-emerald-300 flex items-center justify-center font-bold text-xs flex-shrink-0">3</div>
                         <p>Copia el código en el firmware de tu placa ESP32 o usa la pestaña <strong>Monitoreo</strong> para ver la telemetría.</p>
                     </div>
                 </div>
@@ -566,7 +568,7 @@ if (isset($_GET['tab']) && $_GET['tab'] === 'new' || isset($_GET['action']) && $
 </main>
 
 <!-- Toast de Notificaciones -->
-<div id="hwToast" class="fixed bottom-6 left-1/2 -translate-x-1/2 bg-slate-900 dark:bg-white text-white dark:text-slate-900 px-4 py-2.5 rounded-full text-xs font-bold shadow-xl opacity-0 pointer-events-none transition-all z-[10000]"></div>
+<div id="hwToast" class="fixed bottom-6 left-1/2 -translate-x-1/2 bg-slate-900 dark:bg-white text-white dark:text-slate-900 px-4 py-2.5 rounded-xl text-xs font-bold shadow-xl opacity-0 pointer-events-none transition-all z-[10000]"></div>
 
 <script>
     const deviceId = <?= $selectedDevice ? (int) $selectedDevice['id'] : 0 ?>;
@@ -606,7 +608,7 @@ if (isset($_GET['tab']) && $_GET['tab'] === 'new' || isset($_GET['action']) && $
     }
 
     function markSensorsLive(sensorKeys) {
-        const liveHtml = '<span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] badge-live shadow-sm"><span class="w-1.5 h-1.5 rounded-full bg-white animate-pulse"></span> EN VIVO</span>';
+        const liveHtml = '<span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-lg text-[10px] badge-live shadow-sm"><span class="w-1.5 h-1.5 rounded-full bg-white animate-pulse"></span> EN VIVO</span>';
         sensorKeys.forEach(key => {
             const slot = document.querySelector(`[data-badge-slot="${key}"]`);
             if (slot) slot.innerHTML = liveHtml;
@@ -778,9 +780,9 @@ if (isset($_GET['tab']) && $_GET['tab'] === 'new' || isset($_GET['action']) && $
         localStorage.setItem('sp_theme', next);
 
         if (btn) {
-            btn.innerHTML = next === 'dark' 
-                ? '<i data-lucide="sun" class="w-4 h-4 text-amber-400"></i>' 
-                : '<i data-lucide="moon" class="w-4 h-4 text-slate-700"></i>';
+            btn.innerHTML = next === 'dark'
+                ? '<i data-lucide="sun" class="w-4 h-4 text-amber-400"></i>'
+                : '<i data-lucide="moon" class="w-4 h-4"></i>';
             if (typeof lucide !== 'undefined') lucide.createIcons();
         }
     }
