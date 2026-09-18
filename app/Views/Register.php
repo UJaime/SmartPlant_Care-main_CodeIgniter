@@ -243,12 +243,12 @@ $segundos_restantes = max(0, ($_SESSION['register_expira'] ?? 0) - time());
     <link rel="stylesheet" href="/assets/styles.css">
     <style>
         .strength-bar { height: 3px; border-radius: 999px; transition: background 0.4s ease; }
-        .check-custom { appearance: none; width: 16px; height: 16px; border: 1px solid rgba(255,255,255,0.2); border-radius: 4px; background: rgba(255,255,255,0.05); cursor: pointer; position: relative; flex-shrink: 0; transition: all 0.2s ease; }
-        .check-custom:checked { background: #ffffff; border-color: #ffffff; }
-        .check-custom:checked::after { content: '✓'; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); font-size: 10px; color: black; font-weight: bold; }
-        .otp-input { width: 52px; height: 64px; background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.12); border-radius: 16px; color: white; font-size: 28px; font-weight: 700; text-align: center; transition: all 0.3s var(--ease-out); font-family: monospace; caret-color: #ffffff; }
-        .otp-input:focus { outline: none; border-color: rgba(255,255,255,0.5); background: rgba(255,255,255,0.06); box-shadow: 0 0 0 4px rgba(255,255,255,0.06); transform: scale(1.06); }
-        .otp-input.filled { border-color: rgba(255,255,255,0.3); background: rgba(255,255,255,0.04); }
+        .check-custom { appearance: none; width: 16px; height: 16px; border: 1px solid var(--border-md); border-radius: 4px; background: var(--bg-card); cursor: pointer; position: relative; flex-shrink: 0; transition: all 0.2s ease; }
+        .check-custom:checked { background: var(--black); border-color: var(--black); }
+        .check-custom:checked::after { content: '✓'; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); font-size: 10px; color: var(--white); font-weight: bold; }
+        .otp-input { width: 52px; height: 64px; background: var(--bg-card); border: 1px solid var(--border-md); border-radius: 16px; color: var(--text); font-size: 28px; font-weight: 700; text-align: center; transition: all 0.3s var(--ease-out); font-family: monospace; caret-color: var(--text); }
+        .otp-input:focus { outline: none; border-color: var(--black); background: var(--bg-card); box-shadow: 0 0 0 4px var(--surface); transform: scale(1.06); }
+        .otp-input.filled { border-color: var(--border-hi); background: var(--bg-card); }
         .otp-input.error-shake { border-color: rgba(239,68,68,0.6); animation: shake 0.4s ease; }
         @keyframes shake { 0%,100% { transform: translateX(0); } 25% { transform: translateX(-6px); } 75% { transform: translateX(6px); } }
         .timer-ring { transform: rotate(-90deg); }
@@ -258,23 +258,26 @@ $segundos_restantes = max(0, ($_SESSION['register_expira'] ?? 0) - time());
 
 <body class="bg-overlay text-white min-h-screen flex flex-col">
 
-<header class="sticky top-6 z-50 mx-auto w-full max-w-5xl px-4">
-    <div class="glass-clean flex items-center justify-between px-8 py-4 rounded-[2.5rem]">
+<header class="sticky top-6 z-50 mx-auto max-w-5xl px-4">
+    <div class="glass-clean flex items-center justify-between px-8 py-3.5 rounded-full shadow-sm">
         <a href="/" class="flex items-center gap-3 group">
-            <img src="/assets/logo.svg" alt="SmartPlant Logo" class="w-9 h-9 transition-transform group-hover:scale-105 filter drop-shadow-[0_2px_8px_rgba(16,185,129,0.35)]">
-            <span class="text-2xl font-bold tracking-tight text-slate-900">SmartPlant <span class="text-emerald-600 font-black">CARE</span></span>
+            <img src="/assets/logo.svg" alt="SmartPlant Logo" class="w-8 h-8 transition-transform group-hover:scale-105">
+            <span class="text-xl font-bold tracking-tight text-slate-900">SmartPlant <span class="text-emerald-600 font-black">CARE</span></span>
         </a>
-        <nav class="hidden md:flex gap-8 items-center text-sm font-medium text-slate-700">
+        <nav class="hidden md:flex gap-7 items-center text-sm font-medium text-slate-700">
             <a href="/#utilidades" data-i18n="nav_utilidades" class="hover:text-emerald-600 transition-colors">Utilidades</a>
             <a href="/#producto" data-i18n="nav_producto" class="hover:text-emerald-600 transition-colors">Producto</a>
             <a href="/store" data-i18n="nav_tienda" class="hover:text-emerald-600 transition-colors">Tienda</a>
-            
-            <select id="langSelector" class="bg-emerald-50/80 border border-emerald-200 text-slate-800 text-xs rounded-lg px-2.5 py-1.5 outline-none cursor-pointer font-medium hover:border-emerald-400 transition-all">
-                <option value="es" class="text-slate-900">🇪🇸 ES</option>
-                <option value="en" class="text-slate-900">🇬🇧 EN</option>
-            </select>
 
-            <a href="/login" data-i18n="btn_login" class="btn-emerald px-6 py-2.5 rounded-full font-bold hover:scale-105 transition-all text-sm">
+            <div class="flex items-center gap-1.5 bg-slate-100/80 px-2.5 py-1 rounded-full border border-slate-200/80 text-xs">
+                <i data-lucide="globe" class="w-3.5 h-3.5 text-slate-500"></i>
+                <select id="langSelector" class="bg-transparent text-slate-800 text-xs outline-none cursor-pointer font-medium">
+                    <option value="es" class="text-slate-900">ES</option>
+                    <option value="en" class="text-slate-900">EN</option>
+                </select>
+            </div>
+
+            <a href="/login" data-i18n="btn_login" class="btn-emerald px-5 py-2 rounded-full font-semibold hover:scale-105 transition-all text-xs">
                 Iniciar sesión
             </a>
         </nav>
@@ -331,7 +334,7 @@ $segundos_restantes = max(0, ($_SESSION['register_expira'] ?? 0) - time());
                     </button>
                 </div>
                 <div class="mt-2 flex gap-1.5">
-                    <div class="strength-bar flex-1 bg-white/10" id="bar1"></div><div class="strength-bar flex-1 bg-white/10" id="bar2"></div><div class="strength-bar flex-1 bg-white/10" id="bar3"></div><div class="strength-bar flex-1 bg-white/10" id="bar4"></div>
+                    <div class="strength-bar flex-1" style="background:var(--border)" id="bar1"></div><div class="strength-bar flex-1" style="background:var(--border)" id="bar2"></div><div class="strength-bar flex-1" style="background:var(--border)" id="bar3"></div><div class="strength-bar flex-1" style="background:var(--border)" id="bar4"></div>
                 </div>
                 <p class="text-[11px] text-gray-600 mt-1 ml-1" id="strengthLabel"></p>
             </div>
@@ -371,7 +374,7 @@ $segundos_restantes = max(0, ($_SESSION['register_expira'] ?? 0) - time());
         <?php else: ?>
         <div class="glass-form rounded-[2.5rem] p-10 md:p-12 relative z-10 reveal-scale">
             <div class="text-center mb-8">
-                <div class="w-20 h-20 mx-auto mb-5 rounded-full bg-gradient-to-br from-white/10 to-white/5 border border-white/10 flex items-center justify-center shadow-lg text-white">
+                <div class="w-20 h-20 mx-auto mb-5 rounded-full bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center shadow-lg text-emerald-600 dark:text-emerald-400">
                     <i data-lucide="mail" class="w-8 h-8"></i>
                 </div>
                 <h2 class="text-3xl font-semibold tracking-tight" data-i18n="ver_title">Verificá tu correo.</h2>
@@ -391,8 +394,8 @@ $segundos_restantes = max(0, ($_SESSION['register_expira'] ?? 0) - time());
             <div class="flex flex-col items-center mb-8">
                 <div class="relative w-16 h-16">
                     <svg class="timer-ring w-16 h-16" viewBox="0 0 56 56">
-                        <circle cx="28" cy="28" r="24" class="timer-circle" stroke="rgba(255,255,255,0.05)" stroke-dasharray="150.8" stroke-dashoffset="0"/>
-                        <circle cx="28" cy="28" r="24" class="timer-circle" stroke="#ffffff" stroke-dasharray="150.8" stroke-dashoffset="<?= 150.8 * (1 - $segundos_restantes / 600) ?>" id="timerCircle"/>
+                        <circle cx="28" cy="28" r="24" class="timer-circle" stroke="rgba(15,23,42,0.08)" stroke-dasharray="150.8" stroke-dashoffset="0"/>
+                        <circle cx="28" cy="28" r="24" class="timer-circle" stroke="#059669" stroke-dasharray="150.8" stroke-dashoffset="<?= 150.8 * (1 - $segundos_restantes / 600) ?>" id="timerCircle"/>
                     </svg>
                     <div class="absolute inset-0 flex items-center justify-center">
                         <span class="text-xs font-bold text-white" id="timerLabel"><?= gmdate('i:s', $segundos_restantes) ?></span>
@@ -477,12 +480,12 @@ $segundos_restantes = max(0, ($_SESSION['register_expira'] ?? 0) - time());
     function checkStrength(val) {
         const bars  = ['bar1','bar2','bar3','bar4'].map(id => document.getElementById(id));
         const label = document.getElementById('strengthLabel');
-        bars.forEach(b => b.style.background = 'rgba(255,255,255,0.08)');
+        bars.forEach(b => b.style.background = 'var(--border)');
         if (!val) { label.textContent = ''; return; }
         let score = 0;
         if (val.length >= 6)  score++; if (val.length >= 10) score++;
         if (/[A-Z]/.test(val) && /[0-9]/.test(val)) score++; if (/[^A-Za-z0-9]/.test(val)) score++;
-        const colors = ['#666','#888','#bbb','#fff'];
+        const colors = ['#ef4444','#f59e0b','#10b981','#059669'];
         const labels = ['Muy débil','Débil','Buena','Fuerte'];
         for (let i = 0; i < score; i++) bars[i].style.background = colors[score-1];
         label.textContent = labels[score-1] || ''; label.style.color = colors[score-1] || '';
@@ -496,7 +499,7 @@ $segundos_restantes = max(0, ($_SESSION['register_expira'] ?? 0) - time());
         if (!conf) { lbl.classList.add('hidden'); return; }
         lbl.classList.remove('hidden');
         lbl.textContent = pass === conf ? '✓ Coinciden' : '✗ No coinciden';
-        lbl.style.color = pass === conf ? '#ffffff' : '#888888';
+        lbl.style.color = pass === conf ? '#059669' : '#dc2626';
     }
 
     <?php if ($step === 'verify'): ?>

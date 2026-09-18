@@ -138,20 +138,23 @@ function formatPrice($price) {
                 <i data-lucide="moon" class="w-5 h-5"></i>
             </button>
 
-            <select id="langSelector" class="bg-transparent border border-white/20 text-white/80 text-xs rounded-md px-2 py-1 outline-none cursor-pointer">
-                <option value="es" class="text-black">🇪🇸 ES</option>
-                <option value="en" class="text-black">🇬🇧 EN</option>
-                <option value="pt" class="text-black">🇧🇷 PT</option>
-                <option value="fr" class="text-black">🇫🇷 FR</option>
-                <option value="de" class="text-black">🇩🇪 DE</option>
-                <option value="ru" class="text-black">🇷🇺 RU</option>
-                <option value="zh" class="text-black">🇨🇳 ZH</option>
-            </select>
+            <div class="flex items-center gap-1.5 bg-slate-100/80 px-2.5 py-1 rounded-full border border-slate-200/80 text-xs">
+                <i data-lucide="globe" class="w-3.5 h-3.5 text-slate-500"></i>
+                <select id="langSelector" class="bg-transparent text-slate-800 text-xs outline-none cursor-pointer font-medium">
+                    <option value="es" class="text-slate-900">ES</option>
+                    <option value="en" class="text-slate-900">EN</option>
+                    <option value="pt" class="text-slate-900">PT</option>
+                    <option value="fr" class="text-slate-900">FR</option>
+                    <option value="de" class="text-slate-900">DE</option>
+                    <option value="ru" class="text-slate-900">RU</option>
+                    <option value="zh" class="text-slate-900">ZH</option>
+                </select>
+            </div>
 
             <?php if ($logged): ?>
-                <a href="/dashboard" data-i18n="nav_dashboard" class="bg-white text-black px-6 py-2.5 rounded-full font-bold hover:scale-105 transition-all shadow-lg text-sm">Mi Dashboard</a>
+                <a href="/dashboard" data-i18n="nav_dashboard" class="btn-emerald px-6 py-2.5 rounded-full font-semibold hover:scale-105 transition-all text-sm">Mi Dashboard</a>
             <?php else: ?>
-                <a href="/login" data-i18n="nav_cuenta" class="bg-white text-black px-6 py-2.5 rounded-full font-bold hover:scale-105 transition-all shadow-lg text-sm">Mi cuenta</a>
+                <a href="/login" data-i18n="nav_cuenta" class="btn-emerald px-6 py-2.5 rounded-full font-semibold hover:scale-105 transition-all text-sm">Mi cuenta</a>
             <?php endif; ?>
         </nav>
     </div>

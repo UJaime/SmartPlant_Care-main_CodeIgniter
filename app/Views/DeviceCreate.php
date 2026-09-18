@@ -111,9 +111,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Alta de dispositivo - SmartPlant CARE</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
     <link rel="stylesheet" href="/assets/styles.css">
 </head>
-<body class="bg-overlay text-white min-h-screen">
+<body class="bg-overlay text-white min-h-screen flex flex-col">
 <header class="sticky top-6 z-50 mx-auto max-w-5xl px-4">
     <div class="glass-clean flex items-center justify-between px-8 py-4 rounded-[2.5rem]">
         <a href="/" class="flex items-center gap-3 group">
@@ -129,44 +130,50 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     </div>
 </header>
 
-<main class="max-w-5xl mx-auto px-6 py-20">
+<main class="flex-1 max-w-5xl mx-auto px-6 py-16 w-full">
     <section class="grid lg:grid-cols-[0.9fr_1.1fr] gap-10 items-start">
         <div class="pt-6">
-            <span class="text-white/50 font-semibold tracking-[0.2em] text-xs uppercase">Alta de dispositivo</span>
-            <h1 class="text-4xl md:text-6xl font-semibold tracking-tight mt-4 mb-6">Conecta un nuevo SmartPlant.</h1>
-            <p class="text-gray-400 text-lg font-light leading-relaxed">
+            <span class="bg-emerald-100 text-emerald-800 border border-emerald-300 font-bold tracking-[0.15em] text-xs uppercase px-3 py-1 rounded-full shadow-sm">Alta de dispositivo</span>
+            <h1 class="text-4xl md:text-6xl font-semibold tracking-tight mt-4 mb-6 text-slate-900">Conecta un nuevo SmartPlant.</h1>
+            <p class="text-slate-600 text-lg font-light leading-relaxed">
                 Registra el nombre del dispositivo, el tipo de equipo y la planta o sector al que corresponde para que aparezca en tu sistema.
             </p>
         </div>
 
         <form method="POST" class="glass-form rounded-[2rem] p-8 md:p-10 space-y-5">
             <?php if ($error): ?>
-                <div class="text-red-300 text-sm bg-red-500/10 border border-red-500/20 rounded-xl p-4"><?= htmlspecialchars($error) ?></div>
+                <div class="text-red-700 text-sm bg-red-50 border border-red-200 rounded-xl p-4 flex items-center gap-2.5">
+                    <i data-lucide="alert-circle" class="w-4 h-4 flex-shrink-0"></i> <?= htmlspecialchars($error) ?>
+                </div>
             <?php endif; ?>
             <?php if ($success): ?>
-                <div class="text-green-300 text-sm bg-green-500/10 border border-green-500/20 rounded-xl p-4"><?= htmlspecialchars($success) ?></div>
+                <div class="text-emerald-700 text-sm bg-emerald-50 border border-emerald-200 rounded-xl p-4 flex items-center gap-2.5">
+                    <i data-lucide="check-circle-2" class="w-4 h-4 flex-shrink-0"></i> <?= htmlspecialchars($success) ?>
+                </div>
             <?php endif; ?>
             <?php if ($createdDevice): ?>
-                <div class="text-sm bg-white/5 border border-white/10 rounded-2xl p-4 space-y-3">
+                <div class="text-sm bg-slate-50 border border-slate-200 rounded-2xl p-4 space-y-3">
                     <div>
-                        <p class="text-gray-500 text-xs uppercase tracking-widest mb-1">Codigo</p>
-                        <code class="break-all"><?= htmlspecialchars($createdDevice['codigo']) ?></code>
+                        <p class="text-slate-500 text-xs uppercase tracking-widest mb-1">Codigo</p>
+                        <code class="break-all text-slate-800 bg-white border border-slate-200 px-2 py-1 rounded-lg text-xs font-mono inline-block"><?= htmlspecialchars($createdDevice['codigo']) ?></code>
                     </div>
                     <div>
-                        <p class="text-gray-500 text-xs uppercase tracking-widest mb-1">API key</p>
-                        <code class="break-all"><?= htmlspecialchars($createdDevice['api_key']) ?></code>
+                        <p class="text-slate-500 text-xs uppercase tracking-widest mb-1">API key</p>
+                        <code class="break-all text-slate-800 bg-white border border-slate-200 px-2 py-1 rounded-lg text-xs font-mono inline-block"><?= htmlspecialchars($createdDevice['api_key']) ?></code>
                     </div>
-                    <a href="/hardware/connect?device=<?= (int) $createdDevice['id'] ?>" class="inline-flex bg-white text-black px-5 py-2.5 rounded-full text-xs font-bold">Abrir conexion de hardware</a>
+                    <a href="/hardware/connect?device=<?= (int) $createdDevice['id'] ?>" class="btn-emerald inline-flex items-center gap-1.5 px-5 py-2.5 rounded-full text-xs font-bold">
+                        Abrir conexion de hardware <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i>
+                    </a>
                 </div>
             <?php endif; ?>
 
             <div>
-                <label class="block text-xs text-gray-400 uppercase tracking-widest mb-2">Nombre del dispositivo</label>
+                <label class="block text-xs font-semibold text-slate-500 uppercase tracking-widest mb-2">Nombre del dispositivo</label>
                 <input name="nombre" required maxlength="100" value="<?= htmlspecialchars($_POST['nombre'] ?? '') ?>" placeholder="Aurea One Patio" class="input-glass w-full rounded-2xl px-5 py-4 text-sm">
             </div>
 
             <div>
-                <label class="block text-xs text-gray-400 uppercase tracking-widest mb-2">Tipo de dispositivo</label>
+                <label class="block text-xs font-semibold text-slate-500 uppercase tracking-widest mb-2">Tipo de dispositivo</label>
                 <select name="tipo_dispositivo" required class="input-glass w-full rounded-2xl px-5 py-4 text-sm">
                     <?php foreach (['Sensor de humedad y ambiente', 'Kit de riego automatico', 'Panel solar', 'Controlador ESP32', 'Otro'] as $tipo): ?>
                         <option value="<?= htmlspecialchars($tipo) ?>" <?= (($_POST['tipo_dispositivo'] ?? '') === $tipo) ? 'selected' : '' ?>><?= htmlspecialchars($tipo) ?></option>
@@ -175,7 +182,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             </div>
 
             <div>
-                <label class="block text-xs text-gray-400 uppercase tracking-widest mb-2">A donde corresponde</label>
+                <label class="block text-xs font-semibold text-slate-500 uppercase tracking-widest mb-2">A donde corresponde</label>
                 <select name="planta_id" required class="input-glass w-full rounded-2xl px-5 py-4 text-sm">
                     <option value="">Seleccionar planta o sector</option>
                     <?php foreach ($plantas as $planta): ?>
@@ -188,19 +195,35 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
             <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
-                    <label class="block text-xs text-gray-400 uppercase tracking-widest mb-2">Ubicacion</label>
+                    <label class="block text-xs font-semibold text-slate-500 uppercase tracking-widest mb-2">Ubicacion</label>
                     <input name="ubicacion" maxlength="120" value="<?= htmlspecialchars($_POST['ubicacion'] ?? '') ?>" placeholder="Patio norte" class="input-glass w-full rounded-2xl px-5 py-4 text-sm">
                 </div>
                 <div>
-                    <label class="block text-xs text-gray-400 uppercase tracking-widest mb-2">Codigo opcional</label>
+                    <label class="block text-xs font-semibold text-slate-500 uppercase tracking-widest mb-2">Codigo opcional</label>
                     <input name="codigo" maxlength="80" value="<?= htmlspecialchars($_POST['codigo'] ?? '') ?>" placeholder="SPC-PATIO-001" class="input-glass w-full rounded-2xl px-5 py-4 text-sm">
                 </div>
             </div>
 
             <button type="submit" class="btn-glow w-full bg-white text-black py-4 rounded-2xl font-semibold">Guardar dispositivo</button>
-            <a href="/dashboard" class="block text-center text-white/50 text-sm hover:text-white">Volver al dashboard</a>
+            <a href="/dashboard" class="block text-center text-slate-500 text-sm hover:text-emerald-600 transition-colors">Volver al dashboard</a>
         </form>
     </section>
 </main>
+
+<!-- Footer -->
+<footer class="max-w-5xl mx-auto px-6 py-8 mt-6 border-t border-slate-200/80 text-slate-500 text-xs w-full">
+    <div class="flex flex-col sm:flex-row items-center justify-between gap-3">
+        <span class="flex items-center gap-1.5 font-medium"><i data-lucide="sprout" class="w-4 h-4 text-emerald-600"></i> SmartPlant CARE</span>
+        <div class="flex gap-4">
+            <a href="/" class="hover:text-slate-900 transition-colors">Inicio</a>
+            <a href="/support" class="hover:text-slate-900 transition-colors">Soporte</a>
+        </div>
+        <p class="text-[11px]">© 2026 Todos los derechos reservados.</p>
+    </div>
+</footer>
+
+<script>
+    if (typeof lucide !== 'undefined') lucide.createIcons();
+</script>
 </body>
 </html>

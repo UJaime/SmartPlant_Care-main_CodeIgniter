@@ -20,57 +20,52 @@ $msg_estado    = $msg_estado ?? '';
 </head>
 <body class="bg-overlay text-white font-['Inter'] min-h-screen flex flex-col antialiased selection:bg-white/20 overflow-x-hidden">
 
-<!-- Background Effects -->
-<div class="fixed top-0 left-0 w-full h-full overflow-hidden -z-10 pointer-events-none">
-    <div class="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] bg-white/[0.03] blur-[120px] rounded-full mix-blend-screen"></div>
-    <div class="absolute bottom-[-10%] right-[-10%] w-[40%] h-[40%] bg-white/[0.03] blur-[120px] rounded-full mix-blend-screen"></div>
-</div>
-
 <!-- Header -->
-<header class="w-full fixed top-0 left-0 z-50 transition-all duration-300 backdrop-blur-md glass-clean py-4">
-    <div class="max-w-6xl mx-auto px-6 flex justify-between items-center">
-        <a href="/" class="flex items-center gap-3 group">
-            <img src="/assets/logo.svg" alt="SmartPlant Logo" class="w-9 h-9 transition-transform group-hover:scale-105 filter drop-shadow-[0_2px_8px_rgba(16,185,129,0.35)]">
-            <span class="text-2xl font-bold tracking-tight text-slate-900">SmartPlant <span class="text-emerald-600 font-black">CARE</span></span>
+<header class="sticky top-4 z-50 mx-auto max-w-6xl px-4">
+    <div class="glass-clean flex items-center justify-between px-6 py-3.5 rounded-2xl shadow-sm border border-slate-200/80">
+        <a href="/" class="flex items-center gap-2.5 group">
+            <img src="/assets/logo.svg" alt="SmartPlant Logo" class="w-8 h-8 transition-transform group-hover:scale-105">
+            <span class="text-xl font-bold tracking-tight text-slate-900">SmartPlant <span class="text-emerald-600 font-black">CARE</span></span>
         </a>
-        <a href="/dashboard" class="btn-emerald-outline px-5 py-2 rounded-full text-sm font-semibold transition-all">Volver al Dashboard</a>
+        <a href="/dashboard" class="btn-emerald-outline px-4 py-1.5 rounded-full text-xs font-semibold transition-all">Volver al Dashboard</a>
     </div>
 </header>
 
 <!-- Contenido Principal -->
-<main class="flex-1 flex items-center justify-center pt-24 pb-12 px-4">
+<main class="flex-1 flex items-center justify-center py-12 px-4">
     <div class="max-w-xl w-full">
         <div class="text-center mb-10">
-            <h1 class="text-4xl md:text-5xl font-bold tracking-tight mb-4">Centro de <span class="text-transparent bg-clip-text bg-gradient-to-r from-white to-gray-400">Soporte</span></h1>
-            <p class="text-gray-400 font-light text-lg">¿Estás experimentando problemas con tus sensores o con el panel? Describinos tu problema y te ayudaremos a solucionarlo.</p>
+            <div class="w-14 h-14 rounded-2xl bg-emerald-50 text-emerald-600 flex items-center justify-center mx-auto mb-4 border border-emerald-200 shadow-sm">
+                <i data-lucide="life-buoy" class="w-7 h-7"></i>
+            </div>
+            <h1 class="text-4xl md:text-5xl font-bold tracking-tight mb-4 text-slate-900">Centro de <span class="text-emerald-600">Soporte</span></h1>
+            <p class="text-slate-600 font-light text-lg">¿Estás experimentando problemas con tus sensores o con el panel? Describinos tu problema y te ayudaremos a solucionarlo.</p>
         </div>
 
-        <div class="card-glass rounded-[2rem] p-8 md:p-12 shadow-2xl relative overflow-hidden">
-            <div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-white/30 to-white/10"></div>
-            
+        <div class="card-glass rounded-[2rem] p-8 md:p-12 relative overflow-hidden">
             <?= $msg_estado ?>
 
             <form method="POST" action="" class="space-y-6">
                 <div>
-                    <label class="block text-sm font-medium text-gray-400 mb-2">Tu Correo Electrónico</label>
+                    <label class="block text-sm font-medium text-slate-600 mb-2">Tu Correo Electrónico</label>
                     <div class="relative">
-                        <span class="absolute left-4 top-1/2 -translate-y-1/2 text-gray-500">✉️</span>
+                        <i data-lucide="mail" class="w-4 h-4 absolute left-4 top-1/2 -translate-y-1/2 text-slate-400"></i>
                         <input type="email" name="email" value="<?= htmlspecialchars($usuario_email) ?>" required
-                            class="w-full bg-white/5 border border-white/10 rounded-xl pl-12 pr-4 py-3.5 text-white focus:outline-none focus:border-white/40 focus:bg-white/10 transition-all shadow-inner"
+                            class="input-glass w-full rounded-xl pl-12 pr-4 py-3.5 transition-all"
                             placeholder="tucorreo@ejemplo.com">
                     </div>
                 </div>
 
                 <div>
-                    <label class="block text-sm font-medium text-gray-400 mb-2">Descripción del Problema</label>
+                    <label class="block text-sm font-medium text-slate-600 mb-2">Descripción del Problema</label>
                     <textarea name="problema" rows="5" required
-                        class="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3.5 text-white focus:outline-none focus:border-white/40 focus:bg-white/10 transition-all shadow-inner resize-none"
+                        class="input-glass w-full rounded-xl px-4 py-3.5 transition-all resize-none"
                         placeholder="Ej: El sensor de humedad no está actualizando los datos..."></textarea>
                 </div>
 
-                <button type="submit" class="w-full bg-white text-black font-semibold py-4 rounded-xl hover:opacity-90 transition-opacity transform hover:scale-[1.02] active:scale-[0.98] shadow-lg flex items-center justify-center gap-2">
+                <button type="submit" class="btn-emerald w-full py-4 rounded-xl transition-all transform hover:scale-[1.02] active:scale-[0.98] flex items-center justify-center gap-2">
                     <span>Enviar Solicitud</span>
-                    <span>📤</span>
+                    <i data-lucide="send" class="w-4 h-4"></i>
                 </button>
             </form>
         </div>
@@ -78,10 +73,10 @@ $msg_estado    = $msg_estado ?? '';
 </main>
 
 <!-- Footer -->
-<footer class="w-full border-t border-white/5 bg-black/20 py-8 mt-auto">
+<footer class="w-full border-t border-slate-200/80 py-8 mt-auto">
     <div class="max-w-6xl mx-auto px-6 text-center flex flex-col items-center">
-        <span class="text-xs text-gray-600 font-light flex items-center gap-2 mb-2"><span class="text-white/40">🌱</span> SmartPlant CARE</span>
-        <p class="text-[10px] text-gray-700">© 2026 Todos los derechos reservados.</p>
+        <span class="text-xs text-slate-500 font-medium flex items-center gap-1.5 mb-2"><i data-lucide="sprout" class="w-4 h-4 text-emerald-600"></i> SmartPlant CARE</span>
+        <p class="text-[10px] text-slate-400">© 2026 Todos los derechos reservados.</p>
     </div>
 </footer>
 

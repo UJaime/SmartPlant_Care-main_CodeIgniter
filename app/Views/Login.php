@@ -234,28 +234,31 @@ $google_auth_url = 'https://accounts.google.com/o/oauth2/v2/auth?' . http_build_
 
 <body class="bg-overlay text-white min-h-screen flex flex-col">
 
-<header class="sticky top-6 z-50 mx-auto w-full max-w-5xl px-4">
-    <div class="glass-clean flex items-center justify-between px-8 py-4 rounded-[2.5rem]">
+<header class="sticky top-6 z-50 mx-auto max-w-5xl px-4">
+    <div class="glass-clean flex items-center justify-between px-8 py-3.5 rounded-full shadow-sm">
         <a href="/" class="flex items-center gap-3 group">
-            <img src="/assets/logo.svg" alt="SmartPlant Logo" class="w-9 h-9 transition-transform group-hover:scale-105 filter drop-shadow-[0_2px_8px_rgba(16,185,129,0.35)]">
-            <span class="text-2xl font-bold tracking-tight text-slate-900">SmartPlant <span class="text-emerald-600 font-black">CARE</span></span>
+            <img src="/assets/logo.svg" alt="SmartPlant Logo" class="w-8 h-8 transition-transform group-hover:scale-105">
+            <span class="text-xl font-bold tracking-tight text-slate-900">SmartPlant <span class="text-emerald-600 font-black">CARE</span></span>
         </a>
-        <nav class="hidden md:flex gap-8 items-center text-sm font-medium text-slate-700">
+        <nav class="hidden md:flex gap-7 items-center text-sm font-medium text-slate-700">
             <a href="/#utilidades" data-i18n="nav_utilidades" class="hover:text-emerald-600 transition-colors">Utilidades</a>
             <a href="/#producto" data-i18n="nav_producto" class="hover:text-emerald-600 transition-colors">Producto</a>
             <a href="/store" data-i18n="nav_tienda" class="hover:text-emerald-600 transition-colors">Tienda</a>
-            
-            <select id="langSelector" class="bg-emerald-50/80 border border-emerald-200 text-slate-800 text-xs rounded-lg px-2.5 py-1.5 outline-none cursor-pointer font-medium hover:border-emerald-400 transition-all">
-                <option value="es" class="text-slate-900">🇪🇸 ES</option>
-                <option value="en" class="text-slate-900">🇬🇧 EN</option>
-                <option value="pt" class="text-slate-900">🇧🇷 PT</option>
-                <option value="fr" class="text-slate-900">🇫🇷 FR</option>
-                <option value="de" class="text-slate-900">🇩🇪 DE</option>
-                <option value="ru" class="text-slate-900">🇷🇺 RU</option>
-                <option value="zh" class="text-slate-900">🇨🇳 ZH</option>
-            </select>
 
-            <a href="/login" data-i18n="nav_cuenta" class="btn-emerald px-6 py-2.5 rounded-full font-bold hover:scale-105 transition-all text-sm">Mi cuenta</a>
+            <div class="flex items-center gap-1.5 bg-slate-100/80 px-2.5 py-1 rounded-full border border-slate-200/80 text-xs">
+                <i data-lucide="globe" class="w-3.5 h-3.5 text-slate-500"></i>
+                <select id="langSelector" class="bg-transparent text-slate-800 text-xs outline-none cursor-pointer font-medium">
+                    <option value="es" class="text-slate-900">ES</option>
+                    <option value="en" class="text-slate-900">EN</option>
+                    <option value="pt" class="text-slate-900">PT</option>
+                    <option value="fr" class="text-slate-900">FR</option>
+                    <option value="de" class="text-slate-900">DE</option>
+                    <option value="ru" class="text-slate-900">RU</option>
+                    <option value="zh" class="text-slate-900">ZH</option>
+                </select>
+            </div>
+
+            <a href="/login" data-i18n="nav_cuenta" class="btn-emerald px-5 py-2 rounded-full font-semibold hover:scale-105 transition-all text-xs">Mi cuenta</a>
         </nav>
     </div>
 </header>
@@ -264,7 +267,6 @@ $google_auth_url = 'https://accounts.google.com/o/oauth2/v2/auth?' . http_build_
     <div class="w-full max-w-md relative">
 
         <div class="orbit-ring" style="width:500px;height:500px;top:50%;left:50%;margin-top:-250px;margin-left:-250px;"></div>
-        <div class="orbit-ring" style="width:660px;height:660px;top:50%;left:50%;margin-top:-330px;margin-left:-330px;animation-duration:32s;animation-direction:reverse;border-color:rgba(16,185,129,0.12);"></div>
 
         <div class="form-glow relative">
             <form method="POST" class="glass-form rounded-[2.5rem] p-10 md:p-12 relative z-10 reveal-scale shadow-2xl">
@@ -273,10 +275,10 @@ $google_auth_url = 'https://accounts.google.com/o/oauth2/v2/auth?' . http_build_
                     <div class="w-20 h-20 mx-auto mb-5 rounded-3xl bg-gradient-to-br from-emerald-100 to-teal-50 border border-emerald-200 flex items-center justify-center shadow-lg shadow-emerald-500/10 p-3">
                         <img src="/assets/logo.svg" alt="SmartPlant Logo" class="w-full h-full object-contain filter drop-shadow">
                     </div>
-                    <h2 class="text-3xl md:text-4xl font-bold tracking-tight text-slate-900">
+                    <h2 class="text-3xl md:text-4xl font-semibold tracking-tight">
                         <span data-i18n="login_title_1">Bienvenido de</span> <span data-i18n="login_title_2" class="text-gradient-anim">vuelta.</span>
                     </h2>
-                    <p data-i18n="login_sub" class="text-slate-500 text-sm font-medium mt-2">Ingresá para gestionar tu jardín inteligente.</p>
+                    <p data-i18n="login_sub" class="text-gray-400 text-sm font-light mt-2">Ingresá para gestionar tu jardín inteligente.</p>
                 </div>
 
                 <?php if ($error): ?>
@@ -360,14 +362,6 @@ $google_auth_url = 'https://accounts.google.com/o/oauth2/v2/auth?' . http_build_
         </div>
     </div>
 </main>
-
-<div class="py-6 overflow-hidden border-t border-white/5">
-    <div class="marquee-track">
-        <span class="text-[3rem] font-bold tracking-tighter text-white/[0.025] whitespace-nowrap px-8">
-            SmartPlant CARE — Tu jardín inteligente — Monitoreo 24/7 — Riego automático — Energía solar — &nbsp;
-        </span>
-    </div>
-</div>
 
 <script>
     lucide.createIcons();

@@ -33,12 +33,12 @@ $msg_planta         = $msg_planta ?? '';
 
 // Íconos y textos para el renderizado visual de eventos
 $evento_icono = [
-    'riego'              => ['icon' => '💧', 'color' => 'green'],
-    'alerta_humedad'     => ['icon' => '⚠️', 'color' => 'yellow'],
-    'alerta_temperatura' => ['icon' => '🌡️', 'color' => 'orange'],
-    'bateria_baja'       => ['icon' => '🔋', 'color' => 'cyan'],
-    'sin_conexion'       => ['icon' => '📡', 'color' => 'red'],
-    'otro'               => ['icon' => '🔔', 'color' => 'gray'],
+    'riego'              => ['icon' => 'droplets', 'color' => 'emerald'],
+    'alerta_humedad'     => ['icon' => 'alert-triangle', 'color' => 'amber'],
+    'alerta_temperatura' => ['icon' => 'thermometer', 'color' => 'orange'],
+    'bateria_baja'       => ['icon' => 'battery-low', 'color' => 'cyan'],
+    'sin_conexion'       => ['icon' => 'wifi-off', 'color' => 'red'],
+    'otro'               => ['icon' => 'bell', 'color' => 'slate'],
 ];
 ?>
 <!DOCTYPE html>
@@ -83,9 +83,9 @@ $evento_icono = [
                 <div class="w-8 h-8 rounded-full bg-gradient-to-br from-emerald-400 to-teal-600 border border-emerald-300 flex items-center justify-center text-xs text-white font-bold overflow-hidden shadow-sm cursor-pointer hover:scale-105 transition-transform" onclick="openProfileModal()" title="Mi Perfil">
                     <?php if(!empty($_SESSION['foto_perfil'])): ?>
                         <img id="headerAvatarImg" src="<?= htmlspecialchars($_SESSION['foto_perfil']) ?>" class="w-full h-full object-cover" alt="Perfil">
-                        <span id="headerAvatarEmoji" class="hidden">👤</span>
+                        <span id="headerAvatarEmoji" class="hidden"><i data-lucide="user" class="w-3.5 h-3.5"></i></span>
                     <?php else: ?>
-                        <span id="headerAvatarEmoji">👤</span>
+                        <span id="headerAvatarEmoji"><i data-lucide="user" class="w-3.5 h-3.5"></i></span>
                         <img id="headerAvatarImg" src="" class="w-full h-full object-cover hidden" alt="Perfil">
                     <?php endif; ?>
                 </div>
@@ -386,20 +386,6 @@ $evento_icono = [
                 <p class="text-slate-500 text-xs font-normal mt-1 max-w-[220px]">
                     <?= $salud >= 75 ? 'Tu planta se encuentra en condiciones ideales.' : 'Revisá los parámetros de riego y luz.' ?>
                 </p>
-                <div class="w-full mt-4 pt-3 border-t border-slate-100 dark:border-slate-800 grid grid-cols-3 text-center text-xs">
-                    <div>
-                        <span class="text-[10px] text-slate-400 uppercase font-semibold">Agua</span>
-                        <p class="font-bold text-slate-700 dark:text-slate-300 mt-0.5"><?= $humedad >= 40 ? 'Bien' : 'Baja' ?></p>
-                    </div>
-                    <div>
-                        <span class="text-[10px] text-slate-400 uppercase font-semibold">Clima</span>
-                        <p class="font-bold text-slate-700 dark:text-slate-300 mt-0.5"><?= ($temp >= 20 && $temp <= 28) ? 'Ideal' : 'Alerta' ?></p>
-                    </div>
-                    <div>
-                        <span class="text-[10px] text-slate-400 uppercase font-semibold">Sol</span>
-                        <p class="font-bold text-slate-700 dark:text-slate-300 mt-0.5"><?= $luz > 200 ? 'Bien' : 'Poca' ?></p>
-                    </div>
-                </div>
             </div>
 
         </div>
@@ -459,8 +445,8 @@ $evento_icono = [
                         ?>
                         <div class="flex items-center justify-between p-3.5 rounded-xl bg-slate-50 dark:bg-slate-800/50 border border-slate-100 dark:border-slate-800">
                             <div class="flex items-center gap-3">
-                                <div class="w-8 h-8 rounded-lg bg-emerald-50 dark:bg-emerald-950/50 flex items-center justify-center text-sm">
-                                    <?= $icon ?>
+                                <div class="w-8 h-8 rounded-lg bg-emerald-50 dark:bg-emerald-950/50 flex items-center justify-center text-emerald-600 dark:text-emerald-400">
+                                    <i data-lucide="<?= $icon ?>" class="w-4 h-4"></i>
                                 </div>
                                 <div>
                                     <p class="text-xs font-semibold text-slate-900 dark:text-white"><?= htmlspecialchars($ev['mensaje']) ?></p>
@@ -1362,54 +1348,48 @@ $evento_icono = [
         }
     }
 
-    // ── Agregar entrada al timeline dinámicamente ──
+    // ── Agregar entrada a la galería dinámicamente (misma estructura que el render PHP) ──
     function addTimelineEntry(entry) {
         const timeline = document.getElementById('inventoryTimeline');
         // Remove empty state if present
         const empty = document.getElementById('invEmptyState');
         if (empty) empty.remove();
 
-        // Create or get timeline container
-        let container = timeline.querySelector('.inv-timeline');
+        // Create or get the grid container
+        let container = timeline.querySelector('.inv-grid');
         if (!container) {
             container = document.createElement('div');
-            container.className = 'inv-timeline';
+            container.className = 'inv-grid grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4';
             timeline.appendChild(container);
         }
 
         const d = new Date(entry.fecha);
-        const fechaFmt = d.toLocaleDateString('es-AR', { day: '2-digit', month: 'short', year: 'numeric' });
-        const horaFmt = d.toLocaleTimeString('es-AR', { hour: '2-digit', minute: '2-digit' });
-        const diagShort = entry.diagnostico.length > 120 ? entry.diagnostico.substring(0, 120) + '...' : entry.diagnostico;
+        const fechaFmt = d.toLocaleDateString('es-AR', { day: '2-digit', month: 'short', year: 'numeric' }) +
+            ', ' + d.toLocaleTimeString('es-AR', { hour: '2-digit', minute: '2-digit' });
+        const diagShort = entry.diagnostico.length > 100 ? entry.diagnostico.substring(0, 100) + '...' : entry.diagnostico;
         const diagEscaped = entry.diagnostico.replace(/'/g, "\\'").replace(/`/g, "\\`");
 
         const div = document.createElement('div');
-        div.className = 'inv-entry';
+        div.className = 'inv-entry border border-slate-200/80 dark:border-slate-800 rounded-xl overflow-hidden bg-slate-50 dark:bg-slate-800/40 hover:shadow-md transition-all group';
         div.dataset.id = entry.id;
         div.style.animation = 'fadeSlideIn 0.5s var(--ease-out) forwards';
         div.innerHTML = `
-            <div class="inv-entry-dot"></div>
-            <div class="inv-entry-line"></div>
-            <div class="inv-entry-content">
-                <div class="inv-entry-card" onclick="openInventoryDetail(${entry.id}, '${entry.foto_path}', \`${diagEscaped}\`, '${entry.fecha}')">
-                    <div class="inv-entry-img-wrap">
-                        <img src="${entry.foto_path}" alt="Foto planta" class="inv-entry-img">
-                    </div>
-                    <div class="inv-entry-info">
-                        <div class="flex items-center gap-2 mb-1.5">
-                            <span class="text-xs font-semibold text-white/90">${fechaFmt}</span>
-                            <span class="text-[10px] text-gray-600">${horaFmt}</span>
-                        </div>
-                        <p class="text-xs text-gray-400 font-light leading-relaxed">${diagShort}</p>
-                    </div>
+            <div class="h-44 w-full bg-slate-200 dark:bg-slate-800 overflow-hidden relative cursor-pointer" onclick="openInventoryDetail(${entry.id}, '${entry.foto_path}', \`${diagEscaped}\`, '${entry.fecha}')">
+                <img src="${entry.foto_path}" alt="Foto planta" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" loading="lazy">
+                <div class="absolute top-2 right-2">
+                    <button onclick="event.stopPropagation(); deleteInventoryEntry(${entry.id})" class="w-7 h-7 rounded-full bg-black/60 text-white flex items-center justify-center hover:bg-red-600 transition-colors" title="Eliminar">
+                        <i data-lucide="trash-2" class="w-3.5 h-3.5"></i>
+                    </button>
                 </div>
-                <button onclick="event.stopPropagation(); deleteInventoryEntry(${entry.id})" class="inv-delete-btn" title="Eliminar">
-                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h18M8 6V4a2 2 0 012-2h4a2 2 0 012 2v2M19 6l-1 14a2 2 0 01-2 2H8a2 2 0 01-2-2L5 6"/></svg>
-                </button>
+            </div>
+            <div class="p-3.5">
+                <span class="text-[10px] text-slate-400 font-semibold block mb-1">${fechaFmt}</span>
+                <p class="text-xs text-slate-600 dark:text-slate-300 font-normal leading-relaxed line-clamp-2">${diagShort}</p>
             </div>
         `;
 
         container.prepend(div);
+        if (window.lucide) lucide.createIcons();
     }
 
     // ── Eliminar entrada ──
@@ -1433,17 +1413,23 @@ $evento_icono = [
                     entry.style.animation = 'fadeSlideOut 0.3s ease forwards';
                     setTimeout(() => {
                         entry.remove();
-                        // Check if timeline is empty
-                        const container = document.querySelector('.inv-timeline');
+                        // Check if the grid is empty
+                        const container = document.querySelector('.inv-grid');
                         if (container && container.children.length === 0) {
                             container.remove();
                             const timeline = document.getElementById('inventoryTimeline');
                             timeline.innerHTML = `
-                                <div class="inv-empty" id="invEmptyState">
-                                    <div class="w-20 h-20 mx-auto mb-5 rounded-full bg-indigo-500/10 border border-indigo-500/20 flex items-center justify-center text-3xl">📸</div>
-                                    <p class="text-gray-400 text-sm font-medium mb-1">Sin fotos todavía</p>
-                                    <p class="text-gray-600 text-xs font-light">Subí una foto de tu planta y la IA la analizará automáticamente.</p>
+                                <div class="text-center py-12 border-2 border-dashed border-slate-200 dark:border-slate-800 rounded-xl" id="invEmptyState">
+                                    <div class="w-12 h-12 mx-auto mb-3 rounded-full bg-emerald-50 dark:bg-emerald-950/40 text-emerald-600 flex items-center justify-center">
+                                        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><path d="M23 19a2 2 0 01-2 2H3a2 2 0 01-2-2V8a2 2 0 012-2h4l2-3h6l2 3h4a2 2 0 012 2z"/><circle cx="12" cy="13" r="4"/></svg>
+                                    </div>
+                                    <p class="text-slate-700 dark:text-slate-300 text-sm font-semibold mb-1">Sin fotografías registradas</p>
+                                    <p class="text-slate-500 text-xs max-w-sm mx-auto mb-4">Subí una foto de tu planta para que la inteligencia artificial analice su estado.</p>
+                                    <button onclick="openInventoryUpload()" class="px-4 py-2 bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-semibold rounded-xl inline-flex items-center gap-1.5 shadow-sm">
+                                        <i data-lucide="plus" class="w-3.5 h-3.5"></i> Subir primera foto
+                                    </button>
                                 </div>`;
+                            if (window.lucide) lucide.createIcons();
                         }
                     }, 300);
                 }

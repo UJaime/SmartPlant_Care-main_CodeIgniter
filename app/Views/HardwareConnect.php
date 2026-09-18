@@ -45,6 +45,11 @@ function componentDisplayValue(array $component): string
     return trim($value . ' ' . $unit);
 }
 
+// Insignia de estado por tarjeta de sensor: sólo afirma "EN VIVO" cuando hay una lectura reciente.
+$liveBadge = $latest
+    ? '<span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] badge-live shadow-sm"><span class="w-1.5 h-1.5 rounded-full bg-white animate-pulse"></span> EN VIVO</span>'
+    : '<span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-bold bg-slate-200/70 dark:bg-slate-700/60 text-slate-500 dark:text-slate-400"><span class="w-1.5 h-1.5 rounded-full bg-slate-400"></span> SIN DATOS</span>';
+
 // Determinar pestaña inicial
 $initialTab = 'telemetry';
 if (isset($_GET['tab']) && $_GET['tab'] === 'new' || isset($_GET['action']) && $_GET['action'] === 'new' || (count($devices) === 0 && empty($success_msg))) {
@@ -227,7 +232,7 @@ if (isset($_GET['tab']) && $_GET['tab'] === 'new' || isset($_GET['action']) && $
                 </p>
             </div>
 
-            <aside class="hw-panel rounded-2xl p-5 border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 shadow-sm">
+            <aside class="hw-panel rounded-2xl p-5">
                 <?php if ($selectedDevice): ?>
                     <form method="GET" class="space-y-3">
                         <div class="flex items-center justify-between">
@@ -275,7 +280,7 @@ if (isset($_GET['tab']) && $_GET['tab'] === 'new' || isset($_GET['action']) && $
         <?php if ($selectedDevice): ?>
         <!-- Resumen del hardware -->
         <section class="grid sm:grid-cols-2 gap-4 mt-6">
-            <div class="hw-panel rounded-2xl p-5 hw-reading border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 shadow-sm flex flex-col justify-between">
+            <div class="hw-panel rounded-2xl p-5 hw-reading flex flex-col justify-between">
                 <div>
                     <p class="text-[11px] font-bold text-slate-500 uppercase tracking-wider mb-1">Componentes online</p>
                     <p class="text-3xl font-black text-slate-900 dark:text-white"><span id="connectedCount"><?= $connectedCount ?></span>/<span id="totalCount"><?= count($components) ?></span></p>
@@ -283,7 +288,7 @@ if (isset($_GET['tab']) && $_GET['tab'] === 'new' || isset($_GET['action']) && $
                 <p class="text-[11px] text-slate-500 font-medium">Sensores físicos sincronizados.</p>
             </div>
 
-            <div class="hw-panel rounded-2xl p-5 hw-reading border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 shadow-sm flex flex-col justify-between">
+            <div class="hw-panel rounded-2xl p-5 hw-reading flex flex-col justify-between">
                 <div>
                     <p class="text-[11px] font-bold text-slate-500 uppercase tracking-wider mb-1">Estado de Salud</p>
                     <p class="text-lg font-bold text-emerald-600 dark:text-emerald-400 leading-tight" id="analysisSummary"><?= h($analysis['resumen']) ?></p>
@@ -300,9 +305,7 @@ if (isset($_GET['tab']) && $_GET['tab'] === 'new' || isset($_GET['action']) && $
                 <div>
                     <div class="flex items-center justify-between mb-1">
                         <p class="text-[11px] font-black uppercase tracking-wider card-title">Humedad Suelo</p>
-                        <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] badge-live shadow-sm">
-                            <span class="w-1.5 h-1.5 rounded-full bg-white animate-pulse"></span> EN VIVO
-                        </span>
+                        <span data-badge-slot="humedad_suelo"><?= $liveBadge ?></span>
                     </div>
                     <p class="text-3xl font-black val"><span id="readingSoil"><?= $latest ? number_format((float) $latest['humedad_suelo'], 1) : '-' ?></span><span class="text-lg font-bold ml-0.5">%</span></p>
                 </div>
@@ -322,9 +325,7 @@ if (isset($_GET['tab']) && $_GET['tab'] === 'new' || isset($_GET['action']) && $
                 <div>
                     <div class="flex items-center justify-between mb-1">
                         <p class="text-[11px] font-black uppercase tracking-wider card-title">Luz BH-1750</p>
-                        <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] badge-live shadow-sm">
-                            <span class="w-1.5 h-1.5 rounded-full bg-white animate-pulse"></span> EN VIVO
-                        </span>
+                        <span data-badge-slot="luz_ambiental"><?= $liveBadge ?></span>
                     </div>
                     <p class="text-3xl font-black val"><span id="readingLightTop"><?= $latest ? (int) $latest['luz_ambiental'] : '-' ?></span><span class="text-lg font-bold ml-0.5">lx</span></p>
                 </div>
@@ -344,9 +345,7 @@ if (isset($_GET['tab']) && $_GET['tab'] === 'new' || isset($_GET['action']) && $
                 <div>
                     <div class="flex items-center justify-between mb-1">
                         <p class="text-[11px] font-black uppercase tracking-wider card-title">DHT22</p>
-                        <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] badge-live shadow-sm">
-                            <span class="w-1.5 h-1.5 rounded-full bg-white animate-pulse"></span> EN VIVO
-                        </span>
+                        <span data-badge-slot="dht22"><?= $liveBadge ?></span>
                     </div>
                     <p class="text-3xl font-black val"><span id="readingTemp"><?= $latest && $latest['temperatura'] !== null ? number_format((float) $latest['temperatura'], 1) : '-' ?></span><span class="text-lg font-bold ml-0.5">°C</span></p>
                 </div>
@@ -360,9 +359,7 @@ if (isset($_GET['tab']) && $_GET['tab'] === 'new' || isset($_GET['action']) && $
                 <div>
                     <div class="flex items-center justify-between mb-1">
                         <p class="text-[11px] font-black uppercase tracking-wider card-title">pH PH-4502C</p>
-                        <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] badge-live shadow-sm">
-                            <span class="w-1.5 h-1.5 rounded-full bg-white animate-pulse"></span> EN VIVO
-                        </span>
+                        <span data-badge-slot="ph"><?= $liveBadge ?></span>
                     </div>
                     <p class="text-3xl font-black val"><span id="readingPh"><?= $latest && $latest['ph'] !== null ? number_format((float) $latest['ph'], 2) : '-' ?></span></p>
                 </div>
@@ -377,9 +374,7 @@ if (isset($_GET['tab']) && $_GET['tab'] === 'new' || isset($_GET['action']) && $
                 <div>
                     <div class="flex items-center justify-between mb-1">
                         <p class="text-[11px] font-black uppercase tracking-wider card-title">Depósito de agua</p>
-                        <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] badge-live shadow-sm">
-                            <span class="w-1.5 h-1.5 rounded-full bg-white animate-pulse"></span> EN VIVO
-                        </span>
+                        <span data-badge-slot="nivel_tanque"><?= $liveBadge ?></span>
                     </div>
                     <p class="text-3xl font-black val"><span id="readingTank"><?= $latest ? (int) $latest['nivel_tanque'] : '-' ?></span><span class="text-lg font-bold ml-0.5">%</span></p>
                 </div>
@@ -394,7 +389,7 @@ if (isset($_GET['tab']) && $_GET['tab'] === 'new' || isset($_GET['action']) && $
 
         <!-- Detección de Componentes y Lecturas Secundarias -->
         <section class="grid lg:grid-cols-[1.1fr_0.9fr] gap-6 mt-6 items-start">
-            <div class="hw-panel rounded-2xl p-6 border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 shadow-sm">
+            <div class="hw-panel rounded-2xl p-6">
                 <div class="flex items-center justify-between mb-5">
                     <div>
                         <h2 class="text-lg font-bold text-slate-900 dark:text-white">Sensores & Módulos</h2>
@@ -460,7 +455,7 @@ if (isset($_GET['tab']) && $_GET['tab'] === 'new' || isset($_GET['action']) && $
                 </div>
 
                 <!-- Diagnóstico y Alertas -->
-                <div class="hw-panel rounded-2xl p-6 border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 shadow-sm">
+                <div class="hw-panel rounded-2xl p-6">
                     <h2 class="text-sm font-bold text-slate-900 dark:text-white mb-3 flex items-center gap-2">
                         <i data-lucide="shield-check" class="w-4 h-4 text-emerald-600"></i> Diagnóstico de Hardware
                     </h2>
@@ -510,7 +505,7 @@ if (isset($_GET['tab']) && $_GET['tab'] === 'new' || isset($_GET['action']) && $
                 </div>
             </div>
 
-            <div class="bg-white dark:bg-slate-900 border border-slate-200/80 dark:border-slate-800 rounded-3xl p-7 shadow-sm">
+            <div class="glass-form rounded-3xl p-7">
                 <form method="POST" action="" class="space-y-4">
                     <input type="hidden" name="action" value="create_device">
 
@@ -610,6 +605,14 @@ if (isset($_GET['tab']) && $_GET['tab'] === 'new' || isset($_GET['action']) && $
         return 'hw-status-off';
     }
 
+    function markSensorsLive(sensorKeys) {
+        const liveHtml = '<span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] badge-live shadow-sm"><span class="w-1.5 h-1.5 rounded-full bg-white animate-pulse"></span> EN VIVO</span>';
+        sensorKeys.forEach(key => {
+            const slot = document.querySelector(`[data-badge-slot="${key}"]`);
+            if (slot) slot.innerHTML = liveHtml;
+        });
+    }
+
     function formatComponentValue(c) {
         const val = (c.valor !== null && c.valor !== undefined) ? String(c.valor).trim() : '';
         if (!val) return '-';
@@ -648,6 +651,8 @@ if (isset($_GET['tab']) && $_GET['tab'] === 'new' || isset($_GET['action']) && $
 
         const reading = data.reading;
         if (reading) {
+            markSensorsLive(['humedad_suelo', 'luz_ambiental', 'dht22', 'ph', 'nivel_tanque']);
+
             const soilVal = Number(reading.humedad_suelo);
             setText('readingSoil', soilVal.toFixed(1));
             
