@@ -234,37 +234,39 @@ $google_auth_url = 'https://accounts.google.com/o/oauth2/v2/auth?' . http_build_
 
 <body class="bg-overlay text-white min-h-screen flex flex-col">
 
-<header class="sticky top-6 z-50 mx-auto w-full max-w-5xl px-4">
-    <div class="glass-clean flex items-center justify-between px-8 py-4 rounded-[2.5rem]">
-        <a href="/" class="flex items-center gap-3 group">
-            <img src="/assets/logo.svg" alt="SmartPlant Logo" class="w-9 h-9 transition-transform group-hover:scale-105 filter drop-shadow-[0_2px_8px_rgba(16,185,129,0.35)]">
-            <span class="text-2xl font-bold tracking-tight text-slate-900">SmartPlant <span class="text-emerald-600 font-black">CARE</span></span>
-        </a>
-        <nav class="hidden md:flex gap-8 items-center text-sm font-medium text-slate-700">
-            <a href="/#utilidades" data-i18n="nav_utilidades" class="hover:text-emerald-600 transition-colors">Utilidades</a>
-            <a href="/#producto" data-i18n="nav_producto" class="hover:text-emerald-600 transition-colors">Producto</a>
-            <a href="/store" data-i18n="nav_tienda" class="hover:text-emerald-600 transition-colors">Tienda</a>
-            
-            <select id="langSelector" class="bg-emerald-50/80 border border-emerald-200 text-slate-800 text-xs rounded-lg px-2.5 py-1.5 outline-none cursor-pointer font-medium hover:border-emerald-400 transition-all">
-                <option value="es" class="text-slate-900">🇪🇸 ES</option>
-                <option value="en" class="text-slate-900">🇬🇧 EN</option>
-                <option value="pt" class="text-slate-900">🇧🇷 PT</option>
-                <option value="fr" class="text-slate-900">🇫🇷 FR</option>
-                <option value="de" class="text-slate-900">🇩🇪 DE</option>
-                <option value="ru" class="text-slate-900">🇷🇺 RU</option>
-                <option value="zh" class="text-slate-900">🇨🇳 ZH</option>
-            </select>
+<header class="sticky top-0 z-50 w-full">
+    <div class="glass-clean">
+        <div class="max-w-6xl mx-auto px-6 py-3.5 flex items-center justify-between gap-4">
+            <a href="/" class="flex items-center gap-2.5 group">
+                <img src="/assets/logo.svg" alt="SmartPlant Logo" class="w-8 h-8 transition-transform group-hover:scale-105">
+                <span class="text-xl font-bold tracking-tight">SmartPlant <span class="text-emerald-400 font-black">CARE</span></span>
+            </a>
+            <nav class="hidden md:flex gap-7 items-center text-sm font-medium">
+                <a href="/#utilidades" data-i18n="nav_utilidades" class="hover:text-emerald-400 transition-colors">Utilidades</a>
+                <a href="/#producto" data-i18n="nav_producto" class="hover:text-emerald-400 transition-colors">Producto</a>
+                <a href="/store" data-i18n="nav_tienda" class="hover:text-emerald-400 transition-colors">Tienda</a>
 
-            <a href="/login" data-i18n="nav_cuenta" class="btn-emerald px-6 py-2.5 rounded-full font-bold hover:scale-105 transition-all text-sm">Mi cuenta</a>
-        </nav>
+                <div class="flex items-center gap-1.5 chrome-chip px-2.5 py-1 text-xs">
+                    <i data-lucide="globe" class="w-3.5 h-3.5"></i>
+                    <select id="langSelector" class="bg-transparent text-xs outline-none cursor-pointer font-medium">
+                        <option value="es" class="text-slate-900">ES</option>
+                        <option value="en" class="text-slate-900">EN</option>
+                        <option value="pt" class="text-slate-900">PT</option>
+                        <option value="fr" class="text-slate-900">FR</option>
+                        <option value="de" class="text-slate-900">DE</option>
+                        <option value="ru" class="text-slate-900">RU</option>
+                        <option value="zh" class="text-slate-900">ZH</option>
+                    </select>
+                </div>
+
+                <a href="/login" data-i18n="nav_cuenta" class="btn-emerald px-5 py-2 rounded-xl font-semibold transition-all text-xs">Mi cuenta</a>
+            </nav>
+        </div>
     </div>
 </header>
 
 <main class="flex-1 flex items-center justify-center px-6 py-20">
     <div class="w-full max-w-md relative">
-
-        <div class="orbit-ring" style="width:500px;height:500px;top:50%;left:50%;margin-top:-250px;margin-left:-250px;"></div>
-        <div class="orbit-ring" style="width:660px;height:660px;top:50%;left:50%;margin-top:-330px;margin-left:-330px;animation-duration:32s;animation-direction:reverse;border-color:rgba(16,185,129,0.12);"></div>
 
         <div class="form-glow relative">
             <form method="POST" class="glass-form rounded-[2.5rem] p-10 md:p-12 relative z-10 reveal-scale shadow-2xl">
@@ -273,10 +275,10 @@ $google_auth_url = 'https://accounts.google.com/o/oauth2/v2/auth?' . http_build_
                     <div class="w-20 h-20 mx-auto mb-5 rounded-3xl bg-gradient-to-br from-emerald-100 to-teal-50 border border-emerald-200 flex items-center justify-center shadow-lg shadow-emerald-500/10 p-3">
                         <img src="/assets/logo.svg" alt="SmartPlant Logo" class="w-full h-full object-contain filter drop-shadow">
                     </div>
-                    <h2 class="text-3xl md:text-4xl font-bold tracking-tight text-slate-900">
+                    <h2 class="text-3xl md:text-4xl font-semibold tracking-tight">
                         <span data-i18n="login_title_1">Bienvenido de</span> <span data-i18n="login_title_2" class="text-gradient-anim">vuelta.</span>
                     </h2>
-                    <p data-i18n="login_sub" class="text-slate-500 text-sm font-medium mt-2">Ingresá para gestionar tu jardín inteligente.</p>
+                    <p data-i18n="login_sub" class="text-gray-400 text-sm font-light mt-2">Ingresá para gestionar tu jardín inteligente.</p>
                 </div>
 
                 <?php if ($error): ?>
@@ -287,7 +289,7 @@ $google_auth_url = 'https://accounts.google.com/o/oauth2/v2/auth?' . http_build_
                 <?php endif; ?>
 
                 <div class="mb-5">
-                    <label data-i18n="label_email" class="text-xs font-medium text-gray-400 tracking-widest uppercase mb-2 block ml-1">Correo</label>
+                    <label data-i18n="label_email" class="text-xs font-semibold text-gray-600 tracking-wide uppercase mb-2 block ml-1">Correo</label>
                     <input type="email" name="email" placeholder="tucorreo@smartplant.com"
                         value="<?= htmlspecialchars($_POST['email'] ?? '') ?>"
                         class="input-glass w-full rounded-2xl px-5 py-4 text-sm font-light"
@@ -295,13 +297,13 @@ $google_auth_url = 'https://accounts.google.com/o/oauth2/v2/auth?' . http_build_
                 </div>
 
                 <div class="mb-6">
-                    <label data-i18n="label_pass" class="text-xs font-medium text-gray-400 tracking-widest uppercase mb-2 block ml-1">Contraseña</label>
+                    <label data-i18n="label_pass" class="text-xs font-semibold text-gray-600 tracking-wide uppercase mb-2 block ml-1">Contraseña</label>
                     <div class="relative">
                         <input type="password" name="password" id="passwordInput" placeholder="••••••••"
                             class="input-glass w-full rounded-2xl px-5 py-4 text-sm font-light pr-14"
                             required autocomplete="current-password">
                         <button type="button" onclick="togglePassword()"
-                            id="toggleBtn" class="absolute right-4 top-1/2 -translate-y-1/2 text-white/30 hover:text-white/60 transition-colors">
+                            id="toggleBtn" class="absolute right-4 top-1/2 -translate-y-1/2 text-white/60 hover:text-white transition-colors">
                             <i data-lucide="eye" class="w-5 h-5"></i>
                         </button>
                     </div>
@@ -360,14 +362,6 @@ $google_auth_url = 'https://accounts.google.com/o/oauth2/v2/auth?' . http_build_
         </div>
     </div>
 </main>
-
-<div class="py-6 overflow-hidden border-t border-white/5">
-    <div class="marquee-track">
-        <span class="text-[3rem] font-bold tracking-tighter text-white/[0.025] whitespace-nowrap px-8">
-            SmartPlant CARE — Tu jardín inteligente — Monitoreo 24/7 — Riego automático — Energía solar — &nbsp;
-        </span>
-    </div>
-</div>
 
 <script>
     lucide.createIcons();
@@ -471,7 +465,7 @@ $google_auth_url = 'https://accounts.google.com/o/oauth2/v2/auth?' . http_build_
         <form method="POST" class="space-y-5">
             <input type="hidden" name="forgot_password" value="1">
             <div>
-                <label data-i18n="label_email" class="block text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-widest mb-2 ml-1">Correo</label>
+                <label data-i18n="label_email" class="block text-xs font-semibold text-gray-600 dark:text-gray-300 uppercase tracking-wide mb-2 ml-1">Correo</label>
                 <div class="relative">
                     <input type="email" name="email_forgot" placeholder="tucorreo@smartplant.com" required class="w-full input-glass rounded-2xl px-5 py-3.5 text-sm font-light pl-11">
                     <i data-lucide="mail" class="w-5 h-5 absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 pointer-events-none"></i>

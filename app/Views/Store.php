@@ -117,43 +117,48 @@ function formatPrice($price) {
     document.documentElement.setAttribute('lang', localStorage.getItem('sp_lang') || 'es');
 </script>
 
-<header class="sticky top-6 z-50 mx-auto max-w-5xl px-4">
-    <div class="glass-clean flex items-center justify-between px-8 py-4 rounded-[2.5rem]">
-        <a href="/" class="flex items-center gap-3 group">
-            <img src="/assets/logo.svg" alt="SmartPlant Logo" class="w-9 h-9 transition-transform group-hover:scale-105 filter drop-shadow-[0_2px_8px_rgba(16,185,129,0.35)]">
-            <span class="text-2xl font-bold tracking-tight text-slate-900">SmartPlant <span class="text-emerald-600 font-black">CARE</span></span>
-        </a>
-        <nav class="hidden md:flex gap-8 items-center text-sm font-medium text-slate-700">
-            <a href="/" data-i18n="nav_inicio" class="hover:text-emerald-600 transition-colors">Inicio</a>
-            <a href="/#utilidades" data-i18n="nav_utilidades" class="hover:text-emerald-600 transition-colors">Utilidades</a>
-            <a href="/#producto" data-i18n="nav_producto" class="hover:text-emerald-600 transition-colors">Producto</a>
-            <a href="/store" data-i18n="nav_tienda" class="text-emerald-600 font-bold">Tienda</a>
-            
-            <button class="cart-header-btn relative" onclick="toggleCart()" aria-label="Carrito">
-                <i data-lucide="shopping-cart" class="w-5 h-5"></i>
-                <span class="cart-badge" id="cartBadge">0</span>
-            </button>
+<header class="sticky top-0 z-50 w-full">
+    <div class="glass-clean">
+        <div class="max-w-6xl mx-auto px-6 py-3.5 flex items-center justify-between gap-4">
+            <a href="/" class="flex items-center gap-2.5 group">
+                <img src="/assets/logo.svg" alt="SmartPlant Logo" class="w-8 h-8 transition-transform group-hover:scale-105">
+                <span class="text-xl font-bold tracking-tight">SmartPlant <span class="text-emerald-400 font-black">CARE</span></span>
+            </a>
+            <nav class="hidden md:flex gap-7 items-center text-sm font-medium">
+                <a href="/" data-i18n="nav_inicio" class="hover:text-emerald-400 transition-colors">Inicio</a>
+                <a href="/#utilidades" data-i18n="nav_utilidades" class="hover:text-emerald-400 transition-colors">Utilidades</a>
+                <a href="/#producto" data-i18n="nav_producto" class="hover:text-emerald-400 transition-colors">Producto</a>
+                <a href="/store" data-i18n="nav_tienda" class="text-emerald-400 font-bold">Tienda</a>
 
-            <button type="button" class="cart-header-btn" onclick="toggleTheme()" id="themeToggleBtn" aria-label="Cambiar tema" title="Cambiar tema">
-                <i data-lucide="moon" class="w-5 h-5"></i>
-            </button>
+                <button class="chrome-chip relative w-9 h-9 flex items-center justify-center" onclick="toggleCart()" aria-label="Carrito">
+                    <i data-lucide="shopping-cart" class="w-4 h-4"></i>
+                    <span class="cart-badge" id="cartBadge" style="background:var(--chrome-accent);color:#062017;">0</span>
+                </button>
 
-            <select id="langSelector" class="bg-transparent border border-white/20 text-white/80 text-xs rounded-md px-2 py-1 outline-none cursor-pointer">
-                <option value="es" class="text-black">🇪🇸 ES</option>
-                <option value="en" class="text-black">🇬🇧 EN</option>
-                <option value="pt" class="text-black">🇧🇷 PT</option>
-                <option value="fr" class="text-black">🇫🇷 FR</option>
-                <option value="de" class="text-black">🇩🇪 DE</option>
-                <option value="ru" class="text-black">🇷🇺 RU</option>
-                <option value="zh" class="text-black">🇨🇳 ZH</option>
-            </select>
+                <button type="button" class="chrome-chip w-9 h-9 flex items-center justify-center" onclick="toggleTheme()" id="themeToggleBtn" aria-label="Cambiar tema" title="Cambiar tema">
+                    <i data-lucide="moon" class="w-4 h-4"></i>
+                </button>
 
-            <?php if ($logged): ?>
-                <a href="/dashboard" data-i18n="nav_dashboard" class="bg-white text-black px-6 py-2.5 rounded-full font-bold hover:scale-105 transition-all shadow-lg text-sm">Mi Dashboard</a>
-            <?php else: ?>
-                <a href="/login" data-i18n="nav_cuenta" class="bg-white text-black px-6 py-2.5 rounded-full font-bold hover:scale-105 transition-all shadow-lg text-sm">Mi cuenta</a>
-            <?php endif; ?>
-        </nav>
+                <div class="chrome-chip flex items-center gap-1.5 px-2.5 py-1.5 text-xs">
+                    <i data-lucide="globe" class="w-3.5 h-3.5"></i>
+                    <select id="langSelector" class="bg-transparent text-xs outline-none cursor-pointer font-medium">
+                        <option value="es" style="color:#0f172a">ES</option>
+                        <option value="en" style="color:#0f172a">EN</option>
+                        <option value="pt" style="color:#0f172a">PT</option>
+                        <option value="fr" style="color:#0f172a">FR</option>
+                        <option value="de" style="color:#0f172a">DE</option>
+                        <option value="ru" style="color:#0f172a">RU</option>
+                        <option value="zh" style="color:#0f172a">ZH</option>
+                    </select>
+                </div>
+
+                <?php if ($logged): ?>
+                    <a href="/dashboard" data-i18n="nav_dashboard" class="btn-emerald px-6 py-2.5 rounded-xl font-semibold hover:scale-105 transition-all text-sm">Mi Dashboard</a>
+                <?php else: ?>
+                    <a href="/login" data-i18n="nav_cuenta" class="btn-emerald px-6 py-2.5 rounded-xl font-semibold hover:scale-105 transition-all text-sm">Mi cuenta</a>
+                <?php endif; ?>
+            </nav>
+        </div>
     </div>
 </header>
 
@@ -162,7 +167,7 @@ function formatPrice($price) {
     <h1 class="reveal-blur text-5xl md:text-7xl font-semibold tracking-tight mb-6 leading-[1.1]">
         <span data-i18n="store_hero_title">Equipá tu</span> <span data-i18n="store_hero_title_span" class="text-gradient-anim">jardín.</span>
     </h1>
-    <p data-i18n="store_hero_desc" class="reveal text-lg md:text-xl text-gray-400 max-w-xl mx-auto font-light leading-relaxed">
+    <p data-i18n="store_hero_desc" class="reveal text-lg md:text-xl max-w-xl mx-auto font-light leading-relaxed" style="color:var(--text-sub)">
         Tecnología de vanguardia para el cuidado autónomo de tus plantas. Envío a todo el país.
     </p>
 </section>
@@ -182,7 +187,7 @@ function formatPrice($price) {
 
             <div class="store-card-body">
                 <h3 class="text-2xl font-semibold tracking-tight mb-2" data-product-field="name"><?= $p['name'] ?></h3>
-                <p class="text-gray-400 text-sm font-light leading-relaxed mb-5" data-product-field="shortDesc"><?= $p['shortDesc'] ?></p>
+                <p class="text-sm font-light leading-relaxed mb-5" style="color:var(--text-sub)" data-product-field="shortDesc"><?= $p['shortDesc'] ?></p>
 
                 <div class="store-features" data-product-field="features">
                     <?php foreach ($p['features'] as $f): ?>
@@ -193,7 +198,7 @@ function formatPrice($price) {
                 <div class="flex items-end gap-3 mb-6">
                     <span class="text-3xl font-bold text-gradient-green"><?= formatPrice($p['price']) ?></span>
                     <?php if ($p['oldPrice']): ?>
-                    <span class="text-gray-500 line-through text-lg"><?= formatPrice($p['oldPrice']) ?></span>
+                    <span class="line-through text-lg" style="color:var(--text-muted)"><?= formatPrice($p['oldPrice']) ?></span>
                     <?php endif; ?>
                 </div>
 
@@ -218,17 +223,20 @@ function formatPrice($price) {
         <div class="flex flex-col items-center gap-2">
             <span class="mb-2 p-3 bg-white/5 rounded-2xl border border-white/10 flex items-center justify-center"><i data-lucide="<?= $icon ?>" class="w-6 h-6 text-white/80"></i></span>
             <p class="text-white font-semibold text-sm" data-i18n="<?= $keyTitle ?>"><?= $defaultTitle ?></p>
-            <p class="text-gray-500 text-xs font-light" data-i18n="<?= $keyDesc ?>"><?= $defaultDesc ?></p>
+            <p class="text-xs font-light" style="color:var(--text-sub)" data-i18n="<?= $keyDesc ?>"><?= $defaultDesc ?></p>
         </div>
         <?php endforeach; ?>
     </div>
 </section>
 
-<footer class="py-20 text-center text-gray-500 text-sm border-t border-white/10 glass-clean rounded-t-[3rem] mt-20">
-    <div class="max-w-4xl mx-auto px-6">
-        <p class="mb-4 flex items-center justify-center gap-2"><i data-lucide="leaf" class="w-4 h-4"></i> SmartPlant CARE</p>
-        <p class="font-light tracking-widest uppercase text-[10px]" data-i18n="footer_tag">Diseñado para el futuro</p>
-        <p class="mt-10 opacity-50">© 2026 Todos los derechos reservados.</p>
+<footer class="glass-clean mt-20 w-full">
+    <div class="max-w-6xl mx-auto px-6 py-7 flex flex-col sm:flex-row items-center justify-between gap-3 text-sm">
+        <span class="flex items-center gap-1.5 font-medium"><i data-lucide="leaf" class="w-4 h-4 text-emerald-400"></i> SmartPlant CARE</span>
+        <p class="text-xs uppercase tracking-widest font-light" data-i18n="footer_tag">Diseñado para el futuro</p>
+        <div class="flex items-center gap-4">
+            <a href="/" data-i18n="nav_inicio" class="hover:text-emerald-400 transition-colors">Inicio</a>
+            <p class="text-xs">© 2026 Todos los derechos reservados.</p>
+        </div>
     </div>
 </footer>
 
@@ -252,15 +260,15 @@ function formatPrice($price) {
 
                 <div class="flex items-end gap-3 mb-6">
                     <span class="text-4xl font-bold text-gradient-green" id="modalPrice"></span>
-                    <span class="text-gray-500 line-through text-xl" id="modalOldPrice"></span>
+                    <span class="line-through text-xl" style="color:var(--text-muted)" id="modalOldPrice"></span>
                 </div>
 
-                <p class="text-gray-400 font-light leading-relaxed mb-8" id="modalDesc"></p>
+                <p class="font-light leading-relaxed mb-8" style="color:var(--text-sub)" id="modalDesc"></p>
 
                 <div id="modalColorsSection" class="mb-8">
                     <p class="text-sm font-semibold text-white/60 uppercase tracking-widest mb-3" data-i18n="prod_color">Color</p>
                     <div class="flex gap-3 items-center" id="modalColors"></div>
-                    <p class="text-sm text-gray-500 mt-2" id="modalColorName"></p>
+                    <p class="text-sm mt-2" style="color:var(--text-muted)" id="modalColorName"></p>
                 </div>
 
                 <div class="mb-8">
@@ -300,17 +308,17 @@ function formatPrice($price) {
     </div>
     <div class="cart-items" id="cartItems">
         <div class="cart-empty" id="cartEmpty">
-            <div class="flex justify-center mb-4 text-white/20">
+            <div class="flex justify-center mb-4" style="color:var(--text-dim)">
                 <i data-lucide="package-open" class="w-16 h-16"></i>
             </div>
-            <p class="text-gray-400 font-light" data-i18n="cart_empty">Tu carrito está vacío</p>
+            <p class="font-light" style="color:var(--text-sub)" data-i18n="cart_empty">Tu carrito está vacío</p>
             <p class="text-gray-600 text-sm mt-1" data-i18n="cart_empty_sub">Explorá la tienda y agregá productos</p>
         </div>
     </div>
     <div class="cart-footer" id="cartFooter" style="display:none">
         <div class="divider-glass mb-4"></div>
         <div class="flex justify-between items-center mb-6">
-            <span class="text-gray-400 font-light" data-i18n="cart_subtotal">Subtotal</span>
+            <span class="font-light" style="color:var(--text-sub)" data-i18n="cart_subtotal">Subtotal</span>
             <span class="text-2xl font-bold text-gradient-green" id="cartSubtotal">$0</span>
         </div>
         <div class="flex flex-col gap-3">
@@ -432,8 +440,8 @@ function formatPrice($price) {
 
         if (btn) {
             btn.innerHTML = next === 'dark'
-                ? '<i data-lucide="sun" class="w-5 h-5"></i>'
-                : '<i data-lucide="moon" class="w-5 h-5"></i>';
+                ? '<i data-lucide="sun" class="w-4 h-4"></i>'
+                : '<i data-lucide="moon" class="w-4 h-4"></i>';
             btn.setAttribute('aria-label', next === 'dark' ? 'Cambiar a modo claro' : 'Cambiar a modo oscuro');
             btn.setAttribute('title', next === 'dark' ? 'Cambiar a modo claro' : 'Cambiar a modo oscuro');
             lucide.createIcons();
@@ -931,7 +939,7 @@ function formatPrice($price) {
                 <img src="${item.image}" alt="${itemName}" class="cart-item-img">
                 <div class="cart-item-info">
                     <p class="font-semibold text-sm">${itemName}</p>
-                    <p class="text-gray-500 text-xs">${itemColor}</p>
+                    <p class="text-xs" style="color:var(--text-muted)">${itemColor}</p>
                     <p class="text-white/70 font-bold text-sm mt-1">${formatPrice(item.price)}</p>
                 </div>
                 <div class="cart-item-controls">
@@ -1090,7 +1098,7 @@ function formatPrice($price) {
     if (typeof paypal !== 'undefined') {
         if (!isLoggedIn) {
             document.getElementById('paypal-button-container').innerHTML =
-                '<p class="text-center text-xs text-gray-500 font-light">Inicia sesion para habilitar el pago y guardar la compra.</p>';
+                '<p class="text-center text-xs font-light" style="color:var(--text-muted)">Inicia sesion para habilitar el pago y guardar la compra.</p>';
         } else {
             paypal.Buttons({
                 createOrder: function(data, actions) {

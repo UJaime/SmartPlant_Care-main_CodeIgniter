@@ -45,6 +45,11 @@ function componentDisplayValue(array $component): string
     return trim($value . ' ' . $unit);
 }
 
+// Insignia de estado por tarjeta de sensor: sólo afirma "EN VIVO" cuando hay una lectura reciente.
+$liveBadge = $latest
+    ? '<span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-lg text-[10px] badge-live shadow-sm"><span class="w-1.5 h-1.5 rounded-full bg-white animate-pulse"></span> EN VIVO</span>'
+    : '<span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-lg text-[10px] font-bold bg-slate-200/70 dark:bg-slate-700/60 text-slate-500 dark:text-slate-400"><span class="w-1.5 h-1.5 rounded-full bg-slate-400"></span> SIN DATOS</span>';
+
 // Determinar pestaña inicial
 $initialTab = 'telemetry';
 if (isset($_GET['tab']) && $_GET['tab'] === 'new' || isset($_GET['action']) && $_GET['action'] === 'new' || (count($devices) === 0 && empty($success_msg))) {
@@ -73,7 +78,7 @@ if (isset($_GET['tab']) && $_GET['tab'] === 'new' || isset($_GET['action']) && $
             display: inline-flex;
             align-items: center;
             gap: 0.45rem;
-            border-radius: 999px;
+            border-radius: 0.5rem;
             border: 1px solid var(--border);
             padding: 0.35rem 0.7rem;
             font-size: 0.72rem;
@@ -156,34 +161,36 @@ if (isset($_GET['tab']) && $_GET['tab'] === 'new' || isset($_GET['action']) && $
 </script>
 
 <!-- ═══ HEADER ═══ -->
-<header class="sticky top-4 z-50 mx-auto max-w-6xl px-4">
-    <div class="glass-clean flex items-center justify-between px-6 py-3.5 rounded-2xl shadow-sm border border-slate-200/80 dark:border-slate-800">
-        <a href="/" class="flex items-center gap-2.5 group">
-            <img src="/assets/logo.svg" alt="SmartPlant Logo" class="w-8 h-8 transition-transform group-hover:scale-105">
-            <span class="text-xl font-bold tracking-tight text-slate-900 dark:text-white">SmartPlant <span class="text-emerald-600 font-black">CARE</span></span>
-        </a>
-        
-        <div class="flex items-center gap-2 bg-slate-100 dark:bg-slate-800 p-1 rounded-xl border border-slate-200 dark:border-slate-700">
-            <button onclick="switchTab('telemetry')" id="btnTabTelemetry" class="tab-btn px-3.5 py-1.5 rounded-lg text-xs font-bold flex items-center gap-1.5 <?= $initialTab === 'telemetry' ? 'active' : 'text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white' ?>">
-                <i data-lucide="cpu" class="w-3.5 h-3.5"></i> Monitoreo
-            </button>
-            <button onclick="switchTab('new')" id="btnTabNew" class="tab-btn px-3.5 py-1.5 rounded-lg text-xs font-bold flex items-center gap-1.5 <?= $initialTab === 'new' ? 'active' : 'text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white' ?>">
-                <i data-lucide="plus-circle" class="w-3.5 h-3.5"></i> Alta de Sensor
-            </button>
-        </div>
+<header class="sticky top-0 z-50 w-full">
+    <div class="glass-clean">
+        <div class="max-w-6xl mx-auto px-6 py-3.5 flex items-center justify-between gap-4">
+            <a href="/" class="flex items-center gap-2.5 group">
+                <img src="/assets/logo.svg" alt="SmartPlant Logo" class="w-8 h-8 transition-transform group-hover:scale-105">
+                <span class="text-xl font-bold tracking-tight">SmartPlant <span class="text-emerald-400 font-black">CARE</span></span>
+            </a>
 
-        <div class="flex items-center gap-3">
-            <!-- Theme Toggle -->
-            <button onclick="toggleTheme()" class="w-8 h-8 rounded-full bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-200 flex items-center justify-center hover:bg-slate-200 dark:hover:bg-slate-700 transition-all shadow-sm" title="Cambiar tema" id="themeToggleBtn">
-                <i data-lucide="moon" class="w-4 h-4"></i>
-            </button>
-            
-            <a href="/dashboard" class="bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-200 px-3.5 py-1.5 rounded-full text-xs font-semibold hover:bg-slate-200 dark:hover:bg-slate-700 transition-all">
-                Dashboard
-            </a>
-            <a href="/dashboard?logout=1" class="bg-red-50 dark:bg-red-950/30 text-red-600 dark:text-red-400 border border-red-200/80 dark:border-red-900/40 px-3 py-1.5 rounded-full text-xs font-semibold hover:bg-red-100 dark:hover:bg-red-950/60 transition-all">
-                Salir
-            </a>
+            <div class="flex items-center gap-1 chrome-chip p-1">
+                <button onclick="switchTab('telemetry')" id="btnTabTelemetry" class="tab-btn px-3.5 py-1.5 rounded-lg text-xs font-bold flex items-center gap-1.5 <?= $initialTab === 'telemetry' ? 'active' : 'text-slate-500' ?>">
+                    <i data-lucide="cpu" class="w-3.5 h-3.5"></i> Monitoreo
+                </button>
+                <button onclick="switchTab('new')" id="btnTabNew" class="tab-btn px-3.5 py-1.5 rounded-lg text-xs font-bold flex items-center gap-1.5 <?= $initialTab === 'new' ? 'active' : 'text-slate-500' ?>">
+                    <i data-lucide="plus-circle" class="w-3.5 h-3.5"></i> Alta de Sensor
+                </button>
+            </div>
+
+            <div class="flex items-center gap-2.5">
+                <!-- Theme Toggle -->
+                <button onclick="toggleTheme()" class="chrome-chip w-9 h-9 flex items-center justify-center" title="Cambiar tema" id="themeToggleBtn">
+                    <i data-lucide="moon" class="w-4 h-4"></i>
+                </button>
+
+                <a href="/dashboard" class="chrome-chip px-3.5 py-1.5 text-xs font-semibold">
+                    Dashboard
+                </a>
+                <a href="/dashboard?logout=1" class="px-3 py-1.5 rounded-[0.75rem] text-xs font-semibold border border-red-400/30 bg-red-500/10 text-red-300 hover:bg-red-500/20 transition-all">
+                    Salir
+                </a>
+            </div>
         </div>
     </div>
 </header>
@@ -197,7 +204,7 @@ if (isset($_GET['tab']) && $_GET['tab'] === 'new' || isset($_GET['action']) && $
             <div>
                 <p><?= h($success_msg) ?></p>
                 <?php if ($createdDevice): ?>
-                    <p class="text-xs text-emerald-700 dark:text-emerald-400 mt-1 font-mono">Código: <strong><?= h($createdDevice['codigo']) ?></strong> | API Key: <strong><?= h($createdDevice['api_key']) ?></strong></p>
+                    <p class="text-sm text-emerald-700 dark:text-emerald-400 mt-1 font-mono">Código: <strong><?= h($createdDevice['codigo']) ?></strong> | API Key: <strong><?= h($createdDevice['api_key']) ?></strong></p>
                 <?php endif; ?>
             </div>
         </div>
@@ -216,7 +223,7 @@ if (isset($_GET['tab']) && $_GET['tab'] === 'new' || isset($_GET['action']) && $
     <div id="tabContentTelemetry" class="tab-content <?= $initialTab === 'telemetry' ? 'active' : '' ?>">
         <section class="grid lg:grid-cols-[1fr_0.72fr] gap-8 items-start">
             <div>
-                <span class="bg-emerald-100 dark:bg-emerald-950 text-emerald-800 dark:text-emerald-300 border border-emerald-300 dark:border-emerald-800 font-bold tracking-[0.15em] text-xs uppercase px-3 py-1 rounded-full shadow-sm">
+                <span class="bg-emerald-100 dark:bg-emerald-950 text-emerald-800 dark:text-emerald-300 border border-emerald-300 dark:border-emerald-800 font-bold tracking-[0.15em] text-xs uppercase px-3 py-1 rounded-lg shadow-sm">
                     Telemetría en tiempo real
                 </span>
                 <h1 class="text-3xl md:text-4xl font-black tracking-tight mt-3 mb-2 text-slate-900 dark:text-white">
@@ -227,7 +234,7 @@ if (isset($_GET['tab']) && $_GET['tab'] === 'new' || isset($_GET['action']) && $
                 </p>
             </div>
 
-            <aside class="hw-panel rounded-2xl p-5 border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 shadow-sm">
+            <aside class="hw-panel rounded-2xl p-5">
                 <?php if ($selectedDevice): ?>
                     <form method="GET" class="space-y-3">
                         <div class="flex items-center justify-between">
@@ -275,7 +282,7 @@ if (isset($_GET['tab']) && $_GET['tab'] === 'new' || isset($_GET['action']) && $
         <?php if ($selectedDevice): ?>
         <!-- Resumen del hardware -->
         <section class="grid sm:grid-cols-2 gap-4 mt-6">
-            <div class="hw-panel rounded-2xl p-5 hw-reading border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 shadow-sm flex flex-col justify-between">
+            <div class="hw-panel rounded-2xl p-5 hw-reading flex flex-col justify-between">
                 <div>
                     <p class="text-[11px] font-bold text-slate-500 uppercase tracking-wider mb-1">Componentes online</p>
                     <p class="text-3xl font-black text-slate-900 dark:text-white"><span id="connectedCount"><?= $connectedCount ?></span>/<span id="totalCount"><?= count($components) ?></span></p>
@@ -283,7 +290,7 @@ if (isset($_GET['tab']) && $_GET['tab'] === 'new' || isset($_GET['action']) && $
                 <p class="text-[11px] text-slate-500 font-medium">Sensores físicos sincronizados.</p>
             </div>
 
-            <div class="hw-panel rounded-2xl p-5 hw-reading border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 shadow-sm flex flex-col justify-between">
+            <div class="hw-panel rounded-2xl p-5 hw-reading flex flex-col justify-between">
                 <div>
                     <p class="text-[11px] font-bold text-slate-500 uppercase tracking-wider mb-1">Estado de Salud</p>
                     <p class="text-lg font-bold text-emerald-600 dark:text-emerald-400 leading-tight" id="analysisSummary"><?= h($analysis['resumen']) ?></p>
@@ -300,9 +307,7 @@ if (isset($_GET['tab']) && $_GET['tab'] === 'new' || isset($_GET['action']) && $
                 <div>
                     <div class="flex items-center justify-between mb-1">
                         <p class="text-[11px] font-black uppercase tracking-wider card-title">Humedad Suelo</p>
-                        <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] badge-live shadow-sm">
-                            <span class="w-1.5 h-1.5 rounded-full bg-white animate-pulse"></span> EN VIVO
-                        </span>
+                        <span data-badge-slot="humedad_suelo"><?= $liveBadge ?></span>
                     </div>
                     <p class="text-3xl font-black val"><span id="readingSoil"><?= $latest ? number_format((float) $latest['humedad_suelo'], 1) : '-' ?></span><span class="text-lg font-bold ml-0.5">%</span></p>
                 </div>
@@ -322,9 +327,7 @@ if (isset($_GET['tab']) && $_GET['tab'] === 'new' || isset($_GET['action']) && $
                 <div>
                     <div class="flex items-center justify-between mb-1">
                         <p class="text-[11px] font-black uppercase tracking-wider card-title">Luz BH-1750</p>
-                        <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] badge-live shadow-sm">
-                            <span class="w-1.5 h-1.5 rounded-full bg-white animate-pulse"></span> EN VIVO
-                        </span>
+                        <span data-badge-slot="luz_ambiental"><?= $liveBadge ?></span>
                     </div>
                     <p class="text-3xl font-black val"><span id="readingLightTop"><?= $latest ? (int) $latest['luz_ambiental'] : '-' ?></span><span class="text-lg font-bold ml-0.5">lx</span></p>
                 </div>
@@ -344,9 +347,7 @@ if (isset($_GET['tab']) && $_GET['tab'] === 'new' || isset($_GET['action']) && $
                 <div>
                     <div class="flex items-center justify-between mb-1">
                         <p class="text-[11px] font-black uppercase tracking-wider card-title">DHT22</p>
-                        <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] badge-live shadow-sm">
-                            <span class="w-1.5 h-1.5 rounded-full bg-white animate-pulse"></span> EN VIVO
-                        </span>
+                        <span data-badge-slot="dht22"><?= $liveBadge ?></span>
                     </div>
                     <p class="text-3xl font-black val"><span id="readingTemp"><?= $latest && $latest['temperatura'] !== null ? number_format((float) $latest['temperatura'], 1) : '-' ?></span><span class="text-lg font-bold ml-0.5">°C</span></p>
                 </div>
@@ -360,9 +361,7 @@ if (isset($_GET['tab']) && $_GET['tab'] === 'new' || isset($_GET['action']) && $
                 <div>
                     <div class="flex items-center justify-between mb-1">
                         <p class="text-[11px] font-black uppercase tracking-wider card-title">pH PH-4502C</p>
-                        <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] badge-live shadow-sm">
-                            <span class="w-1.5 h-1.5 rounded-full bg-white animate-pulse"></span> EN VIVO
-                        </span>
+                        <span data-badge-slot="ph"><?= $liveBadge ?></span>
                     </div>
                     <p class="text-3xl font-black val"><span id="readingPh"><?= $latest && $latest['ph'] !== null ? number_format((float) $latest['ph'], 2) : '-' ?></span></p>
                 </div>
@@ -377,9 +376,7 @@ if (isset($_GET['tab']) && $_GET['tab'] === 'new' || isset($_GET['action']) && $
                 <div>
                     <div class="flex items-center justify-between mb-1">
                         <p class="text-[11px] font-black uppercase tracking-wider card-title">Depósito de agua</p>
-                        <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] badge-live shadow-sm">
-                            <span class="w-1.5 h-1.5 rounded-full bg-white animate-pulse"></span> EN VIVO
-                        </span>
+                        <span data-badge-slot="nivel_tanque"><?= $liveBadge ?></span>
                     </div>
                     <p class="text-3xl font-black val"><span id="readingTank"><?= $latest ? (int) $latest['nivel_tanque'] : '-' ?></span><span class="text-lg font-bold ml-0.5">%</span></p>
                 </div>
@@ -394,7 +391,7 @@ if (isset($_GET['tab']) && $_GET['tab'] === 'new' || isset($_GET['action']) && $
 
         <!-- Detección de Componentes y Lecturas Secundarias -->
         <section class="grid lg:grid-cols-[1.1fr_0.9fr] gap-6 mt-6 items-start">
-            <div class="hw-panel rounded-2xl p-6 border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 shadow-sm">
+            <div class="hw-panel rounded-2xl p-6">
                 <div class="flex items-center justify-between mb-5">
                     <div>
                         <h2 class="text-lg font-bold text-slate-900 dark:text-white">Sensores & Módulos</h2>
@@ -420,11 +417,11 @@ if (isset($_GET['tab']) && $_GET['tab'] === 'new' || isset($_GET['action']) && $
                         </div>
                         <div class="grid grid-cols-2 gap-2 text-xs pt-1.5 border-t border-slate-100 dark:border-slate-800">
                             <div>
-                                <p class="text-[9px] text-slate-400 uppercase tracking-wider font-bold">Valor</p>
+                                <p class="text-[10px] text-slate-400 uppercase tracking-wider font-bold">Valor</p>
                                 <p class="font-extrabold text-slate-900 dark:text-white" data-field="value"><?= h(componentDisplayValue($component)) ?></p>
                             </div>
                             <div>
-                                <p class="text-[9px] text-slate-400 uppercase tracking-wider font-bold">Lectura</p>
+                                <p class="text-[10px] text-slate-400 uppercase tracking-wider font-bold">Lectura</p>
                                 <p class="font-semibold text-slate-600 dark:text-slate-300 text-[11px]" data-field="lastSeen"><?= h($component['ultima_conexion_relativa']) ?></p>
                             </div>
                         </div>
@@ -434,33 +431,39 @@ if (isset($_GET['tab']) && $_GET['tab'] === 'new' || isset($_GET['action']) && $
             </div>
 
             <aside class="space-y-6">
-                <!-- Control de Actuadores -->
+                <!-- Control del relé (bomba) -->
                 <div class="hw-panel rounded-2xl p-6 border border-emerald-500/30 dark:border-emerald-500/20 bg-emerald-50/30 dark:bg-emerald-950/20 shadow-sm">
-                    <div class="flex items-center justify-between mb-3">
+                    <div class="flex items-center justify-between mb-4">
                         <h2 class="text-sm font-bold text-slate-900 dark:text-white flex items-center gap-2">
-                            <i data-lucide="power" class="w-4 h-4 text-emerald-600 dark:text-emerald-400"></i> Control de Actuadores
+                            <i data-lucide="power" class="w-4 h-4 text-emerald-600 dark:text-emerald-400"></i> Relé de la bomba
                         </h2>
-                        <span class="text-[10px] font-bold uppercase px-2 py-0.5 rounded-full bg-emerald-500/10 text-emerald-700 dark:text-emerald-300 border border-emerald-500/20">ESP32 Relé</span>
+                        <span class="text-[11px] font-bold uppercase px-2 py-0.5 rounded-lg bg-emerald-500/10 text-emerald-700 dark:text-emerald-300 border border-emerald-500/20">GPIO 26</span>
                     </div>
-                    <p class="text-xs text-slate-600 dark:text-slate-400 mb-4">Comandos manuales inmediatos sobre la bomba de agua y válvulas.</p>
-                    
-                    <div class="space-y-2.5">
-                        <button type="button" onclick="sendDeviceCommand('TOGGLE_PUMP')" id="btnTogglePump" class="w-full py-2.5 px-4 rounded-xl font-bold text-xs bg-emerald-600 hover:bg-emerald-500 text-white shadow-sm transition-all flex items-center justify-center gap-2 active:scale-98">
-                            <i data-lucide="droplets" class="w-4 h-4"></i> Alternar Riego Manual
-                        </button>
-                        <div class="grid grid-cols-2 gap-2">
-                            <button type="button" onclick="sendDeviceCommand('WATER_PUMP_ON')" class="py-2 px-3 rounded-lg text-xs font-semibold bg-slate-900 dark:bg-slate-800 hover:bg-slate-800 dark:hover:bg-slate-700 text-white transition-all active:scale-95 flex items-center justify-center gap-1.5">
-                                <i data-lucide="play" class="w-3.5 h-3.5 text-emerald-400"></i> Encender
-                            </button>
-                            <button type="button" onclick="sendDeviceCommand('WATER_PUMP_OFF')" class="py-2 px-3 rounded-lg text-xs font-semibold bg-slate-200 dark:bg-slate-700 hover:bg-slate-300 dark:hover:bg-slate-600 text-slate-800 dark:text-slate-200 transition-all active:scale-95 flex items-center justify-center gap-1.5">
-                                <i data-lucide="square" class="w-3.5 h-3.5 text-red-500"></i> Detener
-                            </button>
+
+                    <div class="flex items-center gap-3 p-3.5 rounded-xl bg-white/70 dark:bg-slate-900/40 border border-slate-200/70 dark:border-slate-800 mb-4">
+                        <span id="relayDot" class="w-3 h-3 rounded-full bg-slate-400 flex-shrink-0"></span>
+                        <div>
+                            <p id="relayStateText" class="text-base font-bold text-slate-900 dark:text-white leading-tight">Consultando…</p>
+                            <p id="relayHint" class="text-xs text-slate-500 dark:text-slate-400 mt-0.5">Estado informado por el ESP32.</p>
                         </div>
                     </div>
+
+                    <div class="grid grid-cols-2 gap-2.5">
+                        <button type="button" onclick="setRelay(true)" data-relay-btn class="py-3 px-3 rounded-xl text-sm font-bold bg-emerald-600 hover:bg-emerald-500 text-white shadow-sm transition-all flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed">
+                            <i data-lucide="power" class="w-4 h-4"></i> Encender
+                        </button>
+                        <button type="button" onclick="setRelay(false)" data-relay-btn class="py-3 px-3 rounded-xl text-sm font-bold bg-slate-200 dark:bg-slate-700 hover:bg-slate-300 dark:hover:bg-slate-600 text-slate-800 dark:text-slate-100 transition-all flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed">
+                            <i data-lucide="power-off" class="w-4 h-4"></i> Apagar
+                        </button>
+                    </div>
+                    <button type="button" onclick="pulseRelay(3)" data-relay-btn class="w-full mt-2.5 py-2.5 rounded-xl text-xs font-semibold border border-slate-300 dark:border-slate-700 text-slate-700 dark:text-slate-300 hover:bg-white/60 dark:hover:bg-slate-800/60 transition-all flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed">
+                        <i data-lucide="timer" class="w-3.5 h-3.5"></i> Probar 3 segundos
+                    </button>
+                    <p class="text-[11px] text-slate-500 dark:text-slate-400 mt-3 leading-relaxed">Por seguridad, el ESP32 apaga la bomba solo si queda encendida más de 5 minutos.</p>
                 </div>
 
                 <!-- Diagnóstico y Alertas -->
-                <div class="hw-panel rounded-2xl p-6 border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 shadow-sm">
+                <div class="hw-panel rounded-2xl p-6">
                     <h2 class="text-sm font-bold text-slate-900 dark:text-white mb-3 flex items-center gap-2">
                         <i data-lucide="shield-check" class="w-4 h-4 text-emerald-600"></i> Diagnóstico de Hardware
                     </h2>
@@ -484,7 +487,7 @@ if (isset($_GET['tab']) && $_GET['tab'] === 'new' || isset($_GET['action']) && $
     <div id="tabContentNew" class="tab-content <?= $initialTab === 'new' ? 'active' : '' ?>">
         <section class="grid lg:grid-cols-[0.9fr_1.1fr] gap-8 items-start">
             <div>
-                <span class="bg-emerald-100 dark:bg-emerald-950 text-emerald-800 dark:text-emerald-300 border border-emerald-300 dark:border-emerald-800 font-bold tracking-[0.15em] text-xs uppercase px-3 py-1 rounded-full shadow-sm">
+                <span class="bg-emerald-100 dark:bg-emerald-950 text-emerald-800 dark:text-emerald-300 border border-emerald-300 dark:border-emerald-800 font-bold tracking-[0.15em] text-xs uppercase px-3 py-1 rounded-lg shadow-sm">
                     Registro de nuevo equipo
                 </span>
                 <h1 class="text-3xl md:text-4xl font-black tracking-tight mt-3 mb-2 text-slate-900 dark:text-white">
@@ -494,23 +497,23 @@ if (isset($_GET['tab']) && $_GET['tab'] === 'new' || isset($_GET['action']) && $
                     Asigna un nombre, tipo de hardware y la planta a la que pertenecerá para que empiece a reportar datos inmediatamente.
                 </p>
 
-                <div class="space-y-3.5 bg-slate-50 dark:bg-slate-900/60 p-5 rounded-2xl border border-slate-200/80 dark:border-slate-800 text-xs text-slate-600 dark:text-slate-400">
+                <div class="space-y-3.5 bg-slate-50 dark:bg-slate-900/60 p-5 rounded-2xl border border-slate-200/80 dark:border-slate-800 text-sm text-slate-600 dark:text-slate-400">
                     <div class="flex items-start gap-3">
-                        <div class="w-6 h-6 rounded-full bg-emerald-100 dark:bg-emerald-950 text-emerald-700 dark:text-emerald-300 flex items-center justify-center font-bold text-xs flex-shrink-0">1</div>
+                        <div class="w-6 h-6 rounded-lg bg-emerald-100 dark:bg-emerald-950 text-emerald-700 dark:text-emerald-300 flex items-center justify-center font-bold text-xs flex-shrink-0">1</div>
                         <p>Completa los datos del formulario y presiona <strong>Dar de alta</strong>.</p>
                     </div>
                     <div class="flex items-start gap-3">
-                        <div class="w-6 h-6 rounded-full bg-emerald-100 dark:bg-emerald-950 text-emerald-700 dark:text-emerald-300 flex items-center justify-center font-bold text-xs flex-shrink-0">2</div>
+                        <div class="w-6 h-6 rounded-lg bg-emerald-100 dark:bg-emerald-950 text-emerald-700 dark:text-emerald-300 flex items-center justify-center font-bold text-xs flex-shrink-0">2</div>
                         <p>El sistema generará automáticamente un <strong>Código de dispositivo</strong> y una <strong>API Key</strong> segura.</p>
                     </div>
                     <div class="flex items-start gap-3">
-                        <div class="w-6 h-6 rounded-full bg-emerald-100 dark:bg-emerald-950 text-emerald-700 dark:text-emerald-300 flex items-center justify-center font-bold text-xs flex-shrink-0">3</div>
+                        <div class="w-6 h-6 rounded-lg bg-emerald-100 dark:bg-emerald-950 text-emerald-700 dark:text-emerald-300 flex items-center justify-center font-bold text-xs flex-shrink-0">3</div>
                         <p>Copia el código en el firmware de tu placa ESP32 o usa la pestaña <strong>Monitoreo</strong> para ver la telemetría.</p>
                     </div>
                 </div>
             </div>
 
-            <div class="bg-white dark:bg-slate-900 border border-slate-200/80 dark:border-slate-800 rounded-3xl p-7 shadow-sm">
+            <div class="glass-form rounded-3xl p-7">
                 <form method="POST" action="" class="space-y-4">
                     <input type="hidden" name="action" value="create_device">
 
@@ -571,7 +574,7 @@ if (isset($_GET['tab']) && $_GET['tab'] === 'new' || isset($_GET['action']) && $
 </main>
 
 <!-- Toast de Notificaciones -->
-<div id="hwToast" class="fixed bottom-6 left-1/2 -translate-x-1/2 bg-slate-900 dark:bg-white text-white dark:text-slate-900 px-4 py-2.5 rounded-full text-xs font-bold shadow-xl opacity-0 pointer-events-none transition-all z-[10000]"></div>
+<div id="hwToast" class="fixed bottom-6 left-1/2 -translate-x-1/2 bg-slate-900 dark:bg-white text-white dark:text-slate-900 px-4 py-2.5 rounded-xl text-xs font-bold shadow-xl opacity-0 pointer-events-none transition-all z-[10000]"></div>
 
 <script>
     const deviceId = <?= $selectedDevice ? (int) $selectedDevice['id'] : 0 ?>;
@@ -610,6 +613,14 @@ if (isset($_GET['tab']) && $_GET['tab'] === 'new' || isset($_GET['action']) && $
         return 'hw-status-off';
     }
 
+    function markSensorsLive(sensorKeys) {
+        const liveHtml = '<span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-lg text-[10px] badge-live shadow-sm"><span class="w-1.5 h-1.5 rounded-full bg-white animate-pulse"></span> EN VIVO</span>';
+        sensorKeys.forEach(key => {
+            const slot = document.querySelector(`[data-badge-slot="${key}"]`);
+            if (slot) slot.innerHTML = liveHtml;
+        });
+    }
+
     function formatComponentValue(c) {
         const val = (c.valor !== null && c.valor !== undefined) ? String(c.valor).trim() : '';
         if (!val) return '-';
@@ -620,6 +631,8 @@ if (isset($_GET['tab']) && $_GET['tab'] === 'new' || isset($_GET['action']) && $
 
     function updateFromPayload(data) {
         if (!data || !data.success) return;
+        lastPayload = data;
+        updateRelayUI(data);
 
         const components = data.components || [];
         let connected = 0;
@@ -648,6 +661,8 @@ if (isset($_GET['tab']) && $_GET['tab'] === 'new' || isset($_GET['action']) && $
 
         const reading = data.reading;
         if (reading) {
+            markSensorsLive(['humedad_suelo', 'luz_ambiental', 'dht22', 'ph', 'nivel_tanque']);
+
             const soilVal = Number(reading.humedad_suelo);
             setText('readingSoil', soilVal.toFixed(1));
             
@@ -731,32 +746,110 @@ if (isset($_GET['tab']) && $_GET['tab'] === 'new' || isset($_GET['action']) && $
             const res = await fetch(statusUrl);
             const data = await res.json();
             updateFromPayload(data);
+            if (!data || !data.success) updateRelayUI(lastPayload);
         } catch (error) {
-            // Silencioso en fondo
+            // Silencioso en fondo, pero sin dejar el relé "esperando" para siempre
+            updateRelayUI(lastPayload);
         }
     }
 
-    async function sendDeviceCommand(comando, parametros = null) {
+    // ─── Relé: la web solo muestra lo que el ESP32 confirma ───
+    const RELAY_CONFIRM_TIMEOUT_MS = 15000;
+    let relayPending = null; // { want: bool, since: ms } mientras esperamos confirmación
+    let relayFastPoll = null;
+    let lastPayload = null;
+
+    // true/false según lo último que reportó el ESP32; null si no hay dato reciente.
+    function relayReportedState(data) {
+        const rele = ((data && data.components) || []).find(c => c.codigo_componente === 'rele');
+        if (!rele || !rele.online) return null;
+        if (rele.valor === 'Activo') return true;
+        if (rele.valor === 'Reposo') return false;
+        return null;
+    }
+
+    function stopRelayWait() {
+        relayPending = null;
+        if (relayFastPoll) clearInterval(relayFastPoll);
+        relayFastPoll = null;
+    }
+
+    function updateRelayUI(data) {
+        const text = document.getElementById('relayStateText');
+        if (!text) return;
+        const on = relayReportedState(data);
+
+        if (relayPending) {
+            if (on === relayPending.want) {
+                showToast(on ? 'Relé encendido' : 'Relé apagado');
+                stopRelayWait();
+            } else if (Date.now() - relayPending.since > RELAY_CONFIRM_TIMEOUT_MS) {
+                showToast('El ESP32 no confirmó la orden. ¿Está encendido y conectado al WiFi?');
+                stopRelayWait();
+            }
+        }
+
+        let dot = 'bg-slate-400', label, hint;
+        if (relayPending) {
+            dot = 'bg-amber-400 animate-pulse';
+            label = relayPending.want ? 'Encendiendo…' : 'Apagando…';
+            hint = 'Esperando que el ESP32 confirme.';
+        } else if (on === null) {
+            label = 'Sin conexión con el ESP32';
+            hint = 'Cuando el ESP32 esté en línea vas a ver acá el estado real del relé.';
+        } else if (on) {
+            dot = 'bg-emerald-500';
+            label = 'Encendido';
+            hint = 'La bomba está recibiendo energía.';
+        } else {
+            label = 'Apagado';
+            hint = 'La bomba está detenida.';
+        }
+
+        document.getElementById('relayDot').className = `w-3 h-3 rounded-full flex-shrink-0 ${dot}`;
+        text.textContent = label;
+        setText('relayHint', hint);
+        document.querySelectorAll('[data-relay-btn]').forEach(btn => btn.disabled = !!relayPending);
+    }
+
+    async function sendRelayCommand(comando, parametros, want) {
         if (!deviceId) {
             showToast('No hay dispositivo seleccionado.');
             return;
         }
+        relayPending = { want, since: Date.now() };
+        updateRelayUI(lastPayload);
+
         try {
             const res = await fetch('/hardware/api?action=control', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ device_id: deviceId, comando: comando, parametros: parametros })
+                body: JSON.stringify({ device_id: deviceId, comando, parametros })
             });
             const data = await res.json();
-            if (data.success) {
-                showToast(data.mensaje || 'Comando ejecutado con éxito.');
-                refreshHardware();
-            } else {
-                showToast(data.error || 'Error al enviar comando.');
+            if (!data.success) {
+                stopRelayWait();
+                updateRelayUI(lastPayload);
+                showToast(data.error || 'No se pudo enviar la orden.');
+                return;
             }
         } catch (err) {
-            showToast('Error de conexión al enviar el comando.');
+            stopRelayWait();
+            updateRelayUI(lastPayload);
+            showToast('Error de conexión al enviar la orden.');
+            return;
         }
+
+        // Mientras esperamos, consultar más seguido para reflejar el cambio enseguida
+        if (!relayFastPoll) relayFastPoll = setInterval(refreshHardware, 1000);
+    }
+
+    function setRelay(on) {
+        sendRelayCommand(on ? 'WATER_PUMP_ON' : 'WATER_PUMP_OFF', null, on);
+    }
+
+    function pulseRelay(seconds) {
+        sendRelayCommand('WATER_PUMP_ON', { segundos: seconds }, true);
     }
 
     // ─── Theme Toggle ───
@@ -773,9 +866,9 @@ if (isset($_GET['tab']) && $_GET['tab'] === 'new' || isset($_GET['action']) && $
         localStorage.setItem('sp_theme', next);
 
         if (btn) {
-            btn.innerHTML = next === 'dark' 
-                ? '<i data-lucide="sun" class="w-4 h-4 text-amber-400"></i>' 
-                : '<i data-lucide="moon" class="w-4 h-4 text-slate-700"></i>';
+            btn.innerHTML = next === 'dark'
+                ? '<i data-lucide="sun" class="w-4 h-4 text-amber-400"></i>'
+                : '<i data-lucide="moon" class="w-4 h-4"></i>';
             if (typeof lucide !== 'undefined') lucide.createIcons();
         }
     }
