@@ -6,12 +6,18 @@
   - Sensor de luz BH-1750 (I2C: SDA P21, SCL P22)
   - Sensor DHT22 - temperatura y humedad ambiente (GPIO 4)
   - Sensor de pH PH-4502C (salida analógica en GPIO 34)
+  Actuadores:
+  - Módulo relé que enciende/apaga la minibomba (GPIO 26), controlable desde la web
 
   Conexiones NodeMCU-32S:
   - Humedad Capacitivo: VCC -> 3.3V | GND -> GND | AO -> P32
   - Sensor BH-1750: VCC -> VIN (o 5V) | GND -> GND | SDA -> P21 | SCL -> P22
   - DHT22: VCC -> 3.3V | GND -> GND | DATA -> P4 (con resistencia pull-up de 10k a 3.3V)
   - PH-4502C: VCC -> 5V | GND -> GND | Po (salida analógica) -> P34
+  - Módulo relé: VCC -> VIN (5V) | GND -> GND | IN -> P26
+      Contactos: (+) de la fuente 5V -> COM | NO -> (+) de la bomba | (-) de la bomba -> (-) de la fuente
+
+  Para probar el relé solo, sin WiFi ni sensores, usá firmware/rele_test/rele_test.ino.
 
   IMPORTANTE: el sensor PH-4502C necesita calibrarse con soluciones buffer de
   pH 7 y pH 4 (ver PH_NEUTRAL_VOLTAGE y PH_SLOPE_V_PER_PH_UNIT más abajo).
@@ -30,6 +36,15 @@
 #define DHT_PIN 4   // Pin P4 en NodeMCU-32S
 #define DHT_TYPE DHT22
 #define PH_PIN 34   // Pin P34 (ADC1, solo entrada) en NodeMCU-32S
+#define RELAY_PIN 26 // Pin P26 -> IN del módulo relé
+
+// La mayoría de los módulos relé baratos se activan con LOW. Si al probar el relé
+// hace clic al revés (se prende cuando debería estar apagado), cambialo a false.
+const bool RELAY_ACTIVE_LOW = true;
+
+// Tope de seguridad: aunque nadie lo apague (se cortó el WiFi, se cerró la web),
+// la bomba nunca queda encendida más de este tiempo.
+const unsigned long RELAY_MAX_ON_MS = 5UL * 60UL * 1000UL; // 5 minutos
 
 // ── Calibración del sensor de pH (ajustar con buffers reales) ──
 const float ADC_MAX_VALUE = 4095.0;     // ESP32 ADC de 12 bits
@@ -40,7 +55,8 @@ const float PH_SLOPE_V_PER_PH_UNIT = 0.18; // Variación de tensión por unidad 
 const char *WIFI_SSID = "placa";
 const char *WIFI_PASS = "12345678";
 
-const char *ENDPOINT = "http://192.168.2.144:8080/hardware/api?action=telemetry";
+const char *ENDPOINT      = "http://192.168.2.144:8080/hardware/api?action=telemetry";
+const char *POLL_ENDPOINT = "http://192.168.2.144:8080/hardware/api?action=poll";
 const char *DEVICE_CODE = "SPC-DEMO-FICUS-001";
 const char *API_KEY     = "67056c1cf743379b4c09b2cf018805e3";
 
@@ -50,6 +66,73 @@ bool bh1750Activo = false;
 unsigned long ultimoEnvio = 0;
 const unsigned long INTERVALO_ENVIO = 5000; // 5 segundos sin bloquear el loop con delay()
 unsigned long ultimoReintentoBH1750 = 0;
+
+unsigned long ultimoPoll = 0;
+const unsigned long INTERVALO_POLL = 1500; // consulta órdenes de la web cada 1,5 s
+
+bool releEncendido = false;
+unsigned long releEncendidoDesde = 0;
+unsigned long releDuracionMs = 0; // tiempo tras el cual se apaga solo
+
+void aplicarRele(bool encender, unsigned long duracionMs) {
+  releEncendido = encender;
+  digitalWrite(RELAY_PIN, (encender == RELAY_ACTIVE_LOW) ? LOW : HIGH);
+
+  if (encender) {
+    if (duracionMs == 0 || duracionMs > RELAY_MAX_ON_MS) duracionMs = RELAY_MAX_ON_MS;
+    releEncendidoDesde = millis();
+    releDuracionMs = duracionMs;
+    Serial.printf("[Relé] ENCENDIDO (se apaga solo en %lu s)\n", duracionMs / 1000);
+  } else {
+    Serial.println("[Relé] APAGADO");
+  }
+
+  // Avisar a la web enseguida en vez de esperar a la próxima lectura
+  ultimoEnvio = 0;
+}
+
+void procesarComandos(JsonArray comandos) {
+  for (JsonObject cmd : comandos) {
+    const char *nombre = cmd["comando"] | "";
+    unsigned long segundos = cmd["parametros"]["segundos"] | 0UL;
+    Serial.printf("[Web] Orden recibida: %s\n", nombre);
+
+    if (strcmp(nombre, "WATER_PUMP_ON") == 0) {
+      aplicarRele(true, segundos * 1000UL);
+    } else if (strcmp(nombre, "WATER_PUMP_OFF") == 0) {
+      aplicarRele(false, 0);
+    } else if (strcmp(nombre, "TOGGLE_PUMP") == 0) {
+      aplicarRele(!releEncendido, segundos * 1000UL);
+    }
+  }
+}
+
+// POST con device_code/api_key; si la respuesta trae "comandos", los aplica.
+int enviarYLeerComandos(const char *url, const String &body) {
+  HTTPClient http;
+  http.begin(url);
+  http.setTimeout(1500); // Timeout rápido de 1.5s para no congelar si la red/IP falla
+  http.addHeader("Content-Type", "application/json");
+
+  int httpCode = http.POST(body);
+  if (httpCode == 200) {
+    String payload = http.getString();
+    #if ARDUINOJSON_VERSION_MAJOR >= 7
+      JsonDocument filtro;
+      JsonDocument respuesta;
+    #else
+      StaticJsonDocument<64> filtro;
+      DynamicJsonDocument respuesta(1024);
+    #endif
+    filtro["comandos"] = true; // solo parsear lo que importa, la respuesta de telemetría es grande
+    if (!deserializeJson(respuesta, payload, DeserializationOption::Filter(filtro))) {
+      procesarComandos(respuesta["comandos"].as<JsonArray>());
+    }
+  }
+
+  http.end();
+  return httpCode;
+}
 
 // Últimos valores válidos del DHT22 (se conservan si una lectura falla)
 float ultimaTemperatura = 24.0;
@@ -84,6 +167,11 @@ void setup() {
   Serial.println("\n==============================================");
   Serial.println("  SmartPlant CARE - ESP32 NodeMCU-32S Setup   ");
   Serial.println("==============================================");
+
+  // Relé apagado desde el arranque: se fija el nivel ANTES de pinMode para que
+  // la bomba no dé un pulso al encender el ESP32.
+  digitalWrite(RELAY_PIN, RELAY_ACTIVE_LOW ? HIGH : LOW);
+  pinMode(RELAY_PIN, OUTPUT);
 
   // Inicializar I2C a 400kHz (Fast Mode)
   Wire.begin(21, 22);
@@ -121,6 +209,20 @@ void setup() {
 
 void loop() {
   unsigned long ahora = millis();
+
+  // Apagado automático de seguridad (funciona aunque no haya WiFi)
+  if (releEncendido && ahora - releEncendidoDesde >= releDuracionMs) {
+    Serial.println("[Relé] Tiempo máximo cumplido, apagando.");
+    aplicarRele(false, 0);
+  }
+
+  // Consultar órdenes de la web (encender/apagar relé) entre lecturas
+  if (WiFi.status() == WL_CONNECTED && ahora - ultimoPoll >= INTERVALO_POLL) {
+    ultimoPoll = ahora;
+    String cuerpo = String("{\"device_code\":\"") + DEVICE_CODE + "\",\"api_key\":\"" + API_KEY + "\"}";
+    enviarYLeerComandos(POLL_ENDPOINT, cuerpo);
+    ahora = millis();
+  }
 
   // Enviar datos periódicamente usando millis() en vez de delay(5000)
   if (ahora - ultimoEnvio >= INTERVALO_ENVIO) {
@@ -171,23 +273,18 @@ void loop() {
       doc["ph"]                = ph;
       doc["bateria"]           = 100;
       doc["ip"]                = WiFi.localIP().toString();
+      doc["rele"]              = releEncendido; // estado REAL del relé, es lo que muestra la web
+      doc["bomba_activa"]      = releEncendido;
 
       String body;
       serializeJson(doc, body);
 
-      HTTPClient http;
-      http.begin(ENDPOINT);
-      http.setTimeout(1500); // Timeout rápido de 1.5s para no congelar si la red/IP falla
-      http.addHeader("Content-Type", "application/json");
-
-      int httpCode = http.POST(body);
+      int httpCode = enviarYLeerComandos(ENDPOINT, body);
       if (httpCode > 0) {
         Serial.printf("[Servidor Web] Lecturas enviadas OK (HTTP %d)\n", httpCode);
       } else {
-        Serial.printf("[Error HTTP] %s\n", http.errorToString(httpCode).c_str());
+        Serial.printf("[Error HTTP] %s\n", HTTPClient::errorToString(httpCode).c_str());
       }
-
-      http.end();
     } else {
       Serial.println("[Reconectando WiFi...]");
       WiFi.reconnect();

@@ -1005,7 +1005,8 @@ $evento_icono = [
             const res = await fetch('/hardware/api?action=control', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ device_id: deviceId, comando: 'WATER_PUMP_ON' })
+                // Pulso corto: el ESP32 apaga la bomba solo al terminar
+                body: JSON.stringify({ device_id: deviceId, comando: 'WATER_PUMP_ON', parametros: { segundos: 5 } })
             });
             const data = await res.json();
             if (data.success) {

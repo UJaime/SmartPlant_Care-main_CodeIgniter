@@ -539,10 +539,26 @@ class HardwareKit
         return false;
     }
 
+    public const RELAY_COMMANDS = ['WATER_PUMP_ON', 'WATER_PUMP_OFF', 'TOGGLE_PUMP'];
+
     public static function recordCommand(mysqli $db, int $deviceId, int $usuarioId, string $comando, ?string $parametros = null): array
     {
         self::ensureSchema($db);
 
+        // Only the latest relay order matters; older undelivered ones would make the
+        // relay flip back and forth when the ESP32 picks them up all at once.
+        if (in_array($comando, self::RELAY_COMMANDS, true)) {
+            $db->query("
+                UPDATE comandos_dispositivo
+                SET estado = 'cancelado'
+                WHERE dispositivo_id = {$deviceId}
+                  AND estado = 'pendiente'
+                  AND comando IN ('" . implode("','", self::RELAY_COMMANDS) . "')
+            ");
+        }
+
+        // The relay state shown on the web comes only from what the ESP32 reports
+        // back in its telemetry, never from the command itself.
         $stmt = $db->prepare("
             INSERT INTO comandos_dispositivo (dispositivo_id, usuario_id, comando, parametros, estado)
             VALUES (?, ?, ?, ?, 'pendiente')
@@ -551,31 +567,62 @@ class HardwareKit
         $stmt->execute();
         $commandId = $stmt->insert_id;
 
-        // Si el comando es activar/desactivar riego, actualizar también la última lectura para respuesta inmediata visual
-        if ($comando === 'WATER_PUMP_ON' || $comando === 'WATER_PUMP_OFF' || $comando === 'TOGGLE_PUMP') {
-            $riegoVal = ($comando === 'WATER_PUMP_OFF') ? 0 : 1;
-            $db->query("
-                UPDATE lecturas_sensores
-                SET riego_activo = {$riegoVal}
-                WHERE dispositivo_id = {$deviceId}
-                ORDER BY creada_en DESC LIMIT 1
-            ");
-            
-            $riegoTexto = $riegoVal ? '1' : '0';
-            $db->query("
-                UPDATE componentes_hardware
-                SET valor = '{$riegoTexto}', estado = 'conectado', ultima_conexion = NOW()
-                WHERE dispositivo_id = {$deviceId} AND codigo_componente = 'rele'
-            ");
-        }
-
         return [
             'success' => true,
             'command_id' => $commandId,
             'comando' => $comando,
             'estado' => 'pendiente',
-            'mensaje' => 'Comando enviado correctamente al dispositivo.',
+            'mensaje' => 'Orden enviada. El ESP32 la aplicará en unos segundos.',
         ];
+    }
+
+    /**
+     * Hands the device its pending commands and marks them as delivered.
+     */
+    public static function takePendingCommands(mysqli $db, int $deviceId, int $limit = 10): array
+    {
+        $stmt = $db->prepare("
+            SELECT id, comando, parametros
+            FROM comandos_dispositivo
+            WHERE dispositivo_id = ? AND estado = 'pendiente'
+            ORDER BY id ASC
+            LIMIT ?
+        ");
+        $stmt->bind_param('ii', $deviceId, $limit);
+        $stmt->execute();
+        $rows = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
+
+        if (! $rows) {
+            return [];
+        }
+
+        $ids = implode(',', array_map('intval', array_column($rows, 'id')));
+        $db->query("
+            UPDATE comandos_dispositivo
+            SET estado = 'ejecutado', ejecutado_en = NOW()
+            WHERE id IN ({$ids}) AND estado = 'pendiente'
+        ");
+
+        return array_map(static function (array $row): array {
+            $params = json_decode((string) ($row['parametros'] ?? ''), true);
+
+            return [
+                'id' => (int) $row['id'],
+                'comando' => $row['comando'],
+                'parametros' => is_array($params) ? $params : new stdClass(),
+            ];
+        }, $rows);
+    }
+
+    public static function countPendingCommands(mysqli $db, int $deviceId): int
+    {
+        $result = $db->query("
+            SELECT COUNT(*) AS total
+            FROM comandos_dispositivo
+            WHERE dispositivo_id = {$deviceId} AND estado = 'pendiente'
+        ");
+
+        return $result ? (int) $result->fetch_assoc()['total'] : 0;
     }
 
     public static function getHistoricalReadings(mysqli $db, int $usuarioId, ?int $deviceId = null, ?string $fechaDesde = null, ?string $fechaHasta = null, int $limit = 100): array

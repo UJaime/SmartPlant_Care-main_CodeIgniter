@@ -21,22 +21,7 @@ if (! is_array($input)) {
 $action = $_GET['action'] ?? $input['action'] ?? '';
 
 if ($action === 'telemetry' && $_SERVER['REQUEST_METHOD'] === 'POST') {
-    $deviceCode = trim((string) ($input['device_code'] ?? $input['codigo'] ?? ''));
-    $apiKey = trim((string) ($input['api_key'] ?? ''));
-
-    if ($deviceCode === '' || $apiKey === '') {
-        jsonResponse(['error' => 'Faltan device_code y api_key.'], 422);
-    }
-
-    $device = HardwareKit::findDeviceByCode($db, $deviceCode);
-    if (! $device) {
-        jsonResponse(['error' => 'Dispositivo no encontrado.'], 404);
-    }
-
-    if (! hash_equals((string) ($device['api_key'] ?? ''), $apiKey)) {
-        jsonResponse(['error' => 'API key invalida para este dispositivo.'], 403);
-    }
-
+    $device = authenticateDevice($db, $input);
     $result = HardwareKit::recordTelemetry($db, $device, $input);
 
     jsonResponse([
@@ -45,6 +30,18 @@ if ($action === 'telemetry' && $_SERVER['REQUEST_METHOD'] === 'POST') {
         'reading' => $result['reading'],
         'components' => $result['components'],
         'analysis' => $result['analysis'],
+        'comandos' => HardwareKit::takePendingCommands($db, (int) $device['id']),
+    ]);
+}
+
+// Lightweight check the ESP32 makes between readings so relay orders from the
+// web apply within ~1-2 s instead of waiting for the next full telemetry.
+if ($action === 'poll' && $_SERVER['REQUEST_METHOD'] === 'POST') {
+    $device = authenticateDevice($db, $input);
+
+    jsonResponse([
+        'success' => true,
+        'comandos' => HardwareKit::takePendingCommands($db, (int) $device['id']),
     ]);
 }
 
@@ -161,7 +158,29 @@ function devicePayload(mysqli $db, array $device): array
         'components' => $components,
         'reading' => $latest,
         'analysis' => HardwareKit::processReading($latest, $components),
+        'comandos_pendientes' => HardwareKit::countPendingCommands($db, (int) $device['id']),
     ];
+}
+
+function authenticateDevice(mysqli $db, array $input): array
+{
+    $deviceCode = trim((string) ($input['device_code'] ?? $input['codigo'] ?? ''));
+    $apiKey = trim((string) ($input['api_key'] ?? ''));
+
+    if ($deviceCode === '' || $apiKey === '') {
+        jsonResponse(['error' => 'Faltan device_code y api_key.'], 422);
+    }
+
+    $device = HardwareKit::findDeviceByCode($db, $deviceCode);
+    if (! $device) {
+        jsonResponse(['error' => 'Dispositivo no encontrado.'], 404);
+    }
+
+    if (! hash_equals((string) ($device['api_key'] ?? ''), $apiKey)) {
+        jsonResponse(['error' => 'API key invalida para este dispositivo.'], 403);
+    }
+
+    return $device;
 }
 
 function jsonResponse(array $payload, int $status = 200): void

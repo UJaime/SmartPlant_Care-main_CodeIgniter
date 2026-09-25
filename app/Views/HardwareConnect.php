@@ -431,29 +431,35 @@ if (isset($_GET['tab']) && $_GET['tab'] === 'new' || isset($_GET['action']) && $
             </div>
 
             <aside class="space-y-6">
-                <!-- Control de Actuadores -->
+                <!-- Control del relé (bomba) -->
                 <div class="hw-panel rounded-2xl p-6 border border-emerald-500/30 dark:border-emerald-500/20 bg-emerald-50/30 dark:bg-emerald-950/20 shadow-sm">
-                    <div class="flex items-center justify-between mb-3">
+                    <div class="flex items-center justify-between mb-4">
                         <h2 class="text-sm font-bold text-slate-900 dark:text-white flex items-center gap-2">
-                            <i data-lucide="power" class="w-4 h-4 text-emerald-600 dark:text-emerald-400"></i> Control de Actuadores
+                            <i data-lucide="power" class="w-4 h-4 text-emerald-600 dark:text-emerald-400"></i> Relé de la bomba
                         </h2>
-                        <span class="text-[10px] font-bold uppercase px-2 py-0.5 rounded-lg bg-emerald-500/10 text-emerald-700 dark:text-emerald-300 border border-emerald-500/20">ESP32 Relé</span>
+                        <span class="text-[11px] font-bold uppercase px-2 py-0.5 rounded-lg bg-emerald-500/10 text-emerald-700 dark:text-emerald-300 border border-emerald-500/20">GPIO 26</span>
                     </div>
-                    <p class="text-xs text-slate-600 dark:text-slate-400 mb-4">Comandos manuales inmediatos sobre la bomba de agua y válvulas.</p>
-                    
-                    <div class="space-y-2.5">
-                        <button type="button" onclick="sendDeviceCommand('TOGGLE_PUMP')" id="btnTogglePump" class="w-full py-2.5 px-4 rounded-xl font-bold text-xs bg-emerald-600 hover:bg-emerald-500 text-white shadow-sm transition-all flex items-center justify-center gap-2 active:scale-98">
-                            <i data-lucide="droplets" class="w-4 h-4"></i> Alternar Riego Manual
-                        </button>
-                        <div class="grid grid-cols-2 gap-2">
-                            <button type="button" onclick="sendDeviceCommand('WATER_PUMP_ON')" class="py-2 px-3 rounded-lg text-xs font-semibold bg-slate-900 dark:bg-slate-800 hover:bg-slate-800 dark:hover:bg-slate-700 text-white transition-all active:scale-95 flex items-center justify-center gap-1.5">
-                                <i data-lucide="play" class="w-3.5 h-3.5 text-emerald-400"></i> Encender
-                            </button>
-                            <button type="button" onclick="sendDeviceCommand('WATER_PUMP_OFF')" class="py-2 px-3 rounded-lg text-xs font-semibold bg-slate-200 dark:bg-slate-700 hover:bg-slate-300 dark:hover:bg-slate-600 text-slate-800 dark:text-slate-200 transition-all active:scale-95 flex items-center justify-center gap-1.5">
-                                <i data-lucide="square" class="w-3.5 h-3.5 text-red-500"></i> Detener
-                            </button>
+
+                    <div class="flex items-center gap-3 p-3.5 rounded-xl bg-white/70 dark:bg-slate-900/40 border border-slate-200/70 dark:border-slate-800 mb-4">
+                        <span id="relayDot" class="w-3 h-3 rounded-full bg-slate-400 flex-shrink-0"></span>
+                        <div>
+                            <p id="relayStateText" class="text-base font-bold text-slate-900 dark:text-white leading-tight">Consultando…</p>
+                            <p id="relayHint" class="text-xs text-slate-500 dark:text-slate-400 mt-0.5">Estado informado por el ESP32.</p>
                         </div>
                     </div>
+
+                    <div class="grid grid-cols-2 gap-2.5">
+                        <button type="button" onclick="setRelay(true)" data-relay-btn class="py-3 px-3 rounded-xl text-sm font-bold bg-emerald-600 hover:bg-emerald-500 text-white shadow-sm transition-all flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed">
+                            <i data-lucide="power" class="w-4 h-4"></i> Encender
+                        </button>
+                        <button type="button" onclick="setRelay(false)" data-relay-btn class="py-3 px-3 rounded-xl text-sm font-bold bg-slate-200 dark:bg-slate-700 hover:bg-slate-300 dark:hover:bg-slate-600 text-slate-800 dark:text-slate-100 transition-all flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed">
+                            <i data-lucide="power-off" class="w-4 h-4"></i> Apagar
+                        </button>
+                    </div>
+                    <button type="button" onclick="pulseRelay(3)" data-relay-btn class="w-full mt-2.5 py-2.5 rounded-xl text-xs font-semibold border border-slate-300 dark:border-slate-700 text-slate-700 dark:text-slate-300 hover:bg-white/60 dark:hover:bg-slate-800/60 transition-all flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed">
+                        <i data-lucide="timer" class="w-3.5 h-3.5"></i> Probar 3 segundos
+                    </button>
+                    <p class="text-[11px] text-slate-500 dark:text-slate-400 mt-3 leading-relaxed">Por seguridad, el ESP32 apaga la bomba solo si queda encendida más de 5 minutos.</p>
                 </div>
 
                 <!-- Diagnóstico y Alertas -->
@@ -625,6 +631,8 @@ if (isset($_GET['tab']) && $_GET['tab'] === 'new' || isset($_GET['action']) && $
 
     function updateFromPayload(data) {
         if (!data || !data.success) return;
+        lastPayload = data;
+        updateRelayUI(data);
 
         const components = data.components || [];
         let connected = 0;
@@ -738,32 +746,110 @@ if (isset($_GET['tab']) && $_GET['tab'] === 'new' || isset($_GET['action']) && $
             const res = await fetch(statusUrl);
             const data = await res.json();
             updateFromPayload(data);
+            if (!data || !data.success) updateRelayUI(lastPayload);
         } catch (error) {
-            // Silencioso en fondo
+            // Silencioso en fondo, pero sin dejar el relé "esperando" para siempre
+            updateRelayUI(lastPayload);
         }
     }
 
-    async function sendDeviceCommand(comando, parametros = null) {
+    // ─── Relé: la web solo muestra lo que el ESP32 confirma ───
+    const RELAY_CONFIRM_TIMEOUT_MS = 15000;
+    let relayPending = null; // { want: bool, since: ms } mientras esperamos confirmación
+    let relayFastPoll = null;
+    let lastPayload = null;
+
+    // true/false según lo último que reportó el ESP32; null si no hay dato reciente.
+    function relayReportedState(data) {
+        const rele = ((data && data.components) || []).find(c => c.codigo_componente === 'rele');
+        if (!rele || !rele.online) return null;
+        if (rele.valor === 'Activo') return true;
+        if (rele.valor === 'Reposo') return false;
+        return null;
+    }
+
+    function stopRelayWait() {
+        relayPending = null;
+        if (relayFastPoll) clearInterval(relayFastPoll);
+        relayFastPoll = null;
+    }
+
+    function updateRelayUI(data) {
+        const text = document.getElementById('relayStateText');
+        if (!text) return;
+        const on = relayReportedState(data);
+
+        if (relayPending) {
+            if (on === relayPending.want) {
+                showToast(on ? 'Relé encendido' : 'Relé apagado');
+                stopRelayWait();
+            } else if (Date.now() - relayPending.since > RELAY_CONFIRM_TIMEOUT_MS) {
+                showToast('El ESP32 no confirmó la orden. ¿Está encendido y conectado al WiFi?');
+                stopRelayWait();
+            }
+        }
+
+        let dot = 'bg-slate-400', label, hint;
+        if (relayPending) {
+            dot = 'bg-amber-400 animate-pulse';
+            label = relayPending.want ? 'Encendiendo…' : 'Apagando…';
+            hint = 'Esperando que el ESP32 confirme.';
+        } else if (on === null) {
+            label = 'Sin conexión con el ESP32';
+            hint = 'Cuando el ESP32 esté en línea vas a ver acá el estado real del relé.';
+        } else if (on) {
+            dot = 'bg-emerald-500';
+            label = 'Encendido';
+            hint = 'La bomba está recibiendo energía.';
+        } else {
+            label = 'Apagado';
+            hint = 'La bomba está detenida.';
+        }
+
+        document.getElementById('relayDot').className = `w-3 h-3 rounded-full flex-shrink-0 ${dot}`;
+        text.textContent = label;
+        setText('relayHint', hint);
+        document.querySelectorAll('[data-relay-btn]').forEach(btn => btn.disabled = !!relayPending);
+    }
+
+    async function sendRelayCommand(comando, parametros, want) {
         if (!deviceId) {
             showToast('No hay dispositivo seleccionado.');
             return;
         }
+        relayPending = { want, since: Date.now() };
+        updateRelayUI(lastPayload);
+
         try {
             const res = await fetch('/hardware/api?action=control', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ device_id: deviceId, comando: comando, parametros: parametros })
+                body: JSON.stringify({ device_id: deviceId, comando, parametros })
             });
             const data = await res.json();
-            if (data.success) {
-                showToast(data.mensaje || 'Comando ejecutado con éxito.');
-                refreshHardware();
-            } else {
-                showToast(data.error || 'Error al enviar comando.');
+            if (!data.success) {
+                stopRelayWait();
+                updateRelayUI(lastPayload);
+                showToast(data.error || 'No se pudo enviar la orden.');
+                return;
             }
         } catch (err) {
-            showToast('Error de conexión al enviar el comando.');
+            stopRelayWait();
+            updateRelayUI(lastPayload);
+            showToast('Error de conexión al enviar la orden.');
+            return;
         }
+
+        // Mientras esperamos, consultar más seguido para reflejar el cambio enseguida
+        if (!relayFastPoll) relayFastPoll = setInterval(refreshHardware, 1000);
+    }
+
+    function setRelay(on) {
+        sendRelayCommand(on ? 'WATER_PUMP_ON' : 'WATER_PUMP_OFF', null, on);
+    }
+
+    function pulseRelay(seconds) {
+        sendRelayCommand('WATER_PUMP_ON', { segundos: seconds }, true);
     }
 
     // ─── Theme Toggle ───
